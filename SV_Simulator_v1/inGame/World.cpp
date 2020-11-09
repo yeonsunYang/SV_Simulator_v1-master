@@ -8,10 +8,10 @@ World::World(int _countryNum)
 {
 	this->countryNum = _countryNum;
 	countries = new Country[countryNum];
-	for (int i = 0; i < countryNum; i++)
-	{
-		this->countries[i].init_Country((CountryCode)i,1); //임시로 산업 1개 넣었음. 
-	}
+	
+	//매개변수 : 국가코드 / 산업개수 / gdp / 세율 / 인구 수 / 탄소배출량 / 탄소흡수량
+	countries[KOR].init_Country(KOR,1,1619000000000, 0.3, 51640000, 616096687, 0);
+	countries[USA].init_Country(USA,1,20540000000000, 0.2, 328200000, 5269529513, 0);
 
 	this->worldCarbonPPM = 411.29; //(2020년 9월 기준 농도)
 	calculator_worldTemperature(); //초기화한 농도 기준으로 평균온도 적용

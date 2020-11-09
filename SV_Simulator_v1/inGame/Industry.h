@@ -5,6 +5,6 @@ class Industry
 private:
 
 public:
-
+	void init_Industry();
 
 };

@@ -159,6 +159,7 @@
     <ClInclude Include="inGame\CountryCode.h" />
     <ClInclude Include="inGame\Game.h" />
     <ClInclude Include="inGame\Industry.h" />
+    <ClInclude Include="inGame\IndustryCode.h" />
     <ClInclude Include="inGame\IndustryPolicyCode.h" />
     <ClInclude Include="inGame\World.h" />
     <ClInclude Include="interface\framework.h" />

@@ -27,7 +27,7 @@ Game::~Game() {
 void Game::InitializeGame() {
 	// 게임 초기화 관련 코드 작성, main thread만 호출 가능
 
-	world = new World(2);
+	world = new World();
 
 
 
@@ -43,8 +43,20 @@ void Game::Oneday() {
 	world->calculator_worldCarbonPPM();
 	world->calculator_worldTemperature();
 
+	for (int i = 0; i < COUNTRY_NUM; i++)
+	{
+		world->countries[i].calculator_budget();
+	}
+
 	cout << date << "일 차" << endl;
 	world->printStatus();
+	cout << "\n#각 국의 정보#\n" << endl;
+
+	for (int i = 0; i < COUNTRY_NUM; i++)
+	{
+		world->countries[i].printStatus();
+		cout << endl;
+	}
 
 	date += 1;
 

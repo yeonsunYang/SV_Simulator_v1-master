@@ -1,13 +1,14 @@
 #pragma once
 #include <string>
+#define COUNTRY_NUM 2
 
 class Country;
 
 class World
 {
+	friend class Game;
 private:
 	Country* countries; //전세계 모든 국가 포인터
-	int countryNum; // (+)추가변수 : 국가 개수
 	float worldTemperature; //전세계 평균온도
 	long long worldCarbonEmission; //전세계 탄소배출량
 	long long worldPopulation; //전세계 인구수
@@ -44,7 +45,7 @@ public:
 	///#함수 역할 : 멤버변수들을 초기화시켜주는 생성자 함수 
 	///#매개변수 countiryNum : 생성할 국가 개수
 	///</summary>
-	World(int countryNum); 
+	World(); 
 
 	///<summary>
 	///#함수 역할 : 모든 국가의 인구수를 합산하는 함수

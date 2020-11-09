@@ -65,5 +65,7 @@ public:
 	///#함수 역할 : 예산 증감 함수
 	///</summary>
 	void renew_budget(long margin_budget);
+
+	void printStatus();
 	
 };

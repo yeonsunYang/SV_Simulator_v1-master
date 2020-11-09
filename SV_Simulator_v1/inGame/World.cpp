@@ -6,10 +6,9 @@ using namespace std;
 	///#함수 역할 : 멤버변수들을 초기화시켜주는 생성자 함수 
 	///#매개변수 countiryNum : 생성할 국가 개수
 	///</summary>
-World::World(int _countryNum)
+World::World()
 {
-	this->countryNum = _countryNum;
-	countries = new Country[countryNum];
+	countries = new Country[COUNTRY_NUM];
 	
 	//매개변수 : 국가코드 / 산업개수 / gdp / 세율 / 인구 수 / 탄소배출량 / 탄소흡수량
 	countries[KOR].init_Country(KOR,1,1619000000000, 0.3, 51640000, 616096687, 50);
@@ -30,7 +29,7 @@ World::World(int _countryNum)
 void World::total_PopulationOfCountries()
 {
 	this->worldPopulation = 0;
-	for (int i = 0; i < this->countryNum; i++)
+	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
 		this->worldPopulation += this->countries[i].population;
 	}
@@ -41,7 +40,7 @@ void World::total_PopulationOfCountries()
 void World::total_CarbonEmissionOfCountries()
 {
 	this->worldCarbonEmission = 0;
-	for (int i = 0; i < this->countryNum; i++)
+	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
 		this->worldCarbonEmission += this->countries[i].carbonEmission;
 	}
@@ -53,7 +52,7 @@ void World::total_CarbonEmissionOfCountries()
 void World::total_CarbonAbsorbingOfCountries()
 {
 	this->worldCarbonAbsorbing = 0;
-	for (int i = 0; i < this->countryNum; i++)
+	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
 		this->worldCarbonAbsorbing += this->countries[i].carbonAbsorbing;
 	}
@@ -82,7 +81,7 @@ void World::calculator_worldCarbonPPM()
 ///
 void World::printStatus()
 {
-	cout << "countryNum: " << countryNum << endl; // (+)추가변수 : 국가 개수
+	cout << "countryNum: " << COUNTRY_NUM << endl; // (+)추가변수 : 국가 개수
 	cout << "worldTemperature: " << worldTemperature << endl; //전세계 평균온도
 	cout << "worldCarbonEmission: " << worldCarbonEmission << endl; //전세계 탄소배출량
 	cout << "worldPopulation: " << worldPopulation << endl; //전세계 인구수

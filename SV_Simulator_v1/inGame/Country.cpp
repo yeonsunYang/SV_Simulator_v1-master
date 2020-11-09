@@ -1,5 +1,8 @@
+#include <iostream>
 #include "Country.h"
 #include "Industry.h"
+using namespace std;
+
 ///<summary>
 ///#함수 역할 : 초기화 함수
 ///</summary>
@@ -13,7 +16,7 @@ void Country::init_Country(CountryCode c, int _industryNum, long long _gdp, floa
 	this->name = c;
 	this->gdp = _gdp; //달러($)단위
 	this->taxRate = _taxRate;
-	calculator_budget(); //초기화 gdp대비 초기화 세율로 예산 책정
+	this->budget = 0; 
 	this->population = _population;
 	this->carbonEmission = _carbonEmission; //톤(t)단위
 	this->carbonAbsorbing = _carbonAbsorbing;
@@ -49,4 +52,16 @@ void Country::renew_carbonAbsorbing(long margin_carbonAbsorbing)
 void Country::renew_budget(long margin_budget)
 {
 	this->budget += margin_budget;
+}
+
+void Country::printStatus()
+{
+	cout << "CountryCode : " << name << endl;//나라
+	cout << "population : " << population << " 명"<<endl; //인구수
+	cout << "GDP : $ " << gdp << endl; //국내총생산
+	cout << "taxRate : " << taxRate <<" % "<<endl;// 세율
+	cout << "budget: $ " << budget << endl; //국가 예산
+	cout<<"carbonEmission : " << carbonEmission<<" (t)"<<endl; //탄소배출량
+	cout << "carbonAbsorbing : " << carbonAbsorbing << " (t)" << endl;//탄소흡수량
+
 }

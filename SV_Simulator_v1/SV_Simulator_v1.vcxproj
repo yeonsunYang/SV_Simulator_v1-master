@@ -167,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="inGame\Game.cpp" />
+    <ClCompile Include="inGame\World.cpp" />
     <ClCompile Include="interface\dllmain.cpp" />
     <ClCompile Include="interface\interface.cpp" />
     <ClCompile Include="interface\pch.cpp">

@@ -4,10 +4,12 @@ class Industry;
 
 class Country
 {
+	friend World;
 private:
 	std::string name; //국가명
 	long long budget; //국가 보유예산
 	long long gdp; //국가 gdp
+	long long population; //국가 인구수
 	long carbonEmission; //국가 탄소배출량
 	long carbonAbsorbing; //국가 탄소흡수량
 	Industry* industry; //국가 산업부문 포인터

@@ -10,7 +10,7 @@ World::World(int _countryNum)
 	countries = new Country[countryNum];
 	for (int i = 0; i < countryNum; i++)
 	{
-		this->countries[i]; //init정의할것임.
+		this->countries[i].init_Country((CountryCode)i,1); //임시로 산업 1개 넣었음. 
 	}
 
 	this->worldCarbonPPM = 411.29; //(2020년 9월 기준 농도)

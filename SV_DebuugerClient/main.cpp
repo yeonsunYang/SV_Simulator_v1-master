@@ -36,7 +36,9 @@ int main()
 	std::cout << (const char*)message << std::endl;
 	std::cout << "====================" << std::endl;
 
-	//xx
+	// 성범 수정
+	// 충돌?
+
 	SV_Interface_EndGame();
 	
 }

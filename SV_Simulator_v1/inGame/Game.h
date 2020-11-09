@@ -1,6 +1,7 @@
 #pragma once
-#include "CountryCode.h"
 #include "IndustryPolicyCode.h"
+#include "World.h"
+#include "Country.h"
 #include <iostream>
 
 
@@ -41,6 +42,7 @@ public:
 //여기서 부터 작성해주세요.******************************************
 
 private:
+	World* world;
 
 public:
 

@@ -1,4 +1,7 @@
 #include "Game.h"
+#include <iostream>
+
+using namespace std;
 
 
 //*******************************
@@ -24,15 +27,26 @@ Game::~Game() {
 void Game::InitializeGame() {
 	// 게임 초기화 관련 코드 작성, main thread만 호출 가능
 
+	world = new World(2);
+
 
 
 
 }
 
 void Game::Oneday() {
-	date += 1;
 
 	// 1일 단위로 진행되는 연산 코드 작성, sub thread에서 호출됨.
+	world->total_PopulationOfCountries();
+	world->total_CarbonAbsorbingOfCountries();
+	world->total_CarbonEmissionOfCountries();
+	world->calculator_worldCarbonPPM();
+	world->calculator_worldTemperature();
+
+	cout << date << "일 차" << endl;
+	world->printStatus();
+
+	date += 1;
 
 
 

@@ -37,6 +37,7 @@ int main()
 	std::cout << "====================" << std::endl;
 
 	// 성범 수정
+	// 충돌?
 
 	SV_Interface_EndGame();
 	

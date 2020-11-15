@@ -45,6 +45,9 @@
     <ClInclude Include="inGame\IndustryCode.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="inGame\IndustryPolicy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="interface\dllmain.cpp">
@@ -63,6 +66,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="inGame\Country.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="inGame\IndustryPolicy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="inGame\Industry.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

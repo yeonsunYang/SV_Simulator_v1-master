@@ -9,6 +9,7 @@ class Country
 {
 private:
 	friend class World;
+	friend class IndustryPolicy;
 
 	CountryCode countryCode; //국가코드
 	long long budget; //국가 보유예산

@@ -21,21 +21,21 @@ int main()
 		Sleep(500);
 		message = SV_Interface_GetData();
 
-		//std::cout << "====================" << std::endl;
-		//std::cout << "현재 Game Data (JSON)" << std::endl;
-		//std::cout << (const char*) message << std::endl;
-		//std::cout << "====================" << std::endl;
+		std::cout << "====================" << std::endl;
+		std::cout << "현재 Game Data (JSON)" << std::endl;
+		std::cout << (const char*) message << std::endl;
+	    std::cout << "====================" << std::endl;
 
-		//SV_Interface_EnforcePolicy(CountryCode::KOR, IndustryPolicyCode::CarbonTax);
+		//SV_Interface_EnforcePolicy(CountryCode::KOR, IndustryPolicyCode::Carbontax);
 		//SV_Interface_EnforcePolicy(CountryCode::USA, IndustryPolicyCode::CER);
 	}
 
 	message = SV_Interface_GetData();
 
-	//std::cout << "====================" << std::endl;
-	//std::cout << "최종 Game Data (JSON)" << std::endl;
-	//std::cout << (const char*)message << std::endl;
-	//std::cout << "====================" << std::endl;
+	std::cout << "====================" << std::endl;
+	std::cout << "최종 Game Data (JSON)" << std::endl;
+	std::cout << (const char*)message << std::endl;
+	std::cout << "====================" << std::endl;
 
 	// 성범 수정
 	// 충돌?

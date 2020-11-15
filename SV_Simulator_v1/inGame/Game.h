@@ -2,6 +2,8 @@
 #include "IndustryPolicyCode.h"
 #include "World.h"
 #include "Country.h"
+#include "Industry.h"
+#include "IndustryPolicy.h"
 #include <iostream>
 
 
@@ -43,6 +45,8 @@ public:
 
 private:
 	World* world;
+	
+	IndustryPolicy* carbontax; //Åº¼Ò¼¼ Á¤Ã¥
 
 public:
 

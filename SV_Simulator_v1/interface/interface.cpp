@@ -29,17 +29,7 @@ void SV_Run()
 	SV_DebugLog("SV_Run() - end", FuncType);
 }
 
-void SV_WriteJson()
-{
-	SV_DebugLog("SV_WriteJson", FuncType);
 
-	if (game == nullptr) {
-		SV_ErrorLog("SV_WriteJson(): nullptr에 접근시도를 합니다.");
-		return;
-	}
-	root["Date"] = game->Today();
-	jsonDocument = Json::writeString(wbuilder, root);
-}
 
 void SV_Interface_InitGame(unsigned int _cycle, int _debugMode)
 {
@@ -102,29 +92,6 @@ void SV_Interface_PlayGame()
 	std::thread Simulator(SV_Run);
 	Simulator.detach();
 	//****************************************
-}
-LPCTSTR SV_Interface_GetData()
-{
-	SV_DebugLog("SV_Interface_GetData()", FuncType);
-
-	SV_WriteJson();
-
-	return (LPCTSTR) jsonDocument.c_str();
-}
-
-
-LPCTSTR SV_Interface_EnforcePolicy(int _countryCode, int _policyCode)
-{
-	SV_DebugLog("SV_Interface_GetData()", FuncType);
-
-	if (!isInit)
-		return nullptr;
-	if (!thread_run)
-		return nullptr;
-
-	game->EnforcePolicy(_countryCode, _policyCode);
-
-	return SV_Interface_GetData();
 }
 
 

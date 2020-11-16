@@ -39,13 +39,10 @@ extern "C" SV_SIMULAYOR_API long long SV_GetWorldCarbonEmission();
 extern "C" SV_SIMULAYOR_API long long SV_GetWorldPopulation();
 extern "C" SV_SIMULAYOR_API float SV_GetWorldCarbonPPM();
 
-extern "C" SV_SIMULAYOR_API LPCTSTR SV_Interface_GetData();
-extern "C" SV_SIMULAYOR_API LPCTSTR SV_Interface_EnforcePolicy(int _countryCode, int _policyCode);
 //***************************************************************************************
 
 
 // only Dll Method (DLL 내부에서만 작동하는 함수)****
-void SV_WriteJson();
 void SV_Run();
 void SV_DebugLog(const char*, int);
 void SV_ErrorLog(const char*);
@@ -83,10 +80,6 @@ bool lDebugMode = false;
 bool fDebugMode = false;
 
 
-
-std::string jsonDocument;
-Json::Value root;
-Json::StreamWriterBuilder wbuilder;
 
 // game 포인터 선언
 Game* game = nullptr;

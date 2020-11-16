@@ -1,11 +1,9 @@
 #include "interface.h"
 #include <Windows.h>
 #include <iostream>
-#include <json/json.h>
 
 int main()
 {
-	LPCTSTR message;
 
 	// Debug Mode***************************
 	// 0: 모든 Debug log 출력 X

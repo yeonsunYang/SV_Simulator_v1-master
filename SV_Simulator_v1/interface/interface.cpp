@@ -180,3 +180,43 @@ void SV_ErrorLog(const char* _str)
 	cout << "***************************************************************" << endl;
 
 }
+
+
+long long SV_GetBudget(int _countryCode)
+{
+	return game->GetBudget(static_cast<CountryCode> (_countryCode));
+}
+long long SV_GetGDP(int _countryCode)
+{
+	return game->GetGDP(static_cast<CountryCode> (_countryCode));
+}
+long long SV_GetPopulation(int _countryCode)
+{
+	return game->GetPopulation(static_cast<CountryCode> (_countryCode));
+}
+long long SV_GetCarbonEmission(int _countryCode)
+{
+	return game->GetCarbonEmission(static_cast<CountryCode> (_countryCode));
+}
+
+float SV_GetTaxRate(int _countryCode)
+{
+	return game->GetTaxRate(static_cast<CountryCode> (_countryCode));
+}
+
+float SV_GetWorldTemperature()
+{
+	return game->GetWorldTemperature();
+}
+long long SV_GetWorldCarbonEmission()
+{
+	return game->GetWorldCarbonEmission();
+}
+long long SV_GetWorldPopulation()
+{
+	return game->GetWorldPopulation();
+}
+float SV_GetWorldCarbonPPM()
+{
+	return game->GetWorldCarbonPPM();
+}

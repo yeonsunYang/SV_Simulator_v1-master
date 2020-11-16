@@ -67,4 +67,6 @@ public:
 	///#함수 역할 : 디버깅 용 테스트 함수
 	///</summary>
 	void printStatus();
+
+	~World();
 };

@@ -20,6 +20,15 @@ private:
 	float taxRate; //국가 세율
 
 public:
+
+	long long GetbudGet() { return this->budget; }
+	long long GetGDP() { return this->gdp; }
+	long long GetPopulation() { return this->population; }
+	long long GetCarbonEmission() { return this->carbonEmission; }
+	float GettaxRate() { return this->taxRate; }
+
+
+
 /*#####################################
 1. 초기화 되어야 하는 부분
 	# 초기화 함수 (!= 생성자 함수)

@@ -20,6 +20,12 @@ private:
 	/// </summary>
 	void EndGame();
 
+	/// <summary>
+	/// #함수 기능: (_countryCode)에 해당하는 Country 객체의 포인터 반환.
+	/// </summary>
+	/// <param name="_countryCode:">반환받고자 하는 Country의 code</param>
+	/// <returns>Country 객체의 포인터</returns>
+	Country* GetCountry(CountryCode _countryCode);
 
 
 public:
@@ -37,7 +43,71 @@ public:
 	/// <param name="_policyCode"> 실행하려는 정책 코드</param>
 	void EnforcePolicy(int _countryCode, int _policyCode);
 
+
+	/// <summary>
+	/// 현재 날짜를 반환
+	/// </summary>
+	/// <returns></returns>
 	int Today() { return date; };
+
+	/// <summary>
+	/// #함수 기능: (_countryCode)에 해당하는 Country의 Budget 반환
+	/// </summary>
+	/// <param name="_countryCode">(_countryCode)</param>
+	/// <returns>Country의 Buget</returns>
+	long long GetBudget(CountryCode _countryCode);
+
+	/// <summary>
+	/// #함수 기능: (_countryCode)에 해당하는 Country의 GDP 반환
+	/// </summary>
+	/// <param name="_countryCode">(_countryCode)</param>
+	/// <returns>Country의 GDP</returns>
+	long long GetGDP(CountryCode _countryCode);
+
+	/// <summary>
+	/// #함수 기능: (_countryCode)에 해당하는 Country의 Population 반환
+	/// </summary>
+	/// <param name="_countryCode">(_countryCode)</param>
+	/// <returns>Country의 Population</returns>
+	long long GetPopulation(CountryCode _countryCode);
+
+	/// <summary>
+	/// #함수 기능: (_countryCode)에 해당하는 Country의 CarbonEmission 반환
+	/// </summary>
+	/// <param name="_countryCode">(_countryCode)</param>
+	/// <returns>Country의 CarbonEmission</returns>
+	long long GetCarbonEmission(CountryCode _countryCode);
+
+	/// <summary>
+	/// #함수 기능: (_countryCode)에 해당하는 Country의 TaxRate 반환
+	/// </summary>
+	/// <param name="_countryCode">(_countryCode)</param>
+	/// <returns>Country의 TaxRate</returns>
+	float GetTaxRate(CountryCode _countryCode);
+
+	/// <summary>
+	/// #함수 기능: worldTemperature 반환
+	/// </summary>
+	/// <returns>worldTemperature</returns>
+	float GetWorldTemperature();
+
+	/// <summary>
+	/// #함수 기능: worldCarbonEmission 반환
+	/// </summary>
+	/// <returns>worldCarbonEmission</returns>
+	long long GetWorldCarbonEmission();
+
+	/// <summary>
+	/// #함수 기능: worldPopulation 반환
+	/// </summary>
+	/// <returns>worldPopulation</returns>
+	long long GetWorldPopulation();
+
+	/// <summary>
+	/// #함수 기능: worldCarbonPPM
+	/// </summary>
+	/// <returns></returns>
+	float GetWorldCarbonPPM();
 
 	~Game();
 

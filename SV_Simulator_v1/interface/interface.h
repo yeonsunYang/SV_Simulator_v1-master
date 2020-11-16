@@ -27,6 +27,18 @@ extern "C" SV_SIMULAYOR_API void SV_Interface_PlayGame();
 /// </summary>
 /// <returns></returns>
 extern "C" SV_SIMULAYOR_API void SV_Interface_EndGame();
+
+extern "C" SV_SIMULAYOR_API long long SV_GetBudget(int _countryCode);
+extern "C" SV_SIMULAYOR_API long long SV_GetGDP(int _countryCode);
+extern "C" SV_SIMULAYOR_API long long SV_GetPopulation(int _countryCode);
+extern "C" SV_SIMULAYOR_API long long SV_GetCarbonEmission(int _countryCode);
+extern "C" SV_SIMULAYOR_API float SV_GetTaxRate(int _countryCode);
+
+extern "C" SV_SIMULAYOR_API float SV_GetWorldTemperature();
+extern "C" SV_SIMULAYOR_API long long SV_GetWorldCarbonEmission();
+extern "C" SV_SIMULAYOR_API long long SV_GetWorldPopulation();
+extern "C" SV_SIMULAYOR_API float SV_GetWorldCarbonPPM();
+
 extern "C" SV_SIMULAYOR_API LPCTSTR SV_Interface_GetData();
 extern "C" SV_SIMULAYOR_API LPCTSTR SV_Interface_EnforcePolicy(int _countryCode, int _policyCode);
 //***************************************************************************************

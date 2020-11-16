@@ -19,6 +19,10 @@ World::World()
 	total_CarbonEmissionOfCountries();//전세계 탄소배출량 합산값으로 초기화
 	total_PopulationOfCountries(); //전세계 인구수 합산값으로 초기화
 }
+World::~World()
+{
+	delete countries;
+}
 
 
 ///<summary>

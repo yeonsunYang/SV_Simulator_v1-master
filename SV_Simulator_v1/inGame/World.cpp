@@ -17,6 +17,7 @@ World::World()
 	this->worldCarbonPPM = 411.29; //(2020년 9월 기준 농도)
 	calculator_worldTemperature(); //초기화한 농도 기준으로 평균온도 적용
 	total_CarbonEmissionOfCountries();//전세계 탄소배출량 합산값으로 초기화
+	total_PopulationOfCountries(); //전세계 인구수 합산값으로 초기화
 }
 
 
@@ -29,6 +30,18 @@ void World::total_CarbonEmissionOfCountries()
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
 		this->worldCarbonEmission += this->countries[i].carbonEmission;
+	}
+}
+
+///<summary>
+///#함수 역할 : 모든 국가의 인구수를 합산하는 함수
+///</summary>
+void World::total_PopulationOfCountries()
+{
+	this->worldPopulation = 0;
+	for (int i = 0; i < COUNTRY_NUM; i++)
+	{
+		this->worldPopulation += this->countries[i].population;
 	}
 }
 

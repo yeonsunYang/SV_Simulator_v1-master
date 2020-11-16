@@ -39,18 +39,21 @@ void Game::Oneday() {
 
 	// 1일 단위로 진행되는 연산 코드 작성, sub thread에서 호출됨.
 
-	cout << date << "일 차" << endl;
-	world->printStatus();
-	cout << "\n######각 국의 정보######\n" << endl;
+	cout << "\n#######각 국의 정보#######\n" << endl;
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
 		world->countries[i].printStatus();
 		cout << endl;
+		if (i != COUNTRY_NUM - 1)
+		{
+			cout << "-----------------------------\n" << endl;
+		}
 	}
-
-	cout << "\n######전지구 정보######\n" << endl;
+	cout << "#########################" << endl;
+	cout << "\n#######전지구 정보#######\n" << endl;
 	world->printStatus();
 	cout << endl;
+	cout << "#########################" << endl;
 
 	date += 1;
 

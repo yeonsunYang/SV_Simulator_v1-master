@@ -31,6 +31,7 @@ public:
 		# 전세계 평균온도 계산 (탄소 농도 필요)
 		# 탄소농도계산 (탄소배출량과 흡수량 필요)
 		# 전세계 탄소배출량 합산
+		# 전세계 인구수 합산
 		
 	#########################################*/
 
@@ -44,6 +45,11 @@ public:
 	///#함수 역할 : 모든 국가의 탄소배출량을 합산하는 함수
 	///</summary>
 	void total_CarbonEmissionOfCountries();
+
+	///<summary>
+	///#함수 역할 : 모든 국가의 인구수를 합산하는 함수
+	///</summary>
+	void total_PopulationOfCountries();
 
 	///<summary>
 	///#함수 역할 : 세계 온도를 계산하는 함수

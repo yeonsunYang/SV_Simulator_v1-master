@@ -46,10 +46,10 @@ int main()
 	cout << endl;
 
 	cout << "===== world ====" << endl;
-	cout << " ¼¼°è Æò±Õ ¿Âµµ: " << SV_GetWorldTemperature() << endl;
-	cout << " ¼¼°è Åº¼Ò ¹èÃâ·®: " << SV_GetWorldCarbonEmission() << endl;
-	cout << " ¼¼°è Åº¼Ò ³óµµ: " << SV_GetWorldCarbonPPM() << endl;
-	cout << " ¼¼°è ÃÑ ÀÎ±¸¼ö: " << SV_GetWorldPopulation() << endl;
+	cout << "¼¼°è Æò±Õ ¿Âµµ: " << SV_GetWorldTemperature() << endl;
+	cout << "¼¼°è Åº¼Ò ¹èÃâ·®: " << SV_GetWorldCarbonEmission() << endl;
+	cout << "¼¼°è Åº¼Ò ³óµµ: " << SV_GetWorldCarbonPPM() << endl;
+	cout << "¼¼°è ÃÑ ÀÎ±¸¼ö: " << SV_GetWorldPopulation() << endl;
 
 
 
@@ -71,10 +71,10 @@ int main()
 	cout << endl;
 
 	cout << "===== world ====" << endl;
-	cout << " ¼¼°è Æò±Õ ¿Âµµ: " << SV_GetWorldTemperature() << endl;
-	cout << " ¼¼°è Åº¼Ò ¹èÃâ·®: " << SV_GetWorldCarbonEmission() << endl;
-	cout << " ¼¼°è Åº¼Ò ³óµµ: " << SV_GetWorldCarbonPPM() << endl;
-	cout << " ¼¼°è ÃÑ ÀÎ±¸¼ö: " << SV_GetWorldPopulation() << endl;
+	cout << "¼¼°è Æò±Õ ¿Âµµ: " << SV_GetWorldTemperature() << endl;
+	cout << "¼¼°è Åº¼Ò ¹èÃâ·®: " << SV_GetWorldCarbonEmission() << endl;
+	cout << "¼¼°è Åº¼Ò ³óµµ: " << SV_GetWorldCarbonPPM() << endl;
+	cout << "¼¼°è ÃÑ ÀÎ±¸¼ö: " << SV_GetWorldPopulation() << endl;
 
 
 	SV_Interface_EndGame();

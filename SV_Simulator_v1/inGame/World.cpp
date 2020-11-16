@@ -21,7 +21,7 @@ World::World()
 }
 World::~World()
 {
-	delete countries;
+	delete [] countries;
 }
 
 

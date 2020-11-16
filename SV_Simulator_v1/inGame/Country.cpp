@@ -20,6 +20,10 @@ void Country::init_Country(CountryCode _code, long long _gdp, float _taxRate, lo
 	this->population = _population;
 	this->carbonEmission = _carbonEmission; //톤(t)단위
 }
+Country::~Country()
+{
+	delete[] industries;
+}
 
 ///<summary>
 ///#함수 역할 : 산업발생 국가 총 gdp 누적

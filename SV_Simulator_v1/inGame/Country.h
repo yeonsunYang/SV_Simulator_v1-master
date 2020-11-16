@@ -26,6 +26,7 @@ public:
 	long long GetPopulation() { return this->population; }
 	long long GetCarbonEmission() { return this->carbonEmission; }
 	float GettaxRate() { return this->taxRate; }
+	~Country();
 
 
 

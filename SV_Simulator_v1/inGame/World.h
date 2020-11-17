@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #define COUNTRY_NUM 2
 
 class Country;

@@ -3,7 +3,6 @@
 #include "Country.h"
 #include "Industry.h"
 #include "IndustryPolicyCode.h"
-//#include "IndustryCode.h"
 #include "CountryCode.h"
 
 class IndustryPolicy

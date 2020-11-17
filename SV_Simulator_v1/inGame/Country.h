@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include "CountryCode.h"
 #include "IndustryCode.h"
 #define INDUSTRY_NUM 1

@@ -9,14 +9,9 @@
 
 // 여기에 미리 컴파일하려는 헤더 추가
 #include "framework.h"
-#include <json/json.h>
 #include <thread>
-#include <Windows.h>
-#include <string>
-#include <tchar.h>
-#include <fstream>
-#include <iostream>
-#include <cmath>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 

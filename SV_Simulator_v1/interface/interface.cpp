@@ -2,181 +2,212 @@
 #include "interface.h"
 
 
-void SV_Run()
+int SV_Sim::Run()
 {
-	SV_DebugLog("SV_Run() - start", FuncType);
+	if (SV_Sim::simState != SimState::InitThread)
+		return static_cast<int> (SV_Sim::simState);
 
-	thread_run = true;
+	time_t delta, start, end;
 
-	while (!thread_exit)
+	SV_Sim::DebugLog("SV_Run() - start", LogType::Func);
+
+
+	while (SV_Sim::simState != SimState::WaitEnd)
 	{
-		if (oneDayCycle < MINCYCLE) {
-			SV_ErrorLog("SV_Run(): oneDayCycle의 크기가 MINCYCLE 보다 작습니다.");
-			break;
-		}
+		//Pause() 체크
+		if (SV_Sim::simState == SimState::Pause)
+			SV_Sim::Pause();
 
-		Sleep(oneDayCycle);
-
-		if (game == nullptr) {
-			SV_ErrorLog("SV_Run(): game 인스턴스의 nullptr 값을 참조 시도를 하여, Thread를 종료합니다.");
+		start = clock();
+		// work() 호출
+		SV_Sim::Work();
+		if(SV_Sim::simState == SimState::WaitEnd)
 			break;
-		}
-		game->Oneday();
+		end = clock();
+		delta = end - start;
+
+		// 연산이 매우 길어져서 oneDayCycle보다 길어질 경우.
+		if (delta > oneDayCycle)
+			delta = oneDayCycle;
+
+		//Pause() 체크
+		if (SV_Sim::simState == SimState::Pause)
+			SV_Sim::Pause();
+
+		// Wait() 호출
+		SV_Sim::Wait(SV_Sim::oneDayCycle - delta);
+
+
+		if (SV_Sim::simState == SimState::WaitEnd)
+			break;
 	}
 
-	thread_run = false;
+	SV_Sim::simState = SimState::EndThread;
 
-	SV_DebugLog("SV_Run() - end", FuncType);
+	SV_Sim::DebugLog("SV_Run() - end", LogType::Func);
 }
 
-void SV_WriteJson()
+int SV_Sim::Work()
 {
-	SV_DebugLog("SV_WriteJson", FuncType);
-
-	if (game == nullptr) {
-		SV_ErrorLog("SV_WriteJson(): nullptr에 접근시도를 합니다.");
-		return;
+	if (SV_Sim::simState == SimState::WaitEnd) {
+		return 0;
 	}
-	root["Date"] = game->Today();
-	jsonDocument = Json::writeString(wbuilder, root);
+	game->Oneday();
+
+	return 0;
+}
+int SV_Sim::Wait(time_t _waitTime)
+{
+	while (_waitTime > 100)
+	{
+		if (SV_Sim::simState == SimState::WaitEnd) {
+			return static_cast<int> (SV_Sim::simState);
+		}
+
+		if (SV_Sim::simState == SimState::Pause)
+			SV_Sim::Pause();
+
+		Sleep(100);
+		_waitTime -= 100;
+	}
+
+	Sleep(_waitTime);
+
+	if (SV_Sim::simState == SimState::WaitEnd) {
+		return static_cast<int> (SV_Sim::simState);
+	}
+
+	if (SV_Sim::simState == SimState::Pause)
+		SV_Sim::Pause();
+
+	return 0;
+
+}
+int SV_Sim::Pause()
+{
+	while (simState == SimState::Pause)
+	{
+		Sleep(50);
+	}
 }
 
-void SV_Interface_InitGame(unsigned int _cycle, int _debugMode)
+
+int Inter_InitGame(long long _cycle, int _debugMode)
 {
+	SV_Sim::DebugLog("SV_Interface_PlayGame()", LogType::Func);
 
-	if (isInit)
-		return;
-
-	if (thread_run) {
-		SV_ErrorLog("thread가 작동중일때 InitGame()이 호출되었습니다.");
-		return;
-	}
+	if (SV_Sim::simState != SimState::Disable)
+		return static_cast<int> (SV_Sim::simState);
 
 	//**************************
 	//game 생성 및 초기화
 
-	if(game == nullptr)
-		game = new Game();
+	if(SV_Sim::game == nullptr)
+		SV_Sim::game = new Game();
 
 	//**************************
 
-	switch (_debugMode) {
-	case 2:
-		fDebugMode = true;
-		lDebugMode = true;
-		break;
 
-	case 1:
-		fDebugMode = false;
-		lDebugMode = true;
-		break;
+	if (_cycle < MINCYCLE)
+		SV_Sim::oneDayCycle = MINCYCLE;
+	else if (_cycle > MAXCYCLE)
+		SV_Sim::oneDayCycle = MAXCYCLE;
+	else
+		SV_Sim::oneDayCycle = static_cast<time_t>(_cycle);
 
-	default:
-		fDebugMode = false;
-		lDebugMode = false;
-		break;
-	}
+	SV_Sim::debugMode = _debugMode;
 
-	
-	oneDayCycle = max(MINCYCLE, _cycle);
+	SV_Sim::simState = SimState::WaitPlay;
 
-	thread_exit = false;
-	thread_run = false;
-	isInit = true;
+	return 0;
 }
 
-void SV_Interface_PlayGame()
+int Inter_PlayGame()
 {
-	SV_DebugLog("SV_Interface_PlayGame()", FuncType);
+	SV_Sim::DebugLog("SV_Interface_PlayGame()", LogType::Func);
 
-	if (!isInit)
-		return;
-
-	if (thread_run)
-		return;
+	if (SV_Sim::simState != SimState::WaitPlay)
+		return static_cast<int> (SV_Sim::simState);
 
 
-	thread_exit = false;
+	SV_Sim::simState = SimState::InitThread;
 
 	//Thread 생성 및 detach********************
-	std::thread Simulator(SV_Run);
+	std::thread Simulator(SV_Sim::Run);
 	Simulator.detach();
 	//****************************************
-}
-LPCTSTR SV_Interface_GetData()
-{
-	SV_DebugLog("SV_Interface_GetData()", FuncType);
 
-	SV_WriteJson();
-
-	return (LPCTSTR) jsonDocument.c_str();
+	return 0;
 }
 
-
-LPCTSTR SV_Interface_EnforcePolicy(int _countryCode, int _policyCode)
+int Inter_Pause()
 {
-	SV_DebugLog("SV_Interface_GetData()", FuncType);
+	if(SV_Sim::simState == SimState::Work)
+		SV_Sim::simState = SimState::Pause;
 
-	if (!isInit)
-		return nullptr;
-	if (!thread_run)
-		return nullptr;
+	return 0;
+}
 
-	game->EnforcePolicy(_countryCode, _policyCode);
+int Inter_Resume()
+{
+	if (SV_Sim::simState == SimState::Pause)
+		SV_Sim::simState = SimState::Work;
 
-	return SV_Interface_GetData();
+	return 0;
 }
 
 
-void SV_Interface_EndGame()
+int Inter_EndGame()
 {
-	SV_DebugLog("SV_Interface_EndGame()", FuncType);
+	SV_Sim::DebugLog("SV_Interface_EndGame()", LogType::Func);
 
-	thread_exit = true;
-	isInit = false;
-	lDebugMode = false;
-	fDebugMode = false;
+
+	time_t start = clock();
+
+	SV_Sim::simState = SimState::WaitEnd;
 
 	//**************************
-	//game 해제
-	// thread가 작동중이면 0.1ms씩 30회 대기. 최대 3초 대기
+	// game 해제
+	// thread가 작동 중 이면 50ms씩 최대 3초 대기
+	while (SV_Sim::simState != SimState::EndThread)
+	{
+		Sleep(50);
 
-	for (int i = 0; i < 30; i++) {
-
-		if (thread_run)
-			Sleep(100);
-		else {
-			if (game == nullptr) {
-				SV_ErrorLog("SV_Interface_EndGame(): nullptr을 해제하려는 시도를 합니다.");
-				return;
-			}
-			cout <<(i * 100) << "ms 대기 후 종료 되었습니다." << endl;
-			delete game;
-			game = nullptr;
-			return;
+		if (clock() - start > 3000) {
+			SV_Sim::ErrorLog("Inter_EndGame(): Thread가 종료되지 않아서 game포인터를 해제할 수 없습니다.");
+			return -1;
 		}
 	}
 
-	SV_ErrorLog("SV_Interface_EndGame(): Thread가 종료되지 않아서 game포인터를 해제할 수 없습니다.");
+	if (SV_Sim::game == nullptr) {
+		SV_Sim::ErrorLog("Inter_EndGame(): nullptr을 해제하려는 시도를 합니다.");
+		return -2;
+	}
 
+	delete SV_Sim::game;
+	SV_Sim::game = nullptr;
+
+	SV_Sim::simState = SimState::Disable;
+
+	return 0;
 	//**************************
 
 }
 
-void SV_DebugLog(const char* _str, int _type)
+void SV_Sim::DebugLog(const char* _str, LogType _type)
 {
-	if (_type == FuncType && fDebugMode)
+	// debugMode 0: log 출력 안함.
+	// debugMode 1: msg log만 출력.
+	// debugMode 2: msg, func log 둘다 출력.
+	if (SV_Sim::debugMode > static_cast<int> (_type));
 		cout << "SV_LOG: " << _str << endl;
 
-	else if (_type == LogType && lDebugMode)
-		cout << "SV_LOG: " << _str << endl;
 }
 
-void SV_ErrorLog(const char* _str)
+void SV_Sim::ErrorLog(const char* _str)
 {
 	cout << "***************************************************************" << endl;
 	cout << "예기치 못한 상황입니다. 담당자에게 보고해주세요." << endl;
 	cout << "SV_ERO: "<<_str << endl;
 	cout << "***************************************************************" << endl;
-
 }

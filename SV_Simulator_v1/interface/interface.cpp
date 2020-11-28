@@ -4,12 +4,15 @@
 
 int SV_Sim::Run()
 {
+	SV_Sim::DebugLog("Run()", LogType::Func);
+
 	if (SV_Sim::simState != SimState::InitThread)
 		return static_cast<int> (SV_Sim::simState);
 
 	time_t delta, start, end;
 
-	SV_Sim::DebugLog("SV_Run() - start", LogType::Func);
+
+	SV_Sim::simState = SimState::Work;
 
 
 	while (SV_Sim::simState != SimState::WaitEnd)
@@ -44,20 +47,32 @@ int SV_Sim::Run()
 
 	SV_Sim::simState = SimState::EndThread;
 
-	SV_Sim::DebugLog("SV_Run() - end", LogType::Func);
+	SV_Sim::DebugLog("Run() - end", LogType::Func);
+
+	return 0;
 }
 
 int SV_Sim::Work()
 {
+	SV_Sim::DebugLog("Work()", LogType::Func);
+
 	if (SV_Sim::simState == SimState::WaitEnd) {
 		return 0;
 	}
 	game->Oneday();
 
+	if (game->Today() % 30 == 0)
+		game->OneMonth();
+
+	if (game->Today() % 360 == 0)
+		game->OneYear();
+
 	return 0;
 }
 int SV_Sim::Wait(time_t _waitTime)
 {
+	SV_Sim::DebugLog("Wait()", LogType::Func);
+
 	while (_waitTime > 100)
 	{
 		if (SV_Sim::simState == SimState::WaitEnd) {
@@ -71,7 +86,7 @@ int SV_Sim::Wait(time_t _waitTime)
 		_waitTime -= 100;
 	}
 
-	Sleep(_waitTime);
+	Sleep(static_cast<DWORD> (_waitTime));
 
 	if (SV_Sim::simState == SimState::WaitEnd) {
 		return static_cast<int> (SV_Sim::simState);
@@ -85,16 +100,20 @@ int SV_Sim::Wait(time_t _waitTime)
 }
 int SV_Sim::Pause()
 {
+	SV_Sim::DebugLog("Pause()", LogType::Func);
+
 	while (simState == SimState::Pause)
 	{
 		Sleep(50);
 	}
+
+	return 0;
 }
 
 
 int Inter_InitGame(long long _cycle, int _debugMode)
 {
-	SV_Sim::DebugLog("SV_Interface_PlayGame()", LogType::Func);
+	SV_Sim::DebugLog("Inter_InitGame()", LogType::Func);
 
 	if (SV_Sim::simState != SimState::Disable)
 		return static_cast<int> (SV_Sim::simState);
@@ -124,7 +143,7 @@ int Inter_InitGame(long long _cycle, int _debugMode)
 
 int Inter_PlayGame()
 {
-	SV_Sim::DebugLog("SV_Interface_PlayGame()", LogType::Func);
+	SV_Sim::DebugLog("Inter_PlayGame()", LogType::Func);
 
 	if (SV_Sim::simState != SimState::WaitPlay)
 		return static_cast<int> (SV_Sim::simState);
@@ -142,6 +161,8 @@ int Inter_PlayGame()
 
 int Inter_Pause()
 {
+	SV_Sim::DebugLog("Inter_Pause()", LogType::Func);
+
 	if(SV_Sim::simState == SimState::Work)
 		SV_Sim::simState = SimState::Pause;
 
@@ -150,6 +171,8 @@ int Inter_Pause()
 
 int Inter_Resume()
 {
+	SV_Sim::DebugLog("Inter_Resume()", LogType::Func);
+
 	if (SV_Sim::simState == SimState::Pause)
 		SV_Sim::simState = SimState::Work;
 
@@ -159,7 +182,7 @@ int Inter_Resume()
 
 int Inter_EndGame()
 {
-	SV_Sim::DebugLog("SV_Interface_EndGame()", LogType::Func);
+	SV_Sim::DebugLog("Inter_EndGame()", LogType::Func);
 
 
 	time_t start = clock();
@@ -199,7 +222,7 @@ void SV_Sim::DebugLog(const char* _str, LogType _type)
 	// debugMode 0: log 출력 안함.
 	// debugMode 1: msg log만 출력.
 	// debugMode 2: msg, func log 둘다 출력.
-	if (SV_Sim::debugMode > static_cast<int> (_type));
+	if (SV_Sim::debugMode > static_cast<int> (_type))
 		cout << "SV_LOG: " << _str << endl;
 
 }
@@ -211,3 +234,47 @@ void SV_Sim::ErrorLog(const char* _str)
 	cout << "SV_ERO: "<<_str << endl;
 	cout << "***************************************************************" << endl;
 }
+
+int Inter_Today()
+{
+	return SV_Sim::game->Today();
+}
+long long Inter_GetBudget(int _countryCode)
+{
+	return SV_Sim::game->GetBudget(static_cast<CountryCode> (_countryCode));
+}
+long long Inter_GetGDP(int _countryCode)
+{
+	return SV_Sim::game->GetGDP(static_cast<CountryCode> (_countryCode));
+}
+long long Inter_GetPopulation(int _countryCode)
+{
+	return SV_Sim::game->GetPopulation(static_cast<CountryCode> (_countryCode));
+}
+long long Inter_GetCarbonEmission(int _countryCode)
+{
+	return SV_Sim::game->GetCarbonEmission(static_cast<CountryCode> (_countryCode));
+}
+
+float Inter_GetTaxRate(int _countryCode)
+{
+	return SV_Sim::game->GetTaxRate(static_cast<CountryCode> (_countryCode));
+}
+
+float Inter_GetWorldTemperature()
+{
+	return SV_Sim::game->GetWorldTemperature();
+}
+long long Inter_GetWorldCarbonEmission()
+{
+	return SV_Sim::game->GetWorldCarbonEmission();
+}
+long long Inter_GetWorldPopulation()
+{
+	return SV_Sim::game->GetWorldPopulation();
+}
+float Inter_GetWorldCarbonPPM()
+{
+	return SV_Sim::game->GetWorldCarbonPPM();
+}
+

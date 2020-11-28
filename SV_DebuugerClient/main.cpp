@@ -1,43 +1,45 @@
 #include "interface.h"
-#include <Windows.h>
 #include <iostream>
-#include <json/json.h>
 
 int main()
 {
-	LPCTSTR message;
 
 	// Debug Mode***************************
 	// 0: 모든 Debug log 출력 X
 	// 1: msg log 출력 o , function log 출력 x
 	// 2: msg log 출력 o , function log 출력 o
-	SV_Interface_InitGame(500, 1);
+	Inter_InitGame(500, 2);
 
-	SV_Interface_PlayGame();
+	Inter_PlayGame();
 
 
 	for (int i = 0; i < 5; i++)
 	{
 		Sleep(500);
-		message = SV_Interface_GetData();
+		cout << "today: " << Inter_Today() << endl;
+		
 
-		std::cout << "====================" << std::endl;
-		std::cout << "현재 Game Data (JSON)" << std::endl;
-		std::cout << (const char*) message << std::endl;
-	    std::cout << "====================" << std::endl;
+	}
+	Inter_Pause();
 
-		//SV_Interface_EnforcePolicy(CountryCode::KOR, IndustryPolicyCode::Carbontax);
-		//SV_Interface_EnforcePolicy(CountryCode::USA, IndustryPolicyCode::CER);
+	for (int i = 0; i < 10; i++)
+	{
+		Sleep(300);
+
+		std::cout <<"today: " << Inter_Today() << " < pause >" << endl;
+	}
+	Inter_Resume();
+
+
+	for (int i = 0; i < 5; i++)
+	{
+		Sleep(500);
+		cout << "today: " << Inter_Today() << endl;
+
 	}
 
-	message = SV_Interface_GetData();
+	Inter_Pause();
 
-	//std::cout << "====================" << std::endl;
-	//std::cout << "최종 Game Data (JSON)" << std::endl;
-	//std::cout << (const char*)message << std::endl;
-	//std::cout << "====================" << std::endl;
-
-
-	SV_Interface_EndGame();
+	Inter_EndGame();
 	
 }

@@ -56,17 +56,61 @@ extern "C" {
 	SV_SIMULATOR_API int Inter_NormalSpeed();
 
 	
+	//******************************** world class data
+	// 현재 날짜 반환
 	SV_SIMULATOR_API int Inter_Today();
-	SV_SIMULATOR_API long long Inter_GetBudget(int _countryCode);
-	SV_SIMULATOR_API long long Inter_GetGDP(int _countryCode);
-	SV_SIMULATOR_API long long Inter_GetPopulation(int _countryCode);
-	SV_SIMULATOR_API long long Inter_GetCarbonEmission(int _countryCode);
-	SV_SIMULATOR_API float Inter_GetTaxRate(int _countryCode);
-	
+	// 전세계 평균 온도 반환
 	SV_SIMULATOR_API float Inter_GetWorldTemperature();
-	SV_SIMULATOR_API long long Inter_GetWorldCarbonEmission();
-	SV_SIMULATOR_API long long Inter_GetWorldPopulation();
+	// 전세계 평균탄소농도 반환
 	SV_SIMULATOR_API float Inter_GetWorldCarbonPPM();
+	// 전세계 탄소배출량(일 단위) 반환
+	SV_SIMULATOR_API long long Inter_GetWorldCarboneEmission();
+	// 전세계 탄소 흡수량(일 단위) 반환
+	SV_SIMULATOR_API long long Inter_GetWorldCarbonAbsorbed();
+	// 전세계 산림 면적 반환
+	SV_SIMULATOR_API long long Inter_GetWorldForest();
+	// 전세계 인구 수 반환
+	SV_SIMULATOR_API long long Inter_GetWorldPopulation();
+	// 전세계 사만자 수 반환
+	SV_SIMULATOR_API long long Inter_GetWorldDead();
+	// 전세계 기후난민 수 반환
+	SV_SIMULATOR_API long long Inter_GetWorldRefugees();
+	// 전세계 작물생산량 (단위는 '몇 인분')
+	SV_SIMULATOR_API long long Inter_GetWorldFood();
+	// 재난 발생확률
+	SV_SIMULATOR_API float Inter_GetDisasterProbability();
+	// 작물생산량 임계점 (초기화 필요)
+	SV_SIMULATOR_API long long Inter_GetFoodCriticalPoint();
+	// 평균온도 임계점 (초기화 필요)
+	SV_SIMULATOR_API float Inter_GetTempCriticalPoint();
+
+	//********************************************************
+
+	//******************************** country class data
+	// 해당 국가의 예산 반환
+	SV_SIMULATOR_API long long Inter_GetBudget(int _countryCode);
+	// 해당 국가의 GDP 반환
+	SV_SIMULATOR_API long long Inter_GetGDP(int _countryCode);
+	// 해당 국가의 총 인구수 반환
+	SV_SIMULATOR_API long long Inter_GetPopulation(int _countryCode);
+	// 해당 국가의 탄소배출량 반환
+	SV_SIMULATOR_API long long Inter_GetCarbonEmission(int _countryCode);
+	// 해당 국가의 산림면적 반환
+	SV_SIMULATOR_API int Inter_GetCountryForest();
+	// 해당 국가의 세율 반환
+	SV_SIMULATOR_API float Inter_GetTaxRate(int _countryCode);
+	// 해당 국가에서의 플레이어 지지도 반환
+	SV_SIMULATOR_API float Inter_GetSupportRate(int _countryCode);
+	// 해당 국가에서의 기후에 대한 인식율 반환
+	SV_SIMULATOR_API float Inter_GetRecognitionRate(int _countryCode);
+	// 해당 국가의 기후난민 비율 반환
+	SV_SIMULATOR_API float Inter_GetRefugeeRate(int _countryCode);
+	// 해당 국가의 국가 사망자 비율 반환
+	SV_SIMULATOR_API float Inter_GetDeadRate(int _countryCode);
+	// 해당 국가의 작물 생산량 반환
+	SV_SIMULATOR_API long long Inter_GetFood(int _countryCode);
+	// 해당 국가의 벌목률 반환
+	SV_SIMULATOR_API float Inter_GetRemoveForest(int _countryCode);
 	
 	
 	//SV_SIMULATOR_API int Inter_EnforcePolicy(int _countryCode, int _policyCode);

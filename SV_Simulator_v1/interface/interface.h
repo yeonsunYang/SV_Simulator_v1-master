@@ -3,7 +3,7 @@
 #include "pch.h"
 
 #define MINCYCLE 500
-#define MAXCYCLE 5000
+#define MAXCYCLE 100000
 
 #define SV_SIMULATOR_API __declspec(dllexport)
 
@@ -14,6 +14,9 @@ enum class SimState {
 enum class LogType {
 	Msg, Func
 };
+enum class PlaySpeed {
+	Normal = 1, Double = 2, Quad = 4, Octo = 8 
+};
 // Interface Method 선언****************************************************************
 
 extern "C" {
@@ -21,7 +24,7 @@ extern "C" {
 	/// 게임 시작 직후 반드시 호출. 게임 중 단 한번만 호출 가능. game 생성 초기화.
 	/// state를 WaitPlay로 설정
 	/// </summary>
-	/// <param name="_cycle"> oneday의 호출 주기 (ms 단위), 500이상 ~ 5000 이하 값만 유효함. </param>
+	/// <param name="_cycle"> oneday의 호출 주기 (ms 단위), 500이상 ~ 100,000 이하 값만 유효함. </param>
 	/// <param name="_debugMode">Debug 모드 (0 ~ 2) </param>
 	/// <returns></returns>
 	SV_SIMULATOR_API int Inter_InitGame(long long _cycle, int _debugMode);
@@ -47,6 +50,11 @@ extern "C" {
 	/// </summary>
 	/// <returns></returns>
 	SV_SIMULATOR_API int Inter_Resume();
+	SV_SIMULATOR_API int Inter_DoubleSpeed();
+	SV_SIMULATOR_API int Inter_QuadSpeed();
+	SV_SIMULATOR_API int Inter_OctoSpeed();
+	SV_SIMULATOR_API int Inter_NormalSpeed();
+
 	
 	SV_SIMULATOR_API int Inter_Today();
 	SV_SIMULATOR_API long long Inter_GetBudget(int _countryCode);
@@ -63,7 +71,6 @@ extern "C" {
 	
 	//SV_SIMULATOR_API int Inter_EnforcePolicy(int _countryCode, int _policyCode);
 	//***************************************************************************************
-
 }
 
 // only Dll Method (DLL 내부에서만 작동하는 함수)****
@@ -75,13 +82,12 @@ namespace SV_Sim {
 	void DebugLog(const char*, LogType);
 	void ErrorLog(const char*);
 
-
 	Game* game = nullptr;
-
 	// oneDay의 호출 주기 ms 단위, MINCYCLE 이상의 값만 입력됨.
 	static time_t oneDayCycle;
 	static SimState simState = SimState::Disable;
 	int debugMode;
+	PlaySpeed playSpeed;
 }
 //************************************************
 

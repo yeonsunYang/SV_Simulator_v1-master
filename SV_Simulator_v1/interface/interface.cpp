@@ -9,7 +9,7 @@ int SV_Sim::Run()
 	if (SV_Sim::simState != SimState::InitThread)
 		return static_cast<int> (SV_Sim::simState);
 
-	time_t delta, start, end;
+	time_t delta, start, end, waitTime;
 
 
 	SV_Sim::simState = SimState::Work;
@@ -29,16 +29,20 @@ int SV_Sim::Run()
 		end = clock();
 		delta = end - start;
 
-		// 연산이 매우 길어져서 oneDayCycle보다 길어질 경우.
-		if (delta > oneDayCycle)
-			delta = oneDayCycle;
+
+		waitTime = static_cast<time_t> (oneDayCycle / static_cast<long long> (SV_Sim::playSpeed));
+
+		// 연산이 매우 길어져서 연산에 소요된 시간이 waitTime보다 길어질 경우.
+
+		if (delta > waitTime)
+			delta = waitTime;
 
 		//Pause() 체크
 		if (SV_Sim::simState == SimState::Pause)
 			SV_Sim::Pause();
 
 		// Wait() 호출
-		SV_Sim::Wait(SV_Sim::oneDayCycle - delta);
+		SV_Sim::Wait(waitTime - delta);
 
 
 		if (SV_Sim::simState == SimState::WaitEnd)
@@ -51,7 +55,6 @@ int SV_Sim::Run()
 
 	return 0;
 }
-
 int SV_Sim::Work()
 {
 	SV_Sim::DebugLog("Work()", LogType::Func);
@@ -73,7 +76,7 @@ int SV_Sim::Wait(time_t _waitTime)
 {
 	SV_Sim::DebugLog("Wait()", LogType::Func);
 
-	while (_waitTime > 100)
+	while (_waitTime > 50)
 	{
 		if (SV_Sim::simState == SimState::WaitEnd) {
 			return static_cast<int> (SV_Sim::simState);
@@ -82,8 +85,8 @@ int SV_Sim::Wait(time_t _waitTime)
 		if (SV_Sim::simState == SimState::Pause)
 			SV_Sim::Pause();
 
-		Sleep(100);
-		_waitTime -= 100;
+		Sleep(50);
+		_waitTime -= 50;
 	}
 
 	Sleep(static_cast<DWORD> (_waitTime));
@@ -109,7 +112,6 @@ int SV_Sim::Pause()
 
 	return 0;
 }
-
 
 int Inter_InitGame(long long _cycle, int _debugMode)
 {
@@ -137,10 +139,10 @@ int Inter_InitGame(long long _cycle, int _debugMode)
 	SV_Sim::debugMode = _debugMode;
 
 	SV_Sim::simState = SimState::WaitPlay;
+	SV_Sim::playSpeed = PlaySpeed::Normal;
 
 	return 0;
 }
-
 int Inter_PlayGame()
 {
 	SV_Sim::DebugLog("Inter_PlayGame()", LogType::Func);
@@ -158,7 +160,6 @@ int Inter_PlayGame()
 
 	return 0;
 }
-
 int Inter_Pause()
 {
 	SV_Sim::DebugLog("Inter_Pause()", LogType::Func);
@@ -168,7 +169,6 @@ int Inter_Pause()
 
 	return 0;
 }
-
 int Inter_Resume()
 {
 	SV_Sim::DebugLog("Inter_Resume()", LogType::Func);
@@ -178,8 +178,6 @@ int Inter_Resume()
 
 	return 0;
 }
-
-
 int Inter_EndGame()
 {
 	SV_Sim::DebugLog("Inter_EndGame()", LogType::Func);
@@ -216,6 +214,34 @@ int Inter_EndGame()
 	//**************************
 
 }
+int Inter_DoubleSpeed()
+{
+	SV_Sim::DebugLog("Inter_DoubleSpeed()", LogType::Func);
+
+	SV_Sim::playSpeed = PlaySpeed::Double;
+	return 0;
+}
+int Inter_QuadSpeed()
+{
+	SV_Sim::DebugLog("Inter_QuadSpeed()", LogType::Func);
+
+	SV_Sim::playSpeed = PlaySpeed::Quad;
+	return 0;
+}
+int Inter_OctoSpeed()
+{
+	SV_Sim::DebugLog("Inter_OctoSpeed()", LogType::Func);
+
+	SV_Sim::playSpeed = PlaySpeed::Octo;
+	return 0;
+}
+int Inter_NormalSpeed()
+{
+	SV_Sim::DebugLog("Inter_NormalSpeed()", LogType::Func);
+
+	SV_Sim::playSpeed = PlaySpeed::Normal;
+	return 0;
+}
 
 void SV_Sim::DebugLog(const char* _str, LogType _type)
 {
@@ -226,7 +252,6 @@ void SV_Sim::DebugLog(const char* _str, LogType _type)
 		cout << "SV_LOG: " << _str << endl;
 
 }
-
 void SV_Sim::ErrorLog(const char* _str)
 {
 	cout << "***************************************************************" << endl;
@@ -255,12 +280,10 @@ long long Inter_GetCarbonEmission(int _countryCode)
 {
 	return SV_Sim::game->GetCarbonEmission(static_cast<CountryCode> (_countryCode));
 }
-
 float Inter_GetTaxRate(int _countryCode)
 {
 	return SV_Sim::game->GetTaxRate(static_cast<CountryCode> (_countryCode));
 }
-
 float Inter_GetWorldTemperature()
 {
 	return SV_Sim::game->GetWorldTemperature();

@@ -31,6 +31,7 @@ World::~World()
 {
 	for (int i = 0; i < COUNTRY_NUM; i++)
 		delete countries[i];
+
 }
 
 

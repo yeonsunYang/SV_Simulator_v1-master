@@ -1,43 +1,63 @@
 #include "interface.h"
-#include <Windows.h>
 #include <iostream>
-#include <json/json.h>
 
 int main()
 {
-	LPCTSTR message;
-
 	// Debug Mode***************************
 	// 0: 모든 Debug log 출력 X
-	// 1: Debug log 출력 o , function log 출력 x
-	// 2: Debug log 출력 o , function log 출력 o
-	SV_Interface_InitGame(500, 1);
+	// 1: msg log 출력 o , function log 출력 x
+	// 2: msg log 출력 o , function log 출력 o
+	Inter_InitGame(8000, 2);
 
-	SV_Interface_PlayGame();
+	Inter_PlayGame();
 
+	int i;
 
-	for (int i = 0; i < 5; i++)
+	Inter_DoubleSpeed();
+
+	cout << endl;
+	cout << "=======2배속=====" << endl;
+	cout << "4초당 1회 연산" << endl;
+	for (i = 1; i <= 20; i++)
 	{
-		Sleep(500);
-		message = SV_Interface_GetData();
+		Sleep(1000);
+		cout << i << " 초 경과 > ";
+		cout << "today: " << Inter_Today() << endl;
+	}
+	Inter_Pause();
 
-		std::cout << "====================" << std::endl;
-		std::cout << "현재 Game Data (JSON)" << std::endl;
-		std::cout << (const char*) message << std::endl;
-	    std::cout << "====================" << std::endl;
+	for (; i <= 25; i++)
+	{
+		Sleep(1000);
+		cout << i << " 초 경과 > ";
+		std::cout <<"today: " << Inter_Today() << " < pause >" << endl;
+	}
+	Inter_Resume();
+	Inter_QuadSpeed();
 
-		//SV_Interface_EnforcePolicy(CountryCode::KOR, IndustryPolicyCode::Carbontax);
-		//SV_Interface_EnforcePolicy(CountryCode::USA, IndustryPolicyCode::CER);
+	cout << endl;
+	cout << "=======4배속=====" << endl;
+	cout << "2초당 1회 연산" << endl;
+	for (; i <= 45; i++)
+	{
+		Sleep(1000);
+		cout << i << " 초 경과 > ";
+		cout << "today: " << Inter_Today() << endl;
+	}
+	Inter_OctoSpeed();
+
+	cout << endl;
+	cout << "=======8배속=====" << endl;
+	cout << "1초당 1회 연산" << endl;
+	for (; i <= 65; i++)
+	{
+		Sleep(1000);
+		cout << i << " 초 경과 > ";
+		cout << "today: " << Inter_Today() << endl;
 	}
 
-	message = SV_Interface_GetData();
+	Inter_Pause();
 
-	//std::cout << "====================" << std::endl;
-	//std::cout << "최종 Game Data (JSON)" << std::endl;
-	//std::cout << (const char*)message << std::endl;
-	//std::cout << "====================" << std::endl;
-
-
-	SV_Interface_EndGame();
+	Inter_EndGame();
 	
 }

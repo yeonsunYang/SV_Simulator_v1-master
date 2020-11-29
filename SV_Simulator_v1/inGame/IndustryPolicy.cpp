@@ -1,5 +1,5 @@
 #include "IndustryPolicy.h"
-#include <iostream>
+//#include <iostream>
 using namespace std;
 
 ///<summary>
@@ -50,7 +50,7 @@ void IndustryPolicy::enforce_budget(Country country)
 {
 	if (country.budget < this->needBudget)
 	{
-		cout<<"예산이 부족합니다.\n";
+		//		cout<<"예산이 부족합니다.\n";
 	}
 	else
 	{

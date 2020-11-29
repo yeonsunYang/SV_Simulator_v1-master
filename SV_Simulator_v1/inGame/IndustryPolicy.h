@@ -3,7 +3,6 @@
 #include "Country.h"
 #include "Industry.h"
 #include "IndustryPolicyCode.h"
-//#include "IndustryCode.h"
 #include "CountryCode.h"
 
 class IndustryPolicy
@@ -18,28 +17,28 @@ private:
 	float rateOfChange_carbon; //탄소배출량 변화율
 
 public:
-/*#####################################
-1. 초기화 되어야 하는 부분
-	# 생성자 함수
-		- policyCode
-		- industryCode
-		- 국가별 정책시행여부 (isPolicyAccept)
-		- 필요 예산
-		- 세금지수 변동
-		- 탄소배출량 변동
-		- 종사자비율 변동
+	/*#####################################
+	1. 초기화 되어야 하는 부분
+		# 생성자 함수
+			- policyCode
+			- industryCode
+			- 국가별 정책시행여부 (isPolicyAccept)
+			- 필요 예산
+			- 세금지수 변동
+			- 탄소배출량 변동
+			- 종사자비율 변동
 
-2. 이벤트 함수
-	# 탄소배출량 변경
-	# 예산 사용
-	# 국가별 정책시행여부 수정
-	# 세금지수 변경
-	# 종사자비율 변경
-#########################################*/
+	2. 이벤트 함수
+		# 탄소배출량 변경
+		# 예산 사용
+		# 국가별 정책시행여부 수정
+		# 세금지수 변경
+		# 종사자비율 변경
+	#########################################*/
 
-///<summary>
-///#함수역할 : 생성자 함수
-///</summary>
+	///<summary>
+	///#함수역할 : 생성자 함수
+	///</summary>
 	IndustryPolicy(IndustryPolicyCode _pCode, IndustryCode _iCode, long long _needBudget, float _rateOfChange_tax, float _rateOfChange_working, float _rateOfChange_carbon);
 
 	///<summary>

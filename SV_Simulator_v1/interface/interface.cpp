@@ -264,40 +264,249 @@ int Today()
 {
 	return SV_Sim::game->Today();
 }
-long long GetBudget(int _countryCode)
-{
-	return SV_Sim::game->GetBudget(static_cast<CountryCode> (_countryCode));
-}
-long long GetGDP(int _countryCode)
-{
-	return SV_Sim::game->GetGDP(static_cast<CountryCode> (_countryCode));
-}
-long long GetPopulation(int _countryCode)
-{
-	return SV_Sim::game->GetPopulation(static_cast<CountryCode> (_countryCode));
-}
-long long GetCarbonEmission(int _countryCode)
-{
-	return SV_Sim::game->GetCarbonEmission(static_cast<CountryCode> (_countryCode));
-}
-float GetTaxRate(int _countryCode)
-{
-	return SV_Sim::game->GetTaxRate(static_cast<CountryCode> (_countryCode));
-}
+
+//******************************** world class data
+
+// 전세계 평균 온도 반환
 float GetWorldTemperature()
 {
-	return SV_Sim::game->GetWorldTemperature();
+	return 13.0f;
 }
-long long GetWorldCarbonEmission()
-{
-	return SV_Sim::game->GetWorldCarbonEmission();
-}
-long long GetWorldPopulation()
-{
-	return SV_Sim::game->GetWorldPopulation();
-}
+// 전세계 평균탄소농도 반환
 float GetWorldCarbonPPM()
 {
-	return SV_Sim::game->GetWorldCarbonPPM();
+	return 14.0f;
+}
+// 전세계 탄소배출량(일 단위) 반환
+long long GetWorldCarboneEmission()
+{
+	return 15;
+}
+// 전세계 탄소 흡수량(일 단위) 반환
+long long GetWorldCarbonAbsorbed()
+{
+	return 16;
+}
+// 전세계 산림 면적 반환
+long long GetWorldForest()
+{
+	return 17;
+}
+// 전세계 인구 수 반환
+long long GetWorldPopulation()
+{
+	return 18;
+}
+// 전세계 사만자 수 반환
+long long GetWorldDead()
+{
+	return 19;
+}
+// 전세계 기후난민 수 반환
+long long GetWorldRefugees()
+{
+	return 20;
+}
+// 전세계 작물생산량 (단위는 '몇 인분')
+long long GetWorldFood()
+{
+	return 21;
 }
 
+
+//// 재난 발생확률
+//float GetDisasterProbability();
+//// 작물생산량 임계점 (초기화 필요)
+//long long GetFoodCriticalPoint();
+//// 평균온도 임계점 (초기화 필요)
+//float GetTempCriticalPoint();
+
+//********************************************************
+
+//******************************** country class 개요 패널
+// 해당 국가의 예산 반환
+long long GetBudget(int _countryCode)
+{
+	return 22 + _countryCode;
+}
+// 해당 국가의 GDP 반환
+long long GetGDP(int _countryCode)
+{
+	return 23 + _countryCode;
+}
+// 해당 국가의 세율 반환
+float GetTaxRate(int _countryCode)
+{
+	return 24.0f + static_cast<float>(_countryCode);
+}
+// 해당 국가의 식량 생산량
+long long GetFood(int _countryCode)
+{
+	return 25 + _countryCode;
+}
+// 해당 국가의 탄소배출량 반환
+long long GetCarbonEmission(int _countryCode)
+{
+	return 26 + _countryCode;
+}
+// 해당 국가의 산림면적 반환
+int GetCountryForest(int _countryCode)
+{
+	return 27 + _countryCode;
+}
+// 해당 국가의 총 인구수 반환
+long long GetPopulation(int _countryCode)
+{
+	return 28 + _countryCode;
+}
+// 해당 국가의 국가 사망자 비율 반환
+float GetDeadRate(int _countryCode)
+{
+	return 29 + _countryCode;
+}
+// 해당 국가의 기후난민 비율 반환
+float GetRefugeeRate(int _countryCode)
+{
+	return 30.0f + static_cast<float>(_countryCode);
+}
+// 해당 국가의 국가 사망자수 반환
+float GetDead(int _countryCode)
+{
+	return 31.0f + static_cast<float>(_countryCode);
+}
+// 해당 국가의 기후난민수 반환
+float GetRefugees(int _countryCode)
+{
+	return 32.0f + static_cast<float>(_countryCode);
+}
+// 해당 국가에서의 기후에 대한 인식율 반환
+float GetRecognitionRate(int _countryCode)
+{
+	return 33.0f + static_cast<float>(_countryCode);
+}
+// 해당 국가에서의 플레이어 지지도 반환
+float GetSupportRate(int _countryCode)
+{
+	return 34.0f + static_cast<float>(_countryCode);
+}
+
+	
+	
+//// 해당 국가의 벌목률 반환
+//float GetRemoveForest(int _countryCode);
+	
+//************************************* Country class Energy 패널
+// 해당 국가의 산업에서 요구 에너지 반환
+int GetIndustryEnergy(int _countryCode)
+{
+	return 35 + _countryCode;
+}
+// 해당 국가의 생활 요구 에너지 반환
+int GetLifeEnergy(int _countryCode)
+{
+	return 36 + _countryCode;
+}
+// 해당 국가의 총 발전소 개수 반환
+int GetTotalPowerPlants(int _countryCode)
+{
+	return 37 + _countryCode;
+}
+// 해당 국가의 신재생에너지 발전소 개수 반환
+int GetGreenPowerPlants(int _countryCode)
+{
+	return 38 + _countryCode;
+}
+// 해당 국가의 석탄화력 발전소 개수 반환
+int GetFirePowerPlants(int _countryCode)
+{
+	return 39 + _countryCode;
+}
+// 해당 국가의 발전소당 발전량(발전효율) 반환
+int GetProduce(int _countryCode)
+{
+	return 40 + _countryCode;
+}
+// 해당 국가의 석탄발전소 당 탄소배출량 반환
+long long GetCarbonPerProduce(int _countryCode)
+{
+	return 41 + _countryCode;
+}
+
+
+//************************************* Country class Life 패널
+
+// 해당 국가의 1인당 자동차 소유 비율
+float GetCarPerPerson(int _countryCode)
+{
+	return 42.0f + static_cast <float> (_countryCode);
+}
+// 해당 국가의 총 차량 수
+long long GetCars(int _countryCode)
+{
+	return 43 + _countryCode;
+}
+// 해당 국가의 내연기관 자동차 비율
+float GetFossilFuelCarsRatio(int _countryCode)
+{
+	return 44.0f + static_cast <float> (_countryCode);
+}
+// 해당 국가의 친환경 자동차 비율
+float GetEcocarRation(int _countryCode)
+{
+	return 45.0f + static_cast <float> (_countryCode);
+}
+// 해당 국가의 자동차 당 일일 탄소 배출량
+long long GetCarbonPerCar(int _countryCode)
+{
+	return 46 + _countryCode;
+}
+// 해당 국가의 교통 탄소세
+float GetTaxTransprot(int _countryCode)
+{
+	return 47.0f + static_cast <float> (_countryCode);
+}
+// 해당 국가의 총 집의 개수
+long long GetHouses(int _countryCode)
+{
+	return 48 + _countryCode;
+}
+// 해당 국가의 일반 집의 비율
+float GetGrayHouses(int _countryCode)
+{
+	return 49.0f + static_cast <float> (_countryCode);
+}
+// 해당 국가의 그린리모델링 비율
+float GetGreenHouses(int _countryCode)
+{
+	return 50.0f + static_cast <float> (_countryCode);
+}
+// 해당 국가의 태양관 패널 설치 비율
+float GetSunHouses(int _countryCode)
+{
+	return 51.0f + static_cast <float> (_countryCode);
+}
+// 해당 국가의 건물 당 일일 탄소 배출량
+long long GetCarbonPerHouse(int _countryCode)
+{
+	return 52 + _countryCode;
+}
+// 해당 국가의 주거 탄소세
+float GetTaxHouse(int _countryCode)
+{
+	return 53.0f + static_cast <float> (_countryCode);
+}
+// 해당 국가의 일상속 1인당 탄소 배출
+long long GetCarbonPerPerson(int _countryCode)
+{
+	return 54 + _countryCode;
+}
+// 해당 국가의 생활에서 발생하는 일일 총 탄소량
+long long GetLifeCarbonEmission(int _countryCode)
+{
+	return 55 + _countryCode;
+}
+// 해당 국가의 생활속 탄소세지수
+float GetTaxLife(int _countryCode)
+{
+	return 56.0f + static_cast <float> (_countryCode);
+}

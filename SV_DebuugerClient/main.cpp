@@ -7,13 +7,13 @@ int main()
 	// 0: 모든 Debug log 출력 X
 	// 1: msg log 출력 o , function log 출력 x
 	// 2: msg log 출력 o , function log 출력 o
-	Inter_InitGame(8000, 2);
+	InitGame(8000, 2);
 
-	Inter_PlayGame();
+	PlayGame();
 
 	int i;
 
-	Inter_DoubleSpeed();
+	DoubleSpeed();
 
 	cout << endl;
 	cout << "=======2배속=====" << endl;
@@ -22,18 +22,18 @@ int main()
 	{
 		Sleep(1000);
 		cout << i << " 초 경과 > ";
-		cout << "today: " << Inter_Today() << endl;
+		cout << "today: " << Today() << endl;
 	}
-	Inter_Pause();
+	Pause();
 
 	for (; i <= 25; i++)
 	{
 		Sleep(1000);
 		cout << i << " 초 경과 > ";
-		std::cout <<"today: " << Inter_Today() << " < pause >" << endl;
+		std::cout <<"today: " << Today() << " < pause >" << endl;
 	}
-	Inter_Resume();
-	Inter_QuadSpeed();
+	Resume();
+	QuadSpeed();
 
 	cout << endl;
 	cout << "=======4배속=====" << endl;
@@ -42,9 +42,9 @@ int main()
 	{
 		Sleep(1000);
 		cout << i << " 초 경과 > ";
-		cout << "today: " << Inter_Today() << endl;
+		cout << "today: " << Today() << endl;
 	}
-	Inter_OctoSpeed();
+	OctoSpeed();
 
 	cout << endl;
 	cout << "=======8배속=====" << endl;
@@ -53,11 +53,11 @@ int main()
 	{
 		Sleep(1000);
 		cout << i << " 초 경과 > ";
-		cout << "today: " << Inter_Today() << endl;
+		cout << "today: " << Today() << endl;
 	}
 
-	Inter_Pause();
+	Pause();
 
-	Inter_EndGame();
+	EndGame();
 	
 }

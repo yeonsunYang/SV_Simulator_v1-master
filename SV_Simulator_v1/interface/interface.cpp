@@ -113,9 +113,9 @@ int SV_Sim::Pause()
 	return 0;
 }
 
-int Inter_InitGame(long long _cycle, int _debugMode)
+int InitGame(long long _cycle, int _debugMode)
 {
-	SV_Sim::DebugLog("Inter_InitGame()", LogType::Func);
+	SV_Sim::DebugLog("InitGame()", LogType::Func);
 
 	if (SV_Sim::simState != SimState::Disable)
 		return static_cast<int> (SV_Sim::simState);
@@ -143,9 +143,9 @@ int Inter_InitGame(long long _cycle, int _debugMode)
 
 	return 0;
 }
-int Inter_PlayGame()
+int PlayGame()
 {
-	SV_Sim::DebugLog("Inter_PlayGame()", LogType::Func);
+	SV_Sim::DebugLog("PlayGame()", LogType::Func);
 
 	if (SV_Sim::simState != SimState::WaitPlay)
 		return static_cast<int> (SV_Sim::simState);
@@ -160,27 +160,27 @@ int Inter_PlayGame()
 
 	return 0;
 }
-int Inter_Pause()
+int Pause()
 {
-	SV_Sim::DebugLog("Inter_Pause()", LogType::Func);
+	SV_Sim::DebugLog("Pause()", LogType::Func);
 
 	if(SV_Sim::simState == SimState::Work)
 		SV_Sim::simState = SimState::Pause;
 
 	return 0;
 }
-int Inter_Resume()
+int Resume()
 {
-	SV_Sim::DebugLog("Inter_Resume()", LogType::Func);
+	SV_Sim::DebugLog("Resume()", LogType::Func);
 
 	if (SV_Sim::simState == SimState::Pause)
 		SV_Sim::simState = SimState::Work;
 
 	return 0;
 }
-int Inter_EndGame()
+int EndGame()
 {
-	SV_Sim::DebugLog("Inter_EndGame()", LogType::Func);
+	SV_Sim::DebugLog("EndGame()", LogType::Func);
 
 
 	time_t start = clock();
@@ -195,13 +195,13 @@ int Inter_EndGame()
 		Sleep(50);
 
 		if (clock() - start > 3000) {
-			SV_Sim::ErrorLog("Inter_EndGame(): Thread가 종료되지 않아서 game포인터를 해제할 수 없습니다.");
+			SV_Sim::ErrorLog("EndGame(): Thread가 종료되지 않아서 game포인터를 해제할 수 없습니다.");
 			return -1;
 		}
 	}
 
 	if (SV_Sim::game == nullptr) {
-		SV_Sim::ErrorLog("Inter_EndGame(): nullptr을 해제하려는 시도를 합니다.");
+		SV_Sim::ErrorLog("EndGame(): nullptr을 해제하려는 시도를 합니다.");
 		return -2;
 	}
 
@@ -214,30 +214,30 @@ int Inter_EndGame()
 	//**************************
 
 }
-int Inter_DoubleSpeed()
+int DoubleSpeed()
 {
-	SV_Sim::DebugLog("Inter_DoubleSpeed()", LogType::Func);
+	SV_Sim::DebugLog("DoubleSpeed()", LogType::Func);
 
 	SV_Sim::playSpeed = PlaySpeed::Double;
 	return 0;
 }
-int Inter_QuadSpeed()
+int QuadSpeed()
 {
-	SV_Sim::DebugLog("Inter_QuadSpeed()", LogType::Func);
+	SV_Sim::DebugLog("QuadSpeed()", LogType::Func);
 
 	SV_Sim::playSpeed = PlaySpeed::Quad;
 	return 0;
 }
-int Inter_OctoSpeed()
+int OctoSpeed()
 {
-	SV_Sim::DebugLog("Inter_OctoSpeed()", LogType::Func);
+	SV_Sim::DebugLog("OctoSpeed()", LogType::Func);
 
 	SV_Sim::playSpeed = PlaySpeed::Octo;
 	return 0;
 }
-int Inter_NormalSpeed()
+int NormalSpeed()
 {
-	SV_Sim::DebugLog("Inter_NormalSpeed()", LogType::Func);
+	SV_Sim::DebugLog("NormalSpeed()", LogType::Func);
 
 	SV_Sim::playSpeed = PlaySpeed::Normal;
 	return 0;
@@ -260,43 +260,43 @@ void SV_Sim::ErrorLog(const char* _str)
 	cout << "***************************************************************" << endl;
 }
 
-int Inter_Today()
+int Today()
 {
 	return SV_Sim::game->Today();
 }
-long long Inter_GetBudget(int _countryCode)
+long long GetBudget(int _countryCode)
 {
 	return SV_Sim::game->GetBudget(static_cast<CountryCode> (_countryCode));
 }
-long long Inter_GetGDP(int _countryCode)
+long long GetGDP(int _countryCode)
 {
 	return SV_Sim::game->GetGDP(static_cast<CountryCode> (_countryCode));
 }
-long long Inter_GetPopulation(int _countryCode)
+long long GetPopulation(int _countryCode)
 {
 	return SV_Sim::game->GetPopulation(static_cast<CountryCode> (_countryCode));
 }
-long long Inter_GetCarbonEmission(int _countryCode)
+long long GetCarbonEmission(int _countryCode)
 {
 	return SV_Sim::game->GetCarbonEmission(static_cast<CountryCode> (_countryCode));
 }
-float Inter_GetTaxRate(int _countryCode)
+float GetTaxRate(int _countryCode)
 {
 	return SV_Sim::game->GetTaxRate(static_cast<CountryCode> (_countryCode));
 }
-float Inter_GetWorldTemperature()
+float GetWorldTemperature()
 {
 	return SV_Sim::game->GetWorldTemperature();
 }
-long long Inter_GetWorldCarbonEmission()
+long long GetWorldCarbonEmission()
 {
 	return SV_Sim::game->GetWorldCarbonEmission();
 }
-long long Inter_GetWorldPopulation()
+long long GetWorldPopulation()
 {
 	return SV_Sim::game->GetWorldPopulation();
 }
-float Inter_GetWorldCarbonPPM()
+float GetWorldCarbonPPM()
 {
 	return SV_Sim::game->GetWorldCarbonPPM();
 }

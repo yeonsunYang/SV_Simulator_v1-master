@@ -327,12 +327,12 @@ long long GetWorldFood()
 // 해당 국가의 예산 반환
 long long GetBudget(int _countryCode)
 {
-	return 22 + _countryCode;
+	return 22 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 GDP 반환
 long long GetGDP(int _countryCode)
 {
-	return 23 + _countryCode;
+	return 23 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 세율 반환
 float GetTaxRate(int _countryCode)
@@ -342,12 +342,12 @@ float GetTaxRate(int _countryCode)
 // 해당 국가의 식량 생산량
 long long GetFood(int _countryCode)
 {
-	return 25 + _countryCode;
+	return 25 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 탄소배출량 반환
 long long GetCarbonEmission(int _countryCode)
 {
-	return 26 + _countryCode;
+	return 26 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 산림면적 반환
 int GetCountryForest(int _countryCode)
@@ -357,7 +357,7 @@ int GetCountryForest(int _countryCode)
 // 해당 국가의 총 인구수 반환
 long long GetPopulation(int _countryCode)
 {
-	return 28 + _countryCode;
+	return 28 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 국가 사망자 비율 반환
 float GetDeadRate(int _countryCode)
@@ -429,7 +429,7 @@ int GetProduce(int _countryCode)
 // 해당 국가의 석탄발전소 당 탄소배출량 반환
 long long GetCarbonPerProduce(int _countryCode)
 {
-	return 41 + _countryCode;
+	return 41 + static_cast<long long> (_countryCode);
 }
 
 
@@ -443,7 +443,7 @@ float GetCarPerPerson(int _countryCode)
 // 해당 국가의 총 차량 수
 long long GetCars(int _countryCode)
 {
-	return 43 + _countryCode;
+	return 43 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 내연기관 자동차 비율
 float GetFossilFuelCarsRatio(int _countryCode)
@@ -458,7 +458,7 @@ float GetEcocarRation(int _countryCode)
 // 해당 국가의 자동차 당 일일 탄소 배출량
 long long GetCarbonPerCar(int _countryCode)
 {
-	return 46 + _countryCode;
+	return 46 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 교통 탄소세
 float GetTaxTransprot(int _countryCode)
@@ -468,7 +468,7 @@ float GetTaxTransprot(int _countryCode)
 // 해당 국가의 총 집의 개수
 long long GetHouses(int _countryCode)
 {
-	return 48 + _countryCode;
+	return 48 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 일반 집의 비율
 float GetGrayHouses(int _countryCode)
@@ -488,7 +488,7 @@ float GetSunHouses(int _countryCode)
 // 해당 국가의 건물 당 일일 탄소 배출량
 long long GetCarbonPerHouse(int _countryCode)
 {
-	return 52 + _countryCode;
+	return 52 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 주거 탄소세
 float GetTaxHouse(int _countryCode)
@@ -498,12 +498,12 @@ float GetTaxHouse(int _countryCode)
 // 해당 국가의 일상속 1인당 탄소 배출
 long long GetCarbonPerPerson(int _countryCode)
 {
-	return 54 + _countryCode;
+	return 54 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 생활에서 발생하는 일일 총 탄소량
 long long GetLifeCarbonEmission(int _countryCode)
 {
-	return 55 + _countryCode;
+	return 55 + static_cast<long long> (_countryCode);
 }
 // 해당 국가의 생활속 탄소세지수
 float GetTaxLife(int _countryCode)

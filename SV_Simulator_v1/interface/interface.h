@@ -101,9 +101,9 @@ extern "C" {
 	// 해당 국가의 기후난민 비율 반환
 	SV_SIMULATOR_API float GetRefugeeRate(int _countryCode);
 	// 해당 국가의 국가 사망자수 반환
-	SV_SIMULATOR_API float GetDead(int _countryCode);
+	SV_SIMULATOR_API long long GetDead(int _countryCode);
 	// 해당 국가의 기후난민수 반환
-	SV_SIMULATOR_API float GetRefugees(int _countryCode);
+	SV_SIMULATOR_API long long GetRefugees(int _countryCode);
 	// 해당 국가에서의 기후에 대한 인식율 반환
 	SV_SIMULATOR_API float GetRecognitionRate(int _countryCode);
 	// 해당 국가에서의 플레이어 지지도 반환

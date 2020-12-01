@@ -370,14 +370,14 @@ float GetRefugeeRate(int _countryCode)
 	return 30.0f + static_cast<float>(_countryCode);
 }
 // 해당 국가의 국가 사망자수 반환
-float GetDead(int _countryCode)
+long long GetDead(int _countryCode)
 {
-	return 31.0f + static_cast<float>(_countryCode);
+	return 31 + static_cast<long long>(_countryCode);
 }
 // 해당 국가의 기후난민수 반환
-float GetRefugees(int _countryCode)
+long long GetRefugees(int _countryCode)
 {
-	return 32.0f + static_cast<float>(_countryCode);
+	return 32 + static_cast<long long>(_countryCode);
 }
 // 해당 국가에서의 기후에 대한 인식율 반환
 float GetRecognitionRate(int _countryCode)

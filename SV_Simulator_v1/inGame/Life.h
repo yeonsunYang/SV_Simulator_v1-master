@@ -6,7 +6,7 @@ class Life
 	friend class LifePolicy;
 private:
 
-	float carPerPeron; //인구 1명당 자동차 소유 비율
+	float carPerPerson; //인구 1명당 자동차 소유 비율
 	float ecocarRatio; // 친환경 자동차 비율 (탄소배출량 : 0)
 	long long houses; //총 건물 개수
 	float greenhouses; //그린 리모델링 비율 (탄소배출량 : 0)

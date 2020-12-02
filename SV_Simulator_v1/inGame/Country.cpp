@@ -108,7 +108,7 @@ void Country::total_lifeEnergy()
 {
 	this->lifeEnergy = 0;
 
-	this->lifeEnergy += (int)(this->life.day_energyPerHouse * this->life.houses * (1 - this->life.greenhouses) * (1 - this->life.sunghouses));
+	this->lifeEnergy += (int)(this->life.day_energyPerHouse * this->life.houses * (1 - this->life.greenhouses) * (1 - this->life.sunhouses));
 	//그린리모델링과 태양광 패널 설치 하지 않은 건물 수 * 건물 당 에너지소모양
 	this->lifeEnergy += (int)(this->life.day_energyPerHouse * 0.65 * this->life.houses * (1 - this->life.greenhouses) * (this->life.sunhouses));
 	//태양광 패널 설치한 건물 수 * 건물 당 에너지 소모양 65%
@@ -122,7 +122,7 @@ void Country::total_lifeEnergy()
 ///</summary>
 void Country::total_needEnergy()
 {
-	this->total_needEnergy = (this->industryEnergy + this->lifeEnergy);
+	this->needEnergy = (this->industryEnergy + this->lifeEnergy);
 }
 
 

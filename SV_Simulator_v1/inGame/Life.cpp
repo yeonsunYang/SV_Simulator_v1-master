@@ -23,7 +23,7 @@ void Life::init_Life(float _carPerPerson, float _ecocarRatio, long long _houses,
 
 		//@-초기화 라고 적힌 항목 이외는 모두 매개변수로 초기화 해주기
 	*/
-	this->carPerPeron = _carPerPerson;
+	this->carPerPerson = _carPerPerson;
 	this->ecocarRatio = _ecocarRatio;
 	this->houses = _houses;
 	this->greenhouses = _greenhouses;

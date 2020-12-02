@@ -2,6 +2,8 @@
 #include <string>
 #include "CountryCode.h"
 #include "IndustryCode.h"
+#include "Energy.h"
+#include "Life.h"
 #define INDUSTRY_NUM 5
 class Industry;
 class Energy;
@@ -16,7 +18,7 @@ private:
 	CountryCode countryCode; //국가코드
 	long long budget; //국가 보유예산
 	long long gdp; //국가 gdp
-	long long population; //국가 인구수
+	long long population; //국가 인구수(사망자수)
 	long long defaultPopulation; //국가 초기 인구수
 	long long carbonEmission; //국가 탄소배출량
 	int countryForest; //국가 산림 면적
@@ -32,7 +34,7 @@ private:
 	float removeForest; //벌목률
 	int industryEnergy; //산업에서 필요로 하는 에너지양(일일)
 	int lifeEnergy; //생활에서 필요로 하는 에너지양(일일)
-	int total_needEnergy; //총 필요로 하는 에너지양(일일)
+	int needEnergy; //총 필요로 하는 에너지양(일일)
 
 public:
 	/*#####################################

@@ -1,5 +1,5 @@
 #include "Game.h"
-//#include <iostream>
+#include <iostream>
 
 using namespace std;
 
@@ -77,30 +77,12 @@ void Game::InitializeGame() {
 	world = new World();
 
 	// <정책 생성>
-	carbontax = new IndustryPolicy(Carbontax, Steel, 1000, 0.1, 0, 0);
+	//carbontax = new IndustryPolicy(Carbontax, Steel, 1000, 0.1, 0, 0);
 	// IndustryPolicyCode, IndustryCode, 필요예산, 세금지수변화율, 종사자비율변화율, 탄소배출량변화율
 
 }
 
 void Game::Oneday() {
-
-	// 1일 단위로 진행되는 연산 코드 작성, sub thread에서 호출됨.
-
-	//cout << "\n#######각 국의 정보#######\n" << endl;
-	//for (int i = 0; i < COUNTRY_NUM; i++)
-	//{
-	//	world->countries[i].printStatus();
-	//	cout << endl;
-	//	if (i != COUNTRY_NUM - 1)
-	//	{
-	//		cout << "-----------------------------\n" << endl;
-	//	}
-	//}
-	//cout << "#########################" << endl;
-	//cout << "\n#######전지구 정보#######\n" << endl;
-	//world->printStatus();
-	//cout << endl;
-	//cout << "#########################" << endl;
 
 	date += 1;
 
@@ -129,8 +111,14 @@ void Game::OneYear()
 }
 void Game::EndGame() {
 	// 게임 종료시 필요한 코드 작성, main thread만 호출 가능
+
+	for (int i = 0; i < COUNTRY_NUM; i++)
+	{
+		world->countries[i].~Country();
+	}
+	world->~World();
 	delete world;
-	delete carbontax;
+	//delete carbontax;
 
 
 }
@@ -139,7 +127,7 @@ void Game::EndGame() {
 
 
 //이벤트 함수*********************************************************
-
+/*
 void Game::EnforcePolicy(int _countryCode, int _policyCode) {
 	//정책 실행시 호출시 필요한 코드 작성.
 
@@ -160,6 +148,6 @@ void Game::EnforcePolicy(int _countryCode, int _policyCode) {
 
 
 }
-
+*/
 //*******************************************************************
 //===================================================================

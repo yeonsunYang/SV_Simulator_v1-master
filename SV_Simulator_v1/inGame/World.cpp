@@ -23,8 +23,8 @@ World::World()
 		float _carPerPerson, float _ecocarRatio, long long _houses, float _greenhouses, float _sunhouses, long long _carbonPerPerson, int _day_energyPerPerson,
 		int _firePlants, int _greenPlants)*/
 
-	countries[KOR].init_Country(KOR, 16190000, 0.3, 51640000, 411290, 0.02, 50000000, 0.03, 0.1, 0.05, 0.2, 0.1, 0.01, 1.2, 0.01, 5000000, 0.01, 0.09, 15, 15, 5, 1);
-	countries[USA].init_Country(USA, 205400000, 0.2, 328200000, 5269520, 0.08, 120000000, 0.06, 0.12, 0.09, 0.3, 0.06, 0.07, 1.8, 0.05, 12000000, 0.1, 0.12, 30, 30, 10, 5);
+	countries[South_Korea].init_Country(South_Korea, 16190000, 0.3, 51640000, 411290, 0.02, 50000000, 0.03, 0.1, 0.05, 0.2, 0.1, 0.01, 1.2, 0.01, 5000000, 0.01, 0.09, 15, 15, 5, 1);
+	countries[United_States_of_America].init_Country(United_States_of_America, 205400000, 0.2, 328200000, 5269520, 0.08, 120000000, 0.06, 0.12, 0.09, 0.3, 0.06, 0.07, 1.8, 0.05, 12000000, 0.1, 0.12, 30, 30, 10, 5);
 
 	//(2)
 	total_ForestOfCountries();
@@ -241,6 +241,6 @@ void World::printStatus()
 ///</summary>
 World::~World()
 {
-
+	delete[] countries;
 }
 

@@ -1,9 +1,9 @@
 #pragma once
-#include "IndustryPolicyCode.h"
 #include "World.h"
 #include "Country.h"
 #include "Industry.h"
-#include "IndustryPolicy.h"
+#include "Life.h"
+#include "Energy.h"
 //#include <iostream>
 
 
@@ -51,7 +51,7 @@ public:
 	/// </summary>
 	/// <param name="_countryCode"> 정책을 실행한 국가 코드</param>
 	/// <param name="_policyCode"> 실행하려는 정책 코드</param>
-	void EnforcePolicy(int _countryCode, int _policyCode);
+	///void EnforcePolicy(int _countryCode, int _policyCode);
 
 
 	/// <summary>
@@ -125,8 +125,6 @@ public:
 
 private:
 	World* world;
-
-	IndustryPolicy* carbontax; //탄소세 정책
 
 public:
 

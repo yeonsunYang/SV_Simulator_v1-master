@@ -191,3 +191,12 @@ void Country::printStatus()
 	cout << "***carbonEmission : " << carbonEmission << " (t)" << endl; //탄소배출량
 
 }
+
+
+///<summary>
+///#함수 역할 : 소멸자 함수
+///</summary>
+Country::~Country()
+{
+	delete[] industries;
+}

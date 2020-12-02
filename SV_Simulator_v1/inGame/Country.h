@@ -145,4 +145,5 @@ public:
 	///</summary>
 	void printStatus();
 
+	~Country();
 };

@@ -169,7 +169,7 @@ void Country::calculator_monthForest()
 ///</summary>
 void Country::calculator_budget()
 {
-	this->budget += (gdp * taxRate); //@ 연 단위 호출 주기를 갖지만 test에서는 1일 주기로 환산했으므로 나누기 360
+	this->budget = (gdp * taxRate); //연간 예산 연초에 할당받아 쓰기
 }
 
 ///<summary>

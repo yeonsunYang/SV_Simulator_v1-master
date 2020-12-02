@@ -278,7 +278,7 @@ float GetWorldCarbonPPM()
 	return 14.0f;
 }
 // 전세계 탄소배출량(일 단위) 반환
-long long GetWorldCarboneEmission()
+long long GetWorldCarbonEmission()
 {
 	return 15;
 }

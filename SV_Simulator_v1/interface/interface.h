@@ -57,7 +57,7 @@ extern "C" {
 	// 전세계 평균탄소농도 반환
 	SV_SIMULATOR_API float GetWorldCarbonPPM();
 	// 전세계 탄소배출량(일 단위) 반환
-	SV_SIMULATOR_API long long GetWorldCarboneEmission();
+	SV_SIMULATOR_API long long GetWorldCarbonEmission();
 	// 전세계 탄소 흡수량(일 단위) 반환
 	SV_SIMULATOR_API long long GetWorldCarbonAbsorbed();
 	// 전세계 산림 면적 반환

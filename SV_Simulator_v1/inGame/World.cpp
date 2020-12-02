@@ -206,7 +206,7 @@ void World::random_disaster()
 
 	int select_oneDay = rand() % 100; //재난발생확률에 맞게 랜덤으로 추출했을 때
 
-	if (select_oneDay == true)
+	if (disaster[select_oneDay] == true)
 	{
 		//재난발생 (기후난민 수와 사망자 수 증가, 작물생산량 감소)
 		int randomCountry = rand() % COUNTRY_NUM; //발생국 랜덤하게 선택

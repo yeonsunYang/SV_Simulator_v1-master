@@ -27,9 +27,6 @@
     <ClInclude Include="inGame\Game.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inGame\IndustryPolicyCode.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="inGame\CountryCode.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -45,7 +42,10 @@
     <ClInclude Include="inGame\IndustryCode.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inGame\IndustryPolicy.h">
+    <ClInclude Include="inGame\Life.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame\Energy.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,10 +68,13 @@
     <ClCompile Include="inGame\Country.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="inGame\IndustryPolicy.cpp">
+    <ClCompile Include="inGame\Industry.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="inGame\Industry.cpp">
+    <ClCompile Include="inGame\Life.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="inGame\Energy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

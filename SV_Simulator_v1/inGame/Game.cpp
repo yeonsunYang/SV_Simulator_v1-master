@@ -16,7 +16,7 @@ Game::~Game() {
 	EndGame();
 }
 
-
+/*
 Country* Game::GetCountry(CountryCode _countryCode)
 {
 	return world->countries[static_cast<int> (_countryCode)];
@@ -45,6 +45,7 @@ float Game::GetTaxRate(CountryCode _countryCode)
 {
 	return this->GetCountry(_countryCode)->GettaxRate();
 }
+*/
 
 float Game::GetWorldTemperature()
 {
@@ -88,26 +89,42 @@ void Game::Oneday() {
 
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		world->countries[i]->reset_annualGDP();
-		world->countries[i]->add_totalGDP();
-		world->countries[i]->calculator_budget();
-		world->countries[i]->add_totalCarbonEmission();
-		world->countries[i]->add_monthTax();
+		world->countries[i].add_totalGDP();
+		world->countries[i].add_totalCarbonEmission();
+		world->countries[i].add_totalPopulation();
+		world->countries[i].total_industryEnergy();
+		world->countries[i].total_lifeEnergy();
+		world->countries[i].total_needEnergy();
 	}
+	world->total_ForestOfCountries();
+	world->total_CarbonAbsorbedOfCountries();
 	world->total_CarbonEmissionOfCountries();
 	world->calculator_worldCarbonPPM();
 	world->calculator_worldTemperature();
-
+	world->check_worldTemperature();
+	world->total_FoodOfCountries();
+	world->check_worldFood();
+	world->random_disaster();
+	world->total_PopulationOfCountries();
+	world->total_RefugeesOfCountries();
 }
 
 void Game::OneMonth()
 {
-
+	for (int i = 0; i < COUNTRY_NUM; i++)
+	{
+		world->countries[i].add_monthTax();
+		world->countries[i].calculator_monthForest();
+	}
 }
 
 void Game::OneYear()
 {
-
+	for (int i = 0; i < COUNTRY_NUM; i++)
+	{
+		world->countries[i].calculator_budget();
+		world->countries[i].reset_annualGDP();
+	}
 }
 void Game::EndGame() {
 	// 게임 종료시 필요한 코드 작성, main thread만 호출 가능

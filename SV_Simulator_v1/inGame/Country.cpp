@@ -97,7 +97,7 @@ void Country::add_totalGDP()
 {
 	for (int i = 0; i < INDUSTRY_NUM; i++)
 	{
-		this->gdp += (this->industries[i].day_gdpPerProduce * this->industries[i].workingRate * this->population);
+		this->gdp += static_cast<long long> (this->industries[i].day_gdpPerProduce * this->industries[i].workingRate * this->population);
 		//연간 총 gdp는 매일의 산업 gdp를 계속하여 합산해 나간다. 결국 1년 뒤에는 연 총 생산량.
 	}
 }
@@ -217,7 +217,7 @@ void Country::calculator_monthForest()
 ///</summary>
 void Country::calculator_budget()
 {
-	this->budget = (gdp * taxRate); //연간 예산 연초에 할당받아 쓰기
+	this->budget = static_cast<long long>(gdp * taxRate); //연간 예산 연초에 할당받아 쓰기
 }
 
 ///<summary>

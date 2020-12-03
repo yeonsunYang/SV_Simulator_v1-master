@@ -103,7 +103,7 @@ void Game::Oneday() {
 	world->check_worldTemperature();
 	world->total_FoodOfCountries();
 	world->check_worldFood();
-	//world->random_disaster();
+	world->random_disaster();
 	world->total_PopulationOfCountries();
 	world->total_RefugeesOfCountries();
 }

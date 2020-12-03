@@ -5,40 +5,88 @@
 #include "Energy.h"
 using namespace std;
 
-///<summary>
-///#함수 역할 : 초기화 함수
-///</summary>
-void Country::init_Country(CountryCode _code, long long _budget, float _taxRate, long long _population, int _forest, float _refugeeRate, long long _food, float _removeForest,
-	float workingRate_st, float workingRate_oil, float workingRate_sv, float workingRate_mf, float workingRate_ag,
-	float _carPerPerson, float _ecocarRatio, long long _houses, float _greenhouses, float _sunhouses, long long _carbonPerPerson, int _day_energyPerPerson,
-	int _firePlants, int _greenPlants)
+/* 국가 개요 부문
+* countryCode, forest, food, removeForest
+* (supportRate = 0.1; recognitionRate = 0.1;)
+*/
+void Country::init_Country_Info(CountryCode _code, int _forest, long long _food, float _removeForest)
 {
 	this->countryCode = _code;
-	this->gdp = 0; //달러($)단위
-	this->taxRate = _taxRate;
-	this->budget = _budget;
-	this->defaultPopulation = _population;
 	this->countryForest = _forest;
-	this->supportRate = 0.1;
-	this->recognitionRate = 0.1;
-	this->refugeeRate = _refugeeRate;
-	this->deadRate = 0;
 	this->food = _food;
 	this->removeForest = _removeForest;
+	this->supportRate = 0.1f;
+	this->recognitionRate = 0.1f;
+}
 
+/* 경제부문
+* budget, taxRate, (gdp = 0)
+*/
+void Country::init_Country_Finance(long long _budget, float _taxRate)
+{
+	this->budget = _budget;
+	this->taxRate = _taxRate;
+	this->gdp = 0; //달러($)단위
 
-	this->industries = new Industry[INDUSTRY_NUM];
+}
+
+/* 인구 부문
+* population, refugeeRate (deadRate = 0)
+*/
+void Country::init_Country_Population(long long _population, float _refugeeRate)
+{
+	this->defaultPopulation = _population;
+	this->refugeeRate = _refugeeRate;
+	this->deadRate = 0;
+
+}
+
+/* 산업 부문
+* workingRate_st, workingRate_oil, workingRate_sv, workingRate_mf, workingRate_ag
+*/
+void Country::init_Country_Industry(float _workingRate_st, float _workingRate_oil, float _workingRate_sv, float _workingRate_mf, float _workingRate_ag)
+{
 	//산업코드, 산업 1일 단위생산당gdp, 산업 1일 단위생산당 탄소배출량, 산업 1일 단위생산당 에너지사용량, 산업 종사자비율
 	//init_Industry(IndustryCode _code, int _gdp, int _carbon, int _energy, float _workingRate);
 
-	industries[STEEL].init_Industry(STEEL, 50000, 10, 10, workingRate_st);
-	industries[OIL].init_Industry(OIL, 50000, 10, 10, workingRate_oil);
-	industries[SERVICE].init_Industry(SERVICE, 50000, 10, 10, workingRate_sv);
-	industries[MANUFACTURING].init_Industry(MANUFACTURING, 50000, 10, 10, workingRate_mf);
-	industries[AGRICULTURE].init_Industry(AGRICULTURE, 50000, 10, 10, workingRate_ag);
+	industries[STEEL].init_Industry(STEEL, 50000, 10, 10, _workingRate_st);
+	industries[OIL].init_Industry(OIL, 50000, 10, 10, _workingRate_oil);
+	industries[SERVICE].init_Industry(SERVICE, 50000, 10, 10, _workingRate_sv);
+	industries[MANUFACTURING].init_Industry(MANUFACTURING, 50000, 10, 10, _workingRate_mf);
+	industries[AGRICULTURE].init_Industry(AGRICULTURE, 50000, 10, 10, _workingRate_ag);
 	//산업에서 국가별로 다른 것은 종사자비율 뿐. <- 종사자비율은 init_country에서 매개변수로 받기
+}
 
-	life.init_Life(_carPerPerson, _ecocarRatio, _houses, _greenhouses, _sunhouses, _carbonPerPerson, _day_energyPerPerson);
+/* 운송 부문
+* carPerPerson, ecocarRatio
+*/
+void Country::init_Country_Transport(float _carPerPerson, float _ecocarRatio)
+{
+	life.init_Life_Transport(_carPerPerson, _ecocarRatio);
+
+}
+
+/* 주거 부문
+* houses, greenhouses, sunhouses
+*/
+void Country::init_Country_House(long long _houses, float _greenhouses, float _sunhouses)
+{
+	life.init_Life_House(_houses, _greenhouses, _sunhouses);
+}
+
+/* 생활 부문
+* carbonPerPerson, day_energyPerPerson
+*/
+void Country::init_Country_Person(long long _carbonPerPerson, int _day_energyPerPerson)
+{
+	life.init_Life_Person(_carbonPerPerson, _day_energyPerPerson);
+}
+
+/* 발전 부문
+* firePlants, greenPlants
+*/
+void Country::init_Country_Plants(int _firePlants, int _greenPlants)
+{
 	energies.init_Energy(_firePlants, _greenPlants);
 }
 
@@ -181,16 +229,16 @@ void Country::reset_annualGDP()
 }
 
 
-void Country::printStatus()
-{
-	cout << "***CountryCode : " << countryCode << endl;//나라
-	cout << "***population : " << population << " 명" << endl; //인구수
-	cout << "***GDP : $ " << gdp << endl; //국내총생산
-	cout << "***taxRate : " << taxRate << " % " << endl;// 세율
-	cout << "***budget: $ " << budget << endl; //국가 예산
-	cout << "***carbonEmission : " << carbonEmission << " (t)" << endl; //탄소배출량
-
-}
+//void Country::printStatus()
+//{
+//	cout << "***CountryCode : " << countryCode << endl;//나라
+//	cout << "***population : " << population << " 명" << endl; //인구수
+//	cout << "***GDP : $ " << gdp << endl; //국내총생산
+//	cout << "***taxRate : " << taxRate << " % " << endl;// 세율
+//	cout << "***budget: $ " << budget << endl; //국가 예산
+//	cout << "***carbonEmission : " << carbonEmission << " (t)" << endl; //탄소배출량
+//
+//}
 
 
 ///<summary>
@@ -198,5 +246,5 @@ void Country::printStatus()
 ///</summary>
 Country::~Country()
 {
-	delete[] industries;
+
 }

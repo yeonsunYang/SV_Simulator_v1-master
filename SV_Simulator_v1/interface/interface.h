@@ -144,7 +144,8 @@ extern "C" {
 	// 해당 국가의 자동차 당 일일 탄소 배출량
 	SV_SIMULATOR_API long long GetCarbonPerCar(int _countryCode);
 	// 해당 국가의 교통 탄소세
-	SV_SIMULATOR_API float GetTaxTransprot(int _countryCode);
+	SV_SIMULATOR_API int GetTaxTransprot(int _countryCode);
+
 	// 해당 국가의 총 집의 개수
 	SV_SIMULATOR_API long long GetHouses(int _countryCode);
 	// 해당 국가의 일반 집의 비율
@@ -156,14 +157,14 @@ extern "C" {
 	// 해당 국가의 건물 당 일일 탄소 배출량
 	SV_SIMULATOR_API long long GetCarbonPerHouse(int _countryCode);
 	// 해당 국가의 주거 탄소세
-	SV_SIMULATOR_API float GetTaxHouse(int _countryCode);
+	SV_SIMULATOR_API int GetTaxHouse(int _countryCode);
 
 	// 해당 국가의 일상속 1인당 탄소 배출
 	SV_SIMULATOR_API long long GetCarbonPerPerson(int _countryCode);
-	// 해당 국가의 생활에서 발생하는 일일 총 탄소량
+	// 해당 국가의 생활에서 발생하는 일일 총 탄소량 (사용하지 않기로 함.)
 	SV_SIMULATOR_API long long GetLifeCarbonEmission(int _countryCode);
 	// 해당 국가의 생활속 탄소세지수
-	SV_SIMULATOR_API float GetTaxLife(int _countryCode);
+	SV_SIMULATOR_API int GetTaxLife(int _countryCode);
 
 
 

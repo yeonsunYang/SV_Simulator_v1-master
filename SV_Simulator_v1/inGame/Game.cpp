@@ -8,7 +8,6 @@ using namespace std;
 
 Game::Game() {
 	date = 0;
-
 	InitializeGame();
 }
 
@@ -16,13 +15,13 @@ Game::~Game() {
 	EndGame();
 }
 
-/*
-Country* Game::GetCountry(CountryCode _countryCode)
+
+Country* Game::GetCountry(int _countryCode)
 {
-	return world->countries[static_cast<int> (_countryCode)];
+	return world->countries[_countryCode];
 }
 
-
+/*
 long long Game::GetBudget(CountryCode _countryCode)
 {
 	return this->GetCountry(_countryCode)->GetbudGet();
@@ -89,12 +88,12 @@ void Game::Oneday() {
 
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		world->countries[i].add_totalGDP();
-		world->countries[i].add_totalCarbonEmission();
-		world->countries[i].add_totalPopulation();
-		world->countries[i].total_industryEnergy();
-		world->countries[i].total_lifeEnergy();
-		world->countries[i].total_needEnergy();
+		world->countries[i]->add_totalGDP();
+		world->countries[i]->add_totalCarbonEmission();
+		world->countries[i]->add_totalPopulation();
+		world->countries[i]->total_industryEnergy();
+		world->countries[i]->total_lifeEnergy();
+		world->countries[i]->total_needEnergy();
 	}
 	world->total_ForestOfCountries();
 	world->total_CarbonAbsorbedOfCountries();
@@ -104,7 +103,7 @@ void Game::Oneday() {
 	world->check_worldTemperature();
 	world->total_FoodOfCountries();
 	world->check_worldFood();
-	world->random_disaster();
+	//world->random_disaster();
 	world->total_PopulationOfCountries();
 	world->total_RefugeesOfCountries();
 }
@@ -113,8 +112,8 @@ void Game::OneMonth()
 {
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		world->countries[i].add_monthTax();
-		world->countries[i].calculator_monthForest();
+		world->countries[i]->add_monthTax();
+		world->countries[i]->calculator_monthForest();
 	}
 }
 
@@ -122,18 +121,18 @@ void Game::OneYear()
 {
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		world->countries[i].calculator_budget();
-		world->countries[i].reset_annualGDP();
+		world->countries[i]->calculator_budget();
+		world->countries[i]->reset_annualGDP();
 	}
 }
 void Game::EndGame() {
 	// 게임 종료시 필요한 코드 작성, main thread만 호출 가능
 
-	for (int i = 0; i < COUNTRY_NUM; i++)
-	{
-		world->countries[i].~Country();
-	}
-	world->~World();
+	//for (int i = 0; i < COUNTRY_NUM; i++)
+	//{
+	//	world->countries[i]->~Country();
+	//}
+	//world->~World();
 	delete world;
 	//delete carbontax;
 

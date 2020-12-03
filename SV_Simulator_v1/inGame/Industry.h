@@ -5,6 +5,8 @@ class Industry
 {
 	friend class Country;
 	friend class IndustryPolicy;
+	Industry();
+
 private:
 
 	IndustryCode industryCode; //산업 코드

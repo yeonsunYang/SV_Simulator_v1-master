@@ -1,5 +1,10 @@
 #include "Industry.h"
-#include <iostream>
+//#include <iostream>
+
+Industry::Industry()
+{
+
+}
 
 void Industry::init_Industry(IndustryCode _code, int _gdp, int _carbon, int _energy, float _workingRate)
 {

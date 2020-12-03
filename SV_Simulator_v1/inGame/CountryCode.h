@@ -1,8 +1,6 @@
 #pragma once
 
-enum CountryCode {
-	South_Korea, United_States_of_America
-	/*
+enum class CountryCode {
 	Afghanistan, Angola, Albania, United_Arab_Emirates,
 	Argentina, Armenia, Australia, Austria, Azerbaijan, Burundi,
 	Belgium, Benin, Burkina_Faso, Bangladesh, Bulgaria,
@@ -35,5 +33,4 @@ enum CountryCode {
 	Turkey, Taiwan, United_Republic_of_Tanzania, Uganda, Ukraine,
 	Uruguay, United_States_of_America, Uzbekistan, Venezuela,
 	Vietnam, Vanuatu, Yemen, South_Africa, Zambia, Zimbabwe
-	*/
 };

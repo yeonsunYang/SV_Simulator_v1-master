@@ -190,11 +190,14 @@ int EndGame()
 	//**************************
 	// game 해제
 	// thread가 작동 중 이면 50ms씩 최대 3초 대기
-	while (SV_Sim::simState != SimState::EndThread)
+	for (int i = 0; i < 60; i++)
 	{
 		Sleep(50);
-
-		if (clock() - start > 3000) {
+		if (SV_Sim::simState == SimState::EndThread)
+		{
+			break;
+		}
+		else if (i == 59) {
 			SV_Sim::ErrorLog("EndGame(): Thread가 종료되지 않아서 game포인터를 해제할 수 없습니다.");
 			return -1;
 		}
@@ -327,67 +330,72 @@ long long GetWorldFood()
 // 해당 국가의 예산 반환
 long long GetBudget(int _countryCode)
 {
-	return 22 + static_cast<long long> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->GetBudget();
 }
 // 해당 국가의 GDP 반환
 long long GetGDP(int _countryCode)
 {
-	return 23 + static_cast<long long> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->GetGdp();
 }
 // 해당 국가의 세율 반환
 float GetTaxRate(int _countryCode)
 {
-	return 24.0f + static_cast<float>(_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->GetTaxRate();
 }
 // 해당 국가의 식량 생산량
 long long GetFood(int _countryCode)
 {
-	return 25 + static_cast<long long> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->GetFood();
 }
 // 해당 국가의 탄소배출량 반환
 long long GetCarbonEmission(int _countryCode)
 {
-	return 26 + static_cast<long long> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->GetCarbonEmission();
 }
 // 해당 국가의 산림면적 반환
 int GetCountryForest(int _countryCode)
 {
-	return 27 + _countryCode;
+	return SV_Sim::game->GetCountry(_countryCode)->GetCountryForest();
 }
 // 해당 국가의 총 인구수 반환
 long long GetPopulation(int _countryCode)
 {
-	return 28 + static_cast<long long> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->GetPopulation();
 }
 // 해당 국가의 국가 사망자 비율 반환
 float GetDeadRate(int _countryCode)
 {
-	return 29 + _countryCode;
+	return SV_Sim::game->GetCountry(_countryCode)->GetDeadRate();
 }
 // 해당 국가의 기후난민 비율 반환
 float GetRefugeeRate(int _countryCode)
 {
-	return 30.0f + static_cast<float>(_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->GetRefugeeRate();
 }
 // 해당 국가의 국가 사망자수 반환
 long long GetDead(int _countryCode)
 {
-	return 31 + static_cast<long long>(_countryCode);
+	float deadRate = SV_Sim::game->GetCountry(_countryCode)->GetDeadRate();
+	long long population = SV_Sim::game->GetCountry(_countryCode)->GetDefaultPopulation();
+
+	return static_cast<long long> (population * deadRate);
 }
 // 해당 국가의 기후난민수 반환
 long long GetRefugees(int _countryCode)
 {
-	return 32 + static_cast<long long>(_countryCode);
+	float refugeesRate = SV_Sim::game->GetCountry(_countryCode)->GetRefugeeRate();
+	long long population = SV_Sim::game->GetCountry(_countryCode)->GetPopulation();
+	return static_cast<long long> (refugeesRate * population);
 }
 // 해당 국가에서의 기후에 대한 인식율 반환
 float GetRecognitionRate(int _countryCode)
 {
-	return 33.0f + static_cast<float>(_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->GetRecognitionRate();
 }
 // 해당 국가에서의 플레이어 지지도 반환
 float GetSupportRate(int _countryCode)
 {
-	return 34.0f + static_cast<float>(_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->GetSupportRate();
 }
 
 	
@@ -399,37 +407,37 @@ float GetSupportRate(int _countryCode)
 // 해당 국가의 산업에서 요구 에너지 반환
 int GetIndustryEnergy(int _countryCode)
 {
-	return 35 + _countryCode;
+	return SV_Sim::game->GetCountry(_countryCode)->GetIndustryEnergy();
 }
 // 해당 국가의 생활 요구 에너지 반환
 int GetLifeEnergy(int _countryCode)
 {
-	return 36 + _countryCode;
+	return SV_Sim::game->GetCountry(_countryCode)->GetLifeEnergy();
 }
 // 해당 국가의 총 발전소 개수 반환
 int GetTotalPowerPlants(int _countryCode)
 {
-	return 37 + _countryCode;
+	return SV_Sim::game->GetCountry(_countryCode)->energies.GetTotalPowerPlants();
 }
 // 해당 국가의 신재생에너지 발전소 개수 반환
 int GetGreenPowerPlants(int _countryCode)
 {
-	return 38 + _countryCode;
+	return SV_Sim::game->GetCountry(_countryCode)->energies.GetGreenPowerPlants();
 }
 // 해당 국가의 석탄화력 발전소 개수 반환
 int GetFirePowerPlants(int _countryCode)
 {
-	return 39 + _countryCode;
+	return SV_Sim::game->GetCountry(_countryCode)->energies.GetFirePowerPlants();
 }
 // 해당 국가의 발전소당 발전량(발전효율) 반환
 int GetProduce(int _countryCode)
 {
-	return 40 + _countryCode;
+	return SV_Sim::game->GetCountry(_countryCode)->energies.GetProduce();
 }
 // 해당 국가의 석탄발전소 당 탄소배출량 반환
 long long GetCarbonPerProduce(int _countryCode)
 {
-	return 41 + static_cast<long long> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->energies.GetCarbonPerProduce();
 }
 
 
@@ -438,75 +446,81 @@ long long GetCarbonPerProduce(int _countryCode)
 // 해당 국가의 1인당 자동차 소유 비율
 float GetCarPerPerson(int _countryCode)
 {
-	return 42.0f + static_cast <float> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetCarPerPerson();
 }
 // 해당 국가의 총 차량 수
 long long GetCars(int _countryCode)
 {
-	return 43 + static_cast<long long> (_countryCode);
+	float carPerPerson = SV_Sim::game->GetCountry(_countryCode)->life.GetCarPerPerson();
+	long long population = SV_Sim::game->GetCountry(_countryCode)->GetPopulation();
+	return static_cast<long long> (static_cast<float> (population) * carPerPerson);
 }
 // 해당 국가의 내연기관 자동차 비율
 float GetFossilFuelCarsRatio(int _countryCode)
 {
-	return 44.0f + static_cast <float> (_countryCode);
+	return 1.0f - SV_Sim::game->GetCountry(_countryCode)->life.GetEcocarRatio();
 }
 // 해당 국가의 친환경 자동차 비율
 float GetEcocarRation(int _countryCode)
 {
-	return 45.0f + static_cast <float> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetEcocarRatio();
 }
 // 해당 국가의 자동차 당 일일 탄소 배출량
 long long GetCarbonPerCar(int _countryCode)
 {
-	return 46 + static_cast<long long> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetCarbonPerCar();
 }
 // 해당 국가의 교통 탄소세
-float GetTaxTransprot(int _countryCode)
+int GetTaxTransprot(int _countryCode)
 {
-	return 47.0f + static_cast <float> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetTaxTransport();
 }
 // 해당 국가의 총 집의 개수
 long long GetHouses(int _countryCode)
 {
-	return 48 + static_cast<long long> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetHouses();
+
 }
 // 해당 국가의 일반 집의 비율
 float GetGrayHouses(int _countryCode)
 {
-	return 49.0f + static_cast <float> (_countryCode);
+	float greenhouses = SV_Sim::game->GetCountry(_countryCode)->life.GetGreenhouses();
+	float sunhouses = SV_Sim::game->GetCountry(_countryCode)->life.GetSunhouses();
+
+	return 1.0f - greenhouses - sunhouses;
 }
 // 해당 국가의 그린리모델링 비율
 float GetGreenHouses(int _countryCode)
 {
-	return 50.0f + static_cast <float> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetGreenhouses();
 }
 // 해당 국가의 태양관 패널 설치 비율
 float GetSunHouses(int _countryCode)
 {
-	return 51.0f + static_cast <float> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetSunhouses();
 }
 // 해당 국가의 건물 당 일일 탄소 배출량
 long long GetCarbonPerHouse(int _countryCode)
 {
-	return 52 + static_cast<long long> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetCarbonPerHouse();
 }
 // 해당 국가의 주거 탄소세
-float GetTaxHouse(int _countryCode)
+int GetTaxHouse(int _countryCode)
 {
-	return 53.0f + static_cast <float> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetTaxHouse();
 }
 // 해당 국가의 일상속 1인당 탄소 배출
 long long GetCarbonPerPerson(int _countryCode)
 {
-	return 54 + static_cast<long long> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetCarbonPerPerson();
 }
-// 해당 국가의 생활에서 발생하는 일일 총 탄소량
+// 해당 국가의 생활에서 발생하는 일일 총 탄소량 (사용하지 않기로 함.)
 long long GetLifeCarbonEmission(int _countryCode)
 {
-	return 55 + static_cast<long long> (_countryCode);
+	return -1;
 }
 // 해당 국가의 생활속 탄소세지수
-float GetTaxLife(int _countryCode)
+int GetTaxLife(int _countryCode)
 {
-	return 56.0f + static_cast <float> (_countryCode);
+	return SV_Sim::game->GetCountry(_countryCode)->life.GetTaxLife();
 }

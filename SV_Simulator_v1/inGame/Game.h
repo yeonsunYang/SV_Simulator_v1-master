@@ -25,11 +25,12 @@ private:
 	/// </summary>
 	/// <param name="_countryCode:">반환받고자 하는 Country의 code</param>
 	/// <returns>Country 객체의 포인터</returns>
-	Country* GetCountry(CountryCode _countryCode);
 
 
 public:
 	Game();
+
+	Country* GetCountry(int _countryCode);
 
 	/// <summary>
 	/// 1일 단위로 호출되는 함수

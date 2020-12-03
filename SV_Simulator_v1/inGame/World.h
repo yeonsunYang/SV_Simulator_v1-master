@@ -2,7 +2,7 @@
 #include <string>
 #include <time.h>
 #include <stdlib.h>
-#define COUNTRY_NUM 2
+#define COUNTRY_NUM 175
 //#define COUNTRY_NUM 175
 
 class Country;
@@ -11,7 +11,7 @@ class World
 {
 	friend class Game;
 private:
-	Country* countries; //전세계 모든 국가 포인터
+	Country* countries[COUNTRY_NUM]; //전세계 모든 국가 포인터
 	float worldTemperature; //전세계 평균온도
 	float worldCarbonPPM; //전세계 평균탄소농도(ppm)
 	long long worldCarbonEmission; //전세계 탄소배출량(일 단위)

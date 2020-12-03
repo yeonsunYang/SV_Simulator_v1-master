@@ -10,10 +10,11 @@ int main()
 	InitGame(8000, 2);
 
 	PlayGame();
+	Sleep(100);
 
 	int i;
 
-	DoubleSpeed();
+	OctoSpeed();
 
 	cout << endl;
 	cout << "=======2배속=====" << endl;
@@ -33,7 +34,7 @@ int main()
 		std::cout <<"today: " << Today() << " < pause >" << endl;
 	}
 	Resume();
-	QuadSpeed();
+	OctoSpeed();
 
 	cout << endl;
 	cout << "=======4배속=====" << endl;

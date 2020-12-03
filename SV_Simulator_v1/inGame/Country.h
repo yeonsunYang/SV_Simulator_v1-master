@@ -1,13 +1,11 @@
 #pragma once
-#include <string>
 #include "CountryCode.h"
 #include "IndustryCode.h"
 #include "Energy.h"
 #include "Life.h"
+#include "Industry.h"
 #define INDUSTRY_NUM 5
-class Industry;
-class Energy;
-class Life;
+
 
 class Country
 {
@@ -22,9 +20,6 @@ private:
 	long long defaultPopulation; //국가 초기 인구수
 	long long carbonEmission; //국가 탄소배출량
 	int countryForest; //국가 산림 면적
-	Industry* industries; //국가 산업부문 포인터
-	Energy energies; //국가 에너지부문 
-	Life life; //국가 생활부문 
 	float taxRate; //국가 세율
 	float supportRate; //지지도
 	float recognitionRate; //인식률
@@ -73,13 +68,47 @@ public:
 		# 1년 단위로 GDP 0으로 갱신
 
 	#########################################*/
-	///<summary>
-	///#함수 역할 : 초기화 함수
-	///</summary>
-	void init_Country(CountryCode _code, long long _budget, float _taxRate, long long _population, int _forest, float _refugeeRate, long long _food, float _removeForest,
-		float workingRate_st, float workingRate_oil, float workingRate_sv, float workingRate_mf, float workingRate_ag,
-		float _carPerPerson, float _ecocarRatio, long long _houses, float _greenhouses, float _sunhouses, long long _carbonPerPerson, int _day_energyPerPerson,
-		int _firePlants, int _greenPlants);
+
+	/* 국가 개요 부문
+	* countryCode, forest, food, removeForest
+	*/
+	void init_Country_Info(CountryCode _code, int _forest, long long _food, float _removeForest);
+
+	/* 경제부문
+	* budget, taxRate,
+	*/
+	void init_Country_Finance(long long _budget, float _taxRate);
+
+	/* 인구 부문
+	* population, refugeeRate
+	*/
+	void init_Country_Population(long long _population, float _refugeeRate);
+
+	/* 산업 부문
+	* workingRate_st, workingRate_oil, workingRate_sv, workingRate_mf, workingRate_ag
+	*/
+	void init_Country_Industry(float _workingRate_st, float _workingRate_oil, float _workingRate_sv, float _workingRate_mf, float _workingRate_ag);
+
+	/* 운송 부문
+	* carPerPerson, ecocarRatio
+	*/
+	void init_Country_Transport(float _carPerPerson, float _ecocarRatio);
+
+	/* 주거 부문
+	* houses, greenhouses, sunhouses
+	*/
+	void init_Country_House(long long _houses, float _greenhouses, float _sunhouses);
+
+	/* 생활 부문
+	* carbonPerPerson, day_energyPerPerson
+	*/
+	void init_Country_Person(long long _carbonPerPerson, int _day_energyPerPerson);
+
+	/* 발전 부문
+	* firePlants, greenPlants
+	*/
+	void init_Country_Plants(int _firePlants, int _greenPlants);
+
 
 
 	///<summary>
@@ -145,7 +174,29 @@ public:
 	///<summary>
 	///#함수 역할 : 디버깅 용 테스트 함수
 	///</summary>
-	void printStatus();
+	//void printStatus();
+
+	long long GetBudget() { return budget; }//국가 보유예산
+	long long GetGdp() { return gdp; } //국가 gdp
+	long long GetPopulation() { return population; } //국가 인구수(사망자수)
+	long long GetDefaultPopulation() {return defaultPopulation;} //국가 초기 인구수
+	long long GetCarbonEmission() { return carbonEmission; } //국가 탄소배출량
+	int GetCountryForest() { return countryForest; } //국가 산림 면적
+	Energy energies; //국가 에너지부문 
+	Life life; //국가 생활부문 
+	Industry industries[INDUSTRY_NUM]; //국가 산업부문 배열
+	int tesst[3];
+
+	float GetTaxRate() { return taxRate; } //국가 세율
+	float GetSupportRate() { return supportRate; } //지지도
+	float GetRecognitionRate() { return recognitionRate; } //인식률
+	float GetRefugeeRate() { return refugeeRate; } //국가 기후난민 비율
+	float GetDeadRate() { return deadRate; } //국가 사망자 비율
+	long long GetFood() { return food; } //작물생산량 (몇명 분량인지)
+	float GetRemoveForest() { return removeForest; } //벌목률
+	int GetIndustryEnergy() { return industryEnergy; } //산업에서 필요로 하는 에너지양(일일)
+	int GetLifeEnergy() { return lifeEnergy; } //생활에서 필요로 하는 에너지양(일일)
+	int GetNeedEnergy() { return needEnergy; } //총 필요로 하는 에너지양(일일)
 
 	~Country();
 };

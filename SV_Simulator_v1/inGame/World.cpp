@@ -1,7 +1,7 @@
 #include "World.h"
 #include "Country.h"
-#include <iostream>
-using namespace std;
+//#include <iostream>
+//using namespace std;
 ///<summary>
 	///#함수 역할 : 멤버변수들을 초기화시켜주는 생성자 함수 
 	///#매개변수 countiryNum : 생성할 국가 개수
@@ -16,15 +16,42 @@ World::World()
 	*/
 
 	//(1)
-	countries = new Country[COUNTRY_NUM];
+	for (int i = 0; i < COUNTRY_NUM; i++) {
+		countries[i] = new Country();
 
-	/*init_Country(CountryCode _code, long long _budget, float _taxRate, long long _population, int _forest, float _refugeeRate, long long _food, float _removeForest,
-	float workingRate_st, float workingRate_oil, float workingRate_sv, float workingRate_mf, float workingRate_ag,
-		float _carPerPerson, float _ecocarRatio, long long _houses, float _greenhouses, float _sunhouses, long long _carbonPerPerson, int _day_energyPerPerson,
-		int _firePlants, int _greenPlants)*/
+		if (i == static_cast<int> (CountryCode::South_Korea)) {
+			countries[i]->init_Country_Info(static_cast<CountryCode> (i), 411290, 50000000ll, 0.03f);
+			countries[i]->init_Country_Finance(16190000ll, 0.3f);
+			countries[i]->init_Country_Population(51640000ll, 0.02f);
+			countries[i]->init_Country_Industry(0.1f, 0.05f, 0.2f, 0.1f, 0.01f);
+			countries[i]->init_Country_Transport(1.2f, 0.01f);
+			countries[i]->init_Country_House(5000000ll, 0.01f, 0.09f);
+			countries[i]->init_Country_Person(15ll, 15);
+			countries[i]->init_Country_Plants(5, 1);
 
-	countries[South_Korea].init_Country(South_Korea, 16190000, 0.3, 51640000, 411290, 0.02, 50000000, 0.03, 0.1, 0.05, 0.2, 0.1, 0.01, 1.2, 0.01, 5000000, 0.01, 0.09, 15, 15, 5, 1);
-	countries[United_States_of_America].init_Country(United_States_of_America, 205400000, 0.2, 328200000, 5269520, 0.08, 120000000, 0.06, 0.12, 0.09, 0.3, 0.06, 0.07, 1.8, 0.05, 12000000, 0.1, 0.12, 30, 30, 10, 5);
+		}
+		else if (i == static_cast<int> (CountryCode::United_States_of_America)) {
+			countries[i]->init_Country_Info(static_cast<CountryCode> (i), 5269520, 120000000ll, 0.06f);
+			countries[i]->init_Country_Finance(205400000ll, 0.2f);
+			countries[i]->init_Country_Population(328200000ll, 0.08f);
+			countries[i]->init_Country_Industry(0.12f, 0.09f, 0.3f, 0.06f, 0.07f);
+			countries[i]->init_Country_Transport(1.8f, 0.05f);
+			countries[i]->init_Country_House(12000000ll, 0.1f, 0.12f);
+			countries[i]->init_Country_Person(30ll, 30);
+			countries[i]->init_Country_Plants(10, 5);
+		}
+		else
+		{
+			countries[i]->init_Country_Info(static_cast<CountryCode> (i), 1000000 + (i * 10), 200000ll + (i * 10), 0.06f);
+			countries[i]->init_Country_Finance(100000ll, 0.2f);
+			countries[i]->init_Country_Population(25000000ll + (i * 10), 0.08f);
+			countries[i]->init_Country_Industry(0.12f, 0.09f, 0.3f, 0.06f, 0.07f);
+			countries[i]->init_Country_Transport(1.8f, 0.05f);
+			countries[i]->init_Country_House(12000000ll, 0.1f, 0.12f);
+			countries[i]->init_Country_Person(30ll, 30);
+			countries[i]->init_Country_Plants(10, 5);
+		}
+	}
 
 	//(2)
 	total_ForestOfCountries();
@@ -39,7 +66,7 @@ World::World()
 	this->defaultWorldFood = this->worldFood;
 
 	//(4)
-	this->disasterProbability = 0.01;
+	this->disasterProbability = 0.01f;
 }
 
 
@@ -51,7 +78,7 @@ void World::total_CarbonEmissionOfCountries()
 	this->worldCarbonEmission = 0;
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		this->worldCarbonEmission += this->countries[i].carbonEmission;
+		this->worldCarbonEmission += this->countries[i]->carbonEmission;
 	}
 }
 
@@ -64,7 +91,7 @@ void World::total_ForestOfCountries()
 	this->worldForest = 0;
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		this->worldForest += this->countries[i].countryForest;
+		this->worldForest += this->countries[i]->countryForest;
 	}
 }
 
@@ -85,7 +112,7 @@ void World::total_PopulationOfCountries()
 	this->worldPopulation = 0;
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		this->worldPopulation += this->countries[i].population;
+		this->worldPopulation += this->countries[i]->population;
 	}
 }
 
@@ -97,7 +124,7 @@ void World::total_RefugeesOfCountries()
 	this->worldRefugees = 0;
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		this->worldRefugees += this->countries[i].refugeeRate * this->countries[i].population;
+		this->worldRefugees += this->countries[i]->refugeeRate * this->countries[i]->population;
 	}
 }
 
@@ -107,7 +134,7 @@ void World::total_RefugeesOfCountries()
 ///</summary>
 void World::calculator_worldTemperature()
 {
-	this->worldTemperature = 0.008984563 * this->worldCarbonPPM + 12.366367558;
+	this->worldTemperature = 0.008984563f * this->worldCarbonPPM + 12.366367558f;
 }
 
 ///<summary>
@@ -116,7 +143,7 @@ void World::calculator_worldTemperature()
 ///</summary>
 void World::calculator_worldCarbonPPM()
 {
-	this->worldCarbonPPM = 0.001 * (this->worldCarbonEmission - this->worldCarbonAbsorbed);
+	this->worldCarbonPPM = 0.001f * (this->worldCarbonEmission - this->worldCarbonAbsorbed);
 }
 
 ///<summary>
@@ -134,14 +161,14 @@ void World::check_worldTemperature()
 	if ((this->worldTemperature - this->defaultWorldTemperature) >= 0.1)
 	{
 		//초기 온도에서 0.1도 증가했다면, 
-		this->disasterProbability += 0.05;
+		this->disasterProbability += 0.05f;
 		for (int i = 0; i < COUNTRY_NUM; i++)
 		{
-			this->countries[i].recognitionRate += 0.08; //인식률 증가
-			this->countries[i].food -= (long long)(this->countries[i].food * 0.1);//식량감소
+			this->countries[i]->recognitionRate += 0.08f; //인식률 증가
+			this->countries[i]->food -= (long long)(this->countries[i]->food * 0.1f);//식량감소
 		}
 	}
-	this->defaultWorldTemperature += 0.1;
+	this->defaultWorldTemperature += 0.1f;
 }
 
 ///<summary>
@@ -152,7 +179,7 @@ void World::total_FoodOfCountries()
 	this->worldFood = 0;
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		this->worldFood += this->countries[i].food;
+		this->worldFood += this->countries[i]->food;
 	}
 }
 
@@ -173,9 +200,9 @@ void World::check_worldFood()
 		//임계점 넘었다면
 		for (int i = 0; i < COUNTRY_NUM; i++)
 		{
-			this->countries[i].recognitionRate += 0.1; //인식률 증가
-			this->countries[i].deadRate += 0.05; //사망자 비율 증가
-			this->countries[i].refugeeRate += 0.08; //난민 비율 증가
+			this->countries[i]->recognitionRate += 0.1f; //인식률 증가
+			this->countries[i]->deadRate += 0.05f; //사망자 비율 증가
+			this->countries[i]->refugeeRate += 0.08f; //난민 비율 증가
 		}
 	}
 	this->defaultWorldFood -= 50000000;
@@ -186,7 +213,7 @@ void World::check_worldFood()
 ///</summary>
 void World::random_disaster()
 {
-	bool disaster[100] = { false };
+	bool disaster[100] = { true };
 	int probability = (int)(this->disasterProbability * 100);
 	for (int i = 0; i < probability; i++)
 	{
@@ -194,8 +221,10 @@ void World::random_disaster()
 	} //100일 중 재난이 발생할 확률의 날만큼 true로 변환
 
 	srand(time(0));
+
 	int temp;
 	int rn;
+
 	for (int i = 0; i < 99; i++)
 	{
 		rn = rand() % (100 - i) + i; //i부터 99사이의 임의의 정수 생성
@@ -213,10 +242,10 @@ void World::random_disaster()
 		float deadRate = (rand() % 6) / 100; //사망자 비율 6%안에서 랜덤하게
 		float refugeeRate = (rand() % 12) / 100; //난민 비율 12% 안에서 랜덤하게
 
-		this->countries[randomCountry].refugeeRate += refugeeRate; //난민 증가
-		this->countries[randomCountry].deadRate += deadRate; //사망자수 증가
-		this->countries[randomCountry].food -= (long long)(this->countries[randomCountry].food * 0.08);//식량감소
-		this->countries[randomCountry].recognitionRate += (refugeeRate); //인식률 증가
+		this->countries[randomCountry]->refugeeRate += refugeeRate; //난민 증가
+		this->countries[randomCountry]->deadRate += deadRate; //사망자수 증가
+		this->countries[randomCountry]->food -= (long long)(this->countries[randomCountry]->food * 0.08);//식량감소
+		this->countries[randomCountry]->recognitionRate += (refugeeRate); //인식률 증가
 
 	}
 }
@@ -227,11 +256,11 @@ void World::random_disaster()
 ///</summary>
 void World::printStatus()
 {
-	cout << "countryNum: " << COUNTRY_NUM << endl; // (+)추가변수 : 국가 개수
-	cout << "worldTemperature: " << worldTemperature << endl; //전세계 평균온도
-	cout << "worldCarbonEmission: " << worldCarbonEmission << endl; //전세계 탄소배출량
-	cout << "worldPopulation: " << worldPopulation << endl; //전세계 인구수
-	cout << "worldCarbonPPM: " << worldCarbonPPM << endl; //전세계 평균탄소농도(ppm)
+	//cout << "countryNum: " << COUNTRY_NUM << endl; // (+)추가변수 : 국가 개수
+	//cout << "worldTemperature: " << worldTemperature << endl; //전세계 평균온도
+	//cout << "worldCarbonEmission: " << worldCarbonEmission << endl; //전세계 탄소배출량
+	//cout << "worldPopulation: " << worldPopulation << endl; //전세계 인구수
+	//cout << "worldCarbonPPM: " << worldCarbonPPM << endl; //전세계 평균탄소농도(ppm)
 
 }
 
@@ -241,6 +270,11 @@ void World::printStatus()
 ///</summary>
 World::~World()
 {
-	delete[] countries;
+	for (int i = 0; i < COUNTRY_NUM; i++)
+	{
+		if (countries[i] != nullptr)
+		delete countries[i];
+		countries[i] = nullptr;
+	}
 }
 

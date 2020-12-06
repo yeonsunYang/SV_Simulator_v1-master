@@ -1,169 +1,298 @@
 #include "Game.h"
 #include <iostream>
-
+#include <Windows.h>
+#include <iomanip>
 using namespace std;
 
+Game* Game::instance = nullptr;
 
-//*******************************
+Game::Game() 
+{
+	player = Player::GetInstance();
+	world = World::GetInstance();
 
-Game::Game() {
+	countries[0] = new Country(7540, 73, 12);
+	countries[1] = new Country(3270, 35, 17);
+	countries[2] = new Country(2520, 22, 3);
+	countries[3] = new Country(910, 10, 4);
+	countries[4] = new Country(2300, 15, 8);
+	countries[5] = new Country(1000, 12, 3);
+	countries[6] = new Country(6050, 35, 23);
+
 	date = 0;
-	InitializeGame();
 }
 
-Game::~Game() {
-	EndGame();
-}
-
-
-Country* Game::GetCountry(int _countryCode)
+Game::~Game() 
 {
-	return world->countries[_countryCode];
-}
-
-/*
-long long Game::GetBudget(CountryCode _countryCode)
-{
-	return this->GetCountry(_countryCode)->GetbudGet();
-}
-
-long long Game::GetGDP(CountryCode _countryCode)
-{
-	return this->GetCountry(_countryCode)->GetGDP();
-}
-
-long long Game::GetPopulation(CountryCode _countryCode)
-{
-	return this->GetCountry(_countryCode)->GetPopulation();
-}
-long long Game::GetCarbonEmission(CountryCode _countryCode)
-{
-	return this->GetCountry(_countryCode)->GetCarbonEmission();
-}
-float Game::GetTaxRate(CountryCode _countryCode)
-{
-	return this->GetCountry(_countryCode)->GettaxRate();
-}
-*/
-
-float Game::GetWorldTemperature()
-{
-	return world->worldTemperature;
-}
-long long Game::GetWorldCarbonEmission()
-{
-	return world->worldCarbonEmission;
-}
-long long Game::GetWorldPopulation()
-{
-	return world->worldPopulation;
-}
-float Game::GetWorldCarbonPPM()
-{
-	return world->worldCarbonPPM;
-}
-//*******************************
-
-
-
-
-//여기서 부터 작성 가능 ============================================
-
-//규칙적으로 호출되는 함수*******************************************
-
-void Game::InitializeGame() {
-	// 게임 초기화 관련 코드 작성, main thread만 호출 가능
-
-	world = new World();
-
-	// <정책 생성>
-	//carbontax = new IndustryPolicy(Carbontax, Steel, 1000, 0.1, 0, 0);
-	// IndustryPolicyCode, IndustryCode, 필요예산, 세금지수변화율, 종사자비율변화율, 탄소배출량변화율
-
-}
-
-void Game::Oneday() {
-
-	date += 1;
 
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		world->countries[i]->add_totalGDP();
-		world->countries[i]->add_totalCarbonEmission();
-		world->countries[i]->add_totalPopulation();
-		world->countries[i]->total_industryEnergy();
-		world->countries[i]->total_lifeEnergy();
-		world->countries[i]->total_needEnergy();
+		delete countries[i];
 	}
-	world->total_ForestOfCountries();
-	world->total_CarbonAbsorbedOfCountries();
-	world->total_CarbonEmissionOfCountries();
-	world->calculator_worldCarbonPPM();
-	world->calculator_worldTemperature();
-	world->check_worldTemperature();
-	world->total_FoodOfCountries();
-	world->check_worldFood();
-	world->random_disaster();
-	world->total_PopulationOfCountries();
-	world->total_RefugeesOfCountries();
+}
+Game::Game(const Game& other)
+{
+
 }
 
-void Game::OneMonth()
+void Game::Play()
 {
+	system("cls");
+	cout << "=========================" << endl;
+	cout << "잠시 후 게임을 시작합니다." << endl; 
+	cout << "=========================" << endl;
+
+	OneDay();
+
+	world->SetStartTemperature();
+
+	//Sleep(2000);
+}
+
+int Game::Today()
+{
+	return date;
+}
+
+void Game::OneDay()
+{
+	date++;
+
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		world->countries[i]->add_monthTax();
-		world->countries[i]->calculator_monthForest();
+		countries[i]->CalEmission();
+		countries[i]->CalDeath();
+		countries[i]->CalEnergy();
+		countries[i]->CalSupport();
+		countries[i]->ReceiveGold();
+
 	}
+
+	TotalPopulation();
+	TotalPlants();
+	TotalEnergy();
+	TotalEmission();
+	TotalGold();
+	TotalSupport();
+	
+
+	world->CalTemperature();
 }
 
-void Game::OneYear()
+void Game::End()
 {
+	system("cls");
+	cout << "=========================" << endl;
+	cout << "게임이 종료됩니다." << endl;
+	cout << "=========================" << endl;
+}
+void Game::PrintDate()
+{
+	cout << fixed;
+	cout.precision(2);
+
+	cout <<"|"<< setw(4) << date << " 일차  " 
+		<< setw(8) << "| 온도: " << setw(5) << world->Temperature()
+		<< " ( ▲" << setw(5) << world->ElevatedTemperature() << " )"
+		<< setw(8) << "| 농도: " << setw(6) << world->CarbonPPM() << endl;
+}
+void Game::PrintPlayer()
+{
+	cout << "|" << setw(8) << "골드:" << setw(4) << player->TGold()
+		<< " ▲" << setw(3) << player->DGold()
+		<< setw(10) << "| 지지도:" << setw(4) << player->Support();
+		
+	if(player->DSupport() == 0)
+		cout << " ◆" << setw(2) << player->DSupport() << endl;
+	else if (player->DSupport() > 0)
+		cout << " ▲" << setw(3) << player->DSupport() << endl;
+	else if (player->DSupport() < 0)
+		cout << " ▼" << setw(3) << player->DSupport() << endl;
+
+}
+
+void Game::PrintWorld()
+{
+	cout << "|" << "인구수(   전체 /   생존 /   사망 )" << endl;
+	cout << "|" << setw(7) << "("
+		<< setw(7) << world->Population() << " /"
+		<< setw(7) << world->Live() << " /"
+		<< setw(7) << world->Dead() << " )" 
+		<< " ▲ "<< world->DDead()<< endl;
+
+
+	cout << "|" << "배출량(   일일 /   누적 )" << endl;
+	cout << "|" << setw(7) << "("
+		<< setw(7) << world->DEmission() << " /"
+		<< setw(7) << world->TEmission() << " )"<<  endl;
+
+	cout << "|" << "에너지(   수요 /    공급 )" << endl;
+	cout << "|" << setw(7) << "("
+		<< setw(7) << world->NeedEnergy()<< " / " 
+		<< setw(7) << world->SupplyEnergy() << " )" << endl;
+
+	cout << "|" << "  인식(" <<setw(4) <<world->Recognition() << " )";
+
+	if (world->DRecognition() == 0)
+		cout << " ◆" << setw(2) << world->DRecognition() << endl;
+	else if (world->DRecognition() > 0)					 
+		cout << " ▲" << setw(3) << world->DRecognition() << endl;
+	else if (world->DRecognition() < 0)					 
+		cout << " ▼" << setw(3) << world->DRecognition() << endl;
+}
+
+void Game::PrintCountriesAll()
+{
+	cout << "| ( No. )  전체  /  생존  /  사망   " << endl;
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
-		world->countries[i]->calculator_budget();
-		world->countries[i]->reset_annualGDP();
+		cout << "| ( " <<setw(3)<< i <<" )"
+			<<setw(7) << countries[i]->Population() << " /"
+			<<setw(7) << countries[i]->Live() << " /"
+			<<setw(7) << countries[i]->Dead() << " "
+			<< " ▲ " << countries[i]->DDead() << endl;
 	}
 }
-void Game::EndGame() {
-	// 게임 종료시 필요한 코드 작성, main thread만 호출 가능
+void Game::PrintCountriesDetail(char _input)
+{
+	int countryCode = static_cast<int>(_input) - 48;
 
-	//for (int i = 0; i < COUNTRY_NUM; i++)
-	//{
-	//	world->countries[i]->~Country();
-	//}
-	//world->~World();
-	delete world;
-	//delete carbontax;
+	if (countryCode >= COUNTRY_NUM) {
+		cout << " 비정상적인 접근입니다" << endl;
+		return;
+	}
+	cout << "| ( " << setw(3) << countryCode << " ) 국가의 정보" << endl;
+	cout << "| ( " << setw(3) << countryCode << " )"
+		<< setw(7) << countries[countryCode]->Population() << " /"
+		<< setw(7) << countries[countryCode]->Live() << " /"
+		<< setw(7) << countries[countryCode]->Dead() << " "
+		<< " ▲ " << countries[countryCode]->DDead() << endl;
+	cout << endl;
+
+	cout << "|     [골드]" << endl;
+	cout << "|   일일 수입:" << setw(7) << countries[countryCode]->DGold() << endl;
+	cout << "|   누적 수입:" << setw(7) << countries[countryCode]->TGold() << endl;
+	cout << endl;
+
+	cout << "|     [지지도]" << endl;
+	cout << "| 지지도 변화:" << setw(7) << countries[countryCode]->DSupport() << endl;
+	cout << "|      지지도:" << setw(7) << countries[countryCode]->Support() << endl;
+	cout << endl;
+
+	cout << "| [기후위기 인식]" << endl;
+	cout << "| 인식의 변화:" << setw(7) << countries[countryCode]->DSupport() << endl;
+	cout << "|      인식도:" << setw(7) << countries[countryCode]->Recognition() << endl;
+	cout << endl;
+
+	cout << "|     [에너지]" << endl;
+	cout << "| 에너지 수요:" << setw(7) << countries[countryCode]->NeedEnergy() << endl;
+	cout << "| 에너지 공급:" << setw(7) << countries[countryCode]->SupplyEnergy() << endl;
+	cout << endl;
+
+	cout << "|     [발전소]" << endl;
+	cout << "| 화력 발전소:" << setw(7) << countries[countryCode]->FirePlants() << endl;
+	cout << "| 재생 발전소:" << setw(7) << countries[countryCode]->GreenPlants() << endl;
+	cout << endl;
+
 
 
 }
-//******************************************************************
 
+void Game::TotalPopulation()
+{
+	int population, live, dead;
 
+	population = live = dead = 0;
 
-//이벤트 함수*********************************************************
-/*
-void Game::EnforcePolicy(int _countryCode, int _policyCode) {
-	//정책 실행시 호출시 필요한 코드 작성.
-
-
-
-
-	switch (_policyCode)
+	for (Country* _country : countries)
 	{
-	case IndustryPolicyCode::Carbontax:
-		//		cout << "Carbontax 정책이 시행되었습니다." << endl;
-		break;
-
-	default:
-		break;
-
+		population += _country->Population();
+		live += _country->Live();
+		dead += _country->Dead();
 	}
-	carbontax->enforce(*world->countries[_countryCode]); //carbontax를 해당 국가에 대하여 실행
 
+	world->SetPopulation(population, live, dead);
 
 }
-*/
-//*******************************************************************
-//===================================================================
+
+void Game::TotalEnergy()
+{
+	int need, supply;
+	
+	need = supply = 0;
+
+	for (Country* _country : countries)
+	{
+		need += _country->NeedEnergy();
+		supply += _country->SupplyEnergy();
+	}
+
+	world->SetEnergy(need, supply);
+}
+
+void Game::TotalPlants()
+{
+	int fire, green;
+
+	fire = green = 0;
+
+	for (Country* _country : countries)
+	{
+		fire += _country->FirePlants();
+		green += _country->GreenPlants();
+	}
+
+	world->SetPlants(fire, green);
+}
+
+void Game::TotalEmission()
+{
+	int emission = 0;
+
+	for (Country* _country : countries)
+	{
+		emission += _country->DEmission();
+	}
+
+	world->SetEmission(emission);
+
+}
+
+void Game::TotalGold()
+{
+	int gold = 0;
+
+	for (Country* _country : countries)
+	{
+		gold += _country->DGold();
+	}
+
+	player->SetGold(gold);
+}
+void Game::TotalSupport()
+{
+	int support = 0;
+
+	for (Country* _country : countries)
+	{
+		support += _country->Support();
+	}
+
+	support /= COUNTRY_NUM;
+
+	player->SetSupport(support);
+}
+
+void Game::TotalRecognition()
+{
+	int recognition = 0;
+
+	for (Country* _country : countries)
+	{
+		recognition += _country->Recognition();
+	}
+
+	recognition /= COUNTRY_NUM;
+
+	world->SetRecognition(recognition);
+}

@@ -157,11 +157,8 @@
   <ItemGroup>
     <ClInclude Include="inGame\Country.h" />
     <ClInclude Include="inGame\CountryCode.h" />
-    <ClInclude Include="inGame\Energy.h" />
     <ClInclude Include="inGame\Game.h" />
-    <ClInclude Include="inGame\Industry.h" />
-    <ClInclude Include="inGame\IndustryCode.h" />
-    <ClInclude Include="inGame\Life.h" />
+    <ClInclude Include="inGame\Player.h" />
     <ClInclude Include="inGame\World.h" />
     <ClInclude Include="interface\framework.h" />
     <ClInclude Include="interface\interface.h" />
@@ -169,10 +166,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="inGame\Country.cpp" />
-    <ClCompile Include="inGame\Energy.cpp" />
     <ClCompile Include="inGame\Game.cpp" />
-    <ClCompile Include="inGame\Industry.cpp" />
-    <ClCompile Include="inGame\Life.cpp" />
+    <ClCompile Include="inGame\Player.cpp" />
     <ClCompile Include="inGame\World.cpp" />
     <ClCompile Include="interface\dllmain.cpp" />
     <ClCompile Include="interface\interface.cpp" />

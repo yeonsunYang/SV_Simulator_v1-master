@@ -24,28 +24,19 @@
     <ClInclude Include="interface\interface.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inGame\Game.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="inGame\CountryCode.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="inGame\World.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="inGame\Country.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inGame\Industry.h">
+    <ClInclude Include="inGame\Game.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inGame\IndustryCode.h">
+    <ClInclude Include="inGame\Player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inGame\Life.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="inGame\Energy.h">
+    <ClInclude Include="inGame\World.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,22 +50,16 @@
     <ClCompile Include="interface\interface.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="inGame\Game.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="inGame\World.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="inGame\Country.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="inGame\Industry.cpp">
+    <ClCompile Include="inGame\Game.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="inGame\Life.cpp">
+    <ClCompile Include="inGame\Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="inGame\Energy.cpp">
+    <ClCompile Include="inGame\World.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -24,6 +24,19 @@ int SV_Sim::Run()
 		start = clock();
 		// work() 호출
 		SV_Sim::Work();
+		//system("cls");
+
+
+		//cout << "===================================================" << endl;
+		//cout << "===                 Survival 1.5                ===" << endl;
+		//cout << "===================================================" << endl;
+
+		//SV_Sim::game->PrintDate();
+		//SV_Sim::game->PrintPlayer();
+		//SV_Sim::game->PrintWorld();
+		//SV_Sim::game->PrintCountriesAll();
+
+
 		if(SV_Sim::simState == SimState::WaitEnd)
 			break;
 		end = clock();
@@ -62,13 +75,8 @@ int SV_Sim::Work()
 	if (SV_Sim::simState == SimState::WaitEnd) {
 		return 0;
 	}
-	game->Oneday();
+	game->OneDay();
 
-	if (game->Today() % 30 == 0)
-		game->OneMonth();
-
-	if (game->Today() % 360 == 0)
-		game->OneYear();
 
 	return 0;
 }
@@ -120,14 +128,6 @@ int InitGame(long long _cycle, int _debugMode)
 	if (SV_Sim::simState != SimState::Disable)
 		return static_cast<int> (SV_Sim::simState);
 
-	//**************************
-	//game 생성 및 초기화
-
-	if(SV_Sim::game == nullptr)
-		SV_Sim::game = new Game();
-
-	//**************************
-
 
 	if (_cycle < MINCYCLE)
 		SV_Sim::oneDayCycle = MINCYCLE;
@@ -140,6 +140,9 @@ int InitGame(long long _cycle, int _debugMode)
 
 	SV_Sim::simState = SimState::WaitPlay;
 	SV_Sim::playSpeed = PlaySpeed::Normal;
+	SV_Sim::game = Game::GetInstance();
+	SV_Sim::world = World::GetInstance();
+	SV_Sim::player = Player::GetInstance();
 
 	return 0;
 }
@@ -150,6 +153,7 @@ int PlayGame()
 	if (SV_Sim::simState != SimState::WaitPlay)
 		return static_cast<int> (SV_Sim::simState);
 
+	SV_Sim::game->Play();
 
 	SV_Sim::simState = SimState::InitThread;
 
@@ -187,9 +191,7 @@ int EndGame()
 
 	SV_Sim::simState = SimState::WaitEnd;
 
-	//**************************
-	// game 해제
-	// thread가 작동 중 이면 50ms씩 최대 3초 대기
+
 	for (int i = 0; i < 60; i++)
 	{
 		Sleep(50);
@@ -203,13 +205,6 @@ int EndGame()
 		}
 	}
 
-	if (SV_Sim::game == nullptr) {
-		SV_Sim::ErrorLog("EndGame(): nullptr을 해제하려는 시도를 합니다.");
-		return -2;
-	}
-
-	delete SV_Sim::game;
-	SV_Sim::game = nullptr;
 
 	SV_Sim::simState = SimState::Disable;
 
@@ -268,259 +263,165 @@ int Today()
 	return SV_Sim::game->Today();
 }
 
-//******************************** world class data
 
-// 전세계 평균 온도 반환
-float GetWorldTemperature()
+int GetWTemperature_p2()
 {
-	return 13.0f;
+	return SV_Sim::world->Temperature_p2();
 }
-// 전세계 평균탄소농도 반환
-float GetWorldCarbonPPM()
+float GetWTemperature()
 {
-	return 14.0f;
+	return SV_Sim::world->Temperature();
 }
-// 전세계 탄소배출량(일 단위) 반환
-long long GetWorldCarbonEmission()
+int GetWElevatedTemperature_p2()
 {
-	return 15;
+	return SV_Sim::world->ElevatedTemperature_p2();
 }
-// 전세계 탄소 흡수량(일 단위) 반환
-long long GetWorldCarbonAbsorbed()
+float GetWElevatedTemperature()
 {
-	return 16;
+	return SV_Sim::world->ElevatedTemperature();
 }
-// 전세계 산림 면적 반환
-long long GetWorldForest()
+int GetWCarbonPPM_p2()
 {
-	return 17;
+	return SV_Sim::world->CarbonPPM_p2();
 }
-// 전세계 인구 수 반환
-long long GetWorldPopulation()
+float GetWCarbonPPM()
 {
-	return 18;
+	return SV_Sim::world->CarbonPPM();
 }
-// 전세계 사만자 수 반환
-long long GetWorldDead()
+int GetPTGold()
 {
-	return 19;
+	return SV_Sim::player->TGold();
 }
-// 전세계 기후난민 수 반환
-long long GetWorldRefugees()
+int GetPDGold()
 {
-	return 20;
+	return SV_Sim::player->DGold();
 }
-// 전세계 작물생산량 (단위는 '몇 인분')
-long long GetWorldFood()
+int GetPSupport()
 {
-	return 21;
+	return SV_Sim::player->Support();
+}
+int GetPDSupport()
+{
+	return SV_Sim::player->DSupport();
+}
+long long GetWPopulation()
+{
+	return SV_Sim::world->Population();
+}
+long long GetWLive()
+{
+	return SV_Sim::world->Live();
+}
+long long GetWDead()
+{
+	return SV_Sim::world->Dead();
+}
+long long GetWDDead()
+{
+	return SV_Sim::world->DDead();
+}
+int GetWDEmission()
+{
+	return SV_Sim::world->DEmission();
+}
+int GetWTEmission()
+{
+	return SV_Sim::world->TEmission();
+}
+int GetWNeedEnergy()
+{
+	return SV_Sim::world->NeedEnergy();
+}
+int GetWDNeedEnergy()
+{
+	return SV_Sim::world->DNeedEnergy();
+}
+int GetWSupplyEnergy()
+{
+	return SV_Sim::world->SupplyEnergy();
+}
+int GetWDSupplyEnergy()
+{
+	return SV_Sim::world->DSupplyEnergy();
+}
+int GetWRecognition()
+{
+	return SV_Sim::world->Recognition();
+}
+int GetWDRecognition()
+{
+	return SV_Sim::world->DRecognition();
 }
 
-
-//// 재난 발생확률
-//float GetDisasterProbability();
-//// 작물생산량 임계점 (초기화 필요)
-//long long GetFoodCriticalPoint();
-//// 평균온도 임계점 (초기화 필요)
-//float GetTempCriticalPoint();
-
-//********************************************************
-
-//******************************** country class 개요 패널
-// 해당 국가의 예산 반환
-long long GetBudget(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->GetBudget();
-}
-// 해당 국가의 GDP 반환
-long long GetGDP(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->GetGdp();
-}
-// 해당 국가의 세율 반환
-float GetTaxRate(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->GetTaxRate();
-}
-// 해당 국가의 식량 생산량
-long long GetFood(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->GetFood();
-}
-// 해당 국가의 탄소배출량 반환
-long long GetCarbonEmission(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->GetCarbonEmission();
-}
-// 해당 국가의 산림면적 반환
-int GetCountryForest(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->GetCountryForest();
-}
-// 해당 국가의 총 인구수 반환
 long long GetPopulation(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->GetPopulation();
+	return SV_Sim::game->CountryInstance(_countryCode)->Population();
 }
-// 해당 국가의 국가 사망자 비율 반환
-float GetDeadRate(int _countryCode)
+long long GetLive(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->GetDeadRate();
+	return SV_Sim::game->CountryInstance(_countryCode)->Live();
 }
-// 해당 국가의 기후난민 비율 반환
-float GetRefugeeRate(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->GetRefugeeRate();
-}
-// 해당 국가의 국가 사망자수 반환
 long long GetDead(int _countryCode)
 {
-	float deadRate = SV_Sim::game->GetCountry(_countryCode)->GetDeadRate();
-	long long population = SV_Sim::game->GetCountry(_countryCode)->GetDefaultPopulation();
-
-	return static_cast<long long> (population * deadRate);
+	return SV_Sim::game->CountryInstance(_countryCode)->Dead();
 }
-// 해당 국가의 기후난민수 반환
-long long GetRefugees(int _countryCode)
+long long GetDDead(int _countryCode)
 {
-	float refugeesRate = SV_Sim::game->GetCountry(_countryCode)->GetRefugeeRate();
-	long long population = SV_Sim::game->GetCountry(_countryCode)->GetPopulation();
-	return static_cast<long long> (refugeesRate * population);
+	return SV_Sim::game->CountryInstance(_countryCode)->DDead();
 }
-// 해당 국가에서의 기후에 대한 인식율 반환
-float GetRecognitionRate(int _countryCode)
+int GetDGold(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->GetRecognitionRate();
+	return SV_Sim::game->CountryInstance(_countryCode)->DGold();
 }
-// 해당 국가에서의 플레이어 지지도 반환
-float GetSupportRate(int _countryCode)
+int GetTGold(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->GetSupportRate();
+	return SV_Sim::game->CountryInstance(_countryCode)->TGold();
 }
-
-	
-	
-//// 해당 국가의 벌목률 반환
-//float GetRemoveForest(int _countryCode);
-	
-//************************************* Country class Energy 패널
-// 해당 국가의 산업에서 요구 에너지 반환
-int GetIndustryEnergy(int _countryCode)
+int GetDSupport(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->GetIndustryEnergy();
+	return SV_Sim::game->CountryInstance(_countryCode)->DSupport();
 }
-// 해당 국가의 생활 요구 에너지 반환
-int GetLifeEnergy(int _countryCode)
+int GetSupport(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->GetLifeEnergy();
+	return SV_Sim::game->CountryInstance(_countryCode)->Support();
 }
-// 해당 국가의 총 발전소 개수 반환
-int GetTotalPowerPlants(int _countryCode)
+int GetDRecognition(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->energies.GetTotalPowerPlants();
+	return SV_Sim::game->CountryInstance(_countryCode)->DRecognition();
 }
-// 해당 국가의 신재생에너지 발전소 개수 반환
-int GetGreenPowerPlants(int _countryCode)
+int GetRecognition(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->energies.GetGreenPowerPlants();
+	return SV_Sim::game->CountryInstance(_countryCode)->Recognition();
 }
-// 해당 국가의 석탄화력 발전소 개수 반환
-int GetFirePowerPlants(int _countryCode)
+int GetNeedEnergy(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->energies.GetFirePowerPlants();
+	return SV_Sim::game->CountryInstance(_countryCode)->NeedEnergy();
 }
-// 해당 국가의 발전소당 발전량(발전효율) 반환
-int GetProduce(int _countryCode)
+int GetDNeedEnergy(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->energies.GetProduce();
+	return SV_Sim::game->CountryInstance(_countryCode)->DNeedEnergy();
 }
-// 해당 국가의 석탄발전소 당 탄소배출량 반환
-long long GetCarbonPerProduce(int _countryCode)
+int GetSupplyEnergy(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->energies.GetCarbonPerProduce();
+	return SV_Sim::game->CountryInstance(_countryCode)->SupplyEnergy();
 }
-
-
-//************************************* Country class Life 패널
-
-// 해당 국가의 1인당 자동차 소유 비율
-float GetCarPerPerson(int _countryCode)
+int GetDSupplyEnergy(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetCarPerPerson();
+	return SV_Sim::game->CountryInstance(_countryCode)->DSupplyEnergy();
 }
-// 해당 국가의 총 차량 수
-long long GetCars(int _countryCode)
+int GetFirePlants(int _countryCode)
 {
-	float carPerPerson = SV_Sim::game->GetCountry(_countryCode)->life.GetCarPerPerson();
-	long long population = SV_Sim::game->GetCountry(_countryCode)->GetPopulation();
-	return static_cast<long long> (static_cast<float> (population) * carPerPerson);
+	return SV_Sim::game->CountryInstance(_countryCode)->FirePlants();
 }
-// 해당 국가의 내연기관 자동차 비율
-float GetFossilFuelCarsRatio(int _countryCode)
+int GetDFirePlants(int _countryCode)
 {
-	return 1.0f - SV_Sim::game->GetCountry(_countryCode)->life.GetEcocarRatio();
+	return SV_Sim::game->CountryInstance(_countryCode)->DFIrePlants();
 }
-// 해당 국가의 친환경 자동차 비율
-float GetEcocarRation(int _countryCode)
+int GetGreenPlants(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetEcocarRatio();
+	return SV_Sim::game->CountryInstance(_countryCode)->GreenPlants();
 }
-// 해당 국가의 자동차 당 일일 탄소 배출량
-long long GetCarbonPerCar(int _countryCode)
+int GetDGreenPlants(int _countryCode)
 {
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetCarbonPerCar();
-}
-// 해당 국가의 교통 탄소세
-int GetTaxTransprot(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetTaxTransport();
-}
-// 해당 국가의 총 집의 개수
-long long GetHouses(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetHouses();
-
-}
-// 해당 국가의 일반 집의 비율
-float GetGrayHouses(int _countryCode)
-{
-	float greenhouses = SV_Sim::game->GetCountry(_countryCode)->life.GetGreenhouses();
-	float sunhouses = SV_Sim::game->GetCountry(_countryCode)->life.GetSunhouses();
-
-	return 1.0f - greenhouses - sunhouses;
-}
-// 해당 국가의 그린리모델링 비율
-float GetGreenHouses(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetGreenhouses();
-}
-// 해당 국가의 태양관 패널 설치 비율
-float GetSunHouses(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetSunhouses();
-}
-// 해당 국가의 건물 당 일일 탄소 배출량
-long long GetCarbonPerHouse(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetCarbonPerHouse();
-}
-// 해당 국가의 주거 탄소세
-int GetTaxHouse(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetTaxHouse();
-}
-// 해당 국가의 일상속 1인당 탄소 배출
-long long GetCarbonPerPerson(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetCarbonPerPerson();
-}
-// 해당 국가의 생활에서 발생하는 일일 총 탄소량 (사용하지 않기로 함.)
-long long GetLifeCarbonEmission(int _countryCode)
-{
-	return -1;
-}
-// 해당 국가의 생활속 탄소세지수
-int GetTaxLife(int _countryCode)
-{
-	return SV_Sim::game->GetCountry(_countryCode)->life.GetTaxLife();
+	return SV_Sim::game->CountryInstance(_countryCode)->DGreenPlants();
 }

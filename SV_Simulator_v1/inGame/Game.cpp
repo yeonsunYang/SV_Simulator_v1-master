@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "CountryCode.h"
 #include <iostream>
 #include <Windows.h>
 #include <iomanip>
@@ -11,13 +12,26 @@ Game::Game()
 	player = Player::GetInstance();
 	world = World::GetInstance();
 
-	countries[0] = new Country(7540, 73, 12);
-	countries[1] = new Country(3270, 35, 17);
-	countries[2] = new Country(2520, 22, 3);
-	countries[3] = new Country(910, 10, 4);
-	countries[4] = new Country(2300, 15, 8);
-	countries[5] = new Country(1000, 12, 3);
-	countries[6] = new Country(6050, 35, 23);
+	countries[static_cast<int>(CountryCode::South_Korea)] 
+		= new Country(7540, 73, 12);
+
+	countries[static_cast<int>(CountryCode::United_States_of_America)] 
+		= new Country(3270, 35, 17);
+
+	countries[static_cast<int>(CountryCode::China)] 
+		= new Country(2520, 22, 3);
+
+	countries[static_cast<int>(CountryCode::Germany)] 
+		= new Country(910, 10, 4);
+
+	countries[static_cast<int>(CountryCode::Syria)] 
+		= new Country(2300, 15, 8);
+
+	countries[static_cast<int>(CountryCode::Brazil)]
+		= new Country(1000, 12, 3);
+
+	countries[static_cast<int>(CountryCode::Australia)]
+		= new Country(6050, 35, 23);
 
 	date = 0;
 }

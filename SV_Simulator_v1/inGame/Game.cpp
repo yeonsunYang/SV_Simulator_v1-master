@@ -1,13 +1,10 @@
 #include "Game.h"
 #include "CountryCode.h"
-#include <iostream>
 #include <Windows.h>
-#include <iomanip>
-using namespace std;
 
 Game* Game::instance = nullptr;
 
-Game::Game() 
+Game::Game()
 {
 	player = Player::GetInstance();
 	world = World::GetInstance();
@@ -20,7 +17,7 @@ Game::Game()
 	date = 0;
 }
 
-Game::~Game() 
+Game::~Game()
 {
 
 	for (int i = 0; i < COUNTRY_NUM; i++)
@@ -28,18 +25,13 @@ Game::~Game()
 		delete countries[i];
 	}
 }
-Game::Game(const Game& other)
+Game::Game(const Game& other) : Game::Game()
 {
 
 }
 
 void Game::Init()
 {
-	system("cls");
-	cout << "=========================" << endl;
-	cout << "잠시 후 게임을 시작합니다." << endl; 
-	cout << "=========================" << endl;
-
 
 	date = 0;
 
@@ -72,6 +64,7 @@ void Game::Init()
 
 	world->SetStartTemperature();
 
+	//Sleep(2000);
 }
 
 int Game::Today()
@@ -83,13 +76,13 @@ void Game::OneDay()
 {
 	date++;
 
-	for (int i = 0; i < COUNTRY_NUM; i++)
+	for (Country* country : countries) 
 	{
-		countries[i]->CalEmission();
-		countries[i]->CalDeath();
-		countries[i]->CalEnergy();
-		countries[i]->CalSupport();
-		countries[i]->ReceiveGold();
+		country->CalEmission();
+		country->CalDeath();
+		country->CalEnergy();
+		country->CalSupport();
+		country->ReceiveGold();
 
 	}
 
@@ -99,129 +92,11 @@ void Game::OneDay()
 	TotalEmission();
 	TotalGold();
 	TotalSupport();
-	
+
 
 	world->CalTemperature();
 }
 
-void Game::End()
-{
-	system("cls");
-	cout << "=========================" << endl;
-	cout << "게임이 종료됩니다." << endl;
-	cout << "=========================" << endl;
-}
-void Game::PrintDate()
-{
-	cout << fixed;
-	cout.precision(2);
-
-	cout <<"|"<< setw(4) << date << " 일차  " 
-		<< setw(8) << "| 온도: " << setw(5) << world->Temperature()
-		<< " ( ▲" << setw(5) << world->ElevatedTemperature() << " )"
-		<< setw(8) << "| 농도: " << setw(6) << world->CarbonPPM() << endl;
-}
-void Game::PrintPlayer()
-{
-	cout << "|" << setw(8) << "골드:" << setw(4) << player->TGold()
-		<< " ▲" << setw(3) << player->DGold()
-		<< setw(10) << "| 지지도:" << setw(4) << player->Support();
-		
-	if(player->DSupport() == 0)
-		cout << " ◆" << setw(2) << player->DSupport() << endl;
-	else if (player->DSupport() > 0)
-		cout << " ▲" << setw(3) << player->DSupport() << endl;
-	else if (player->DSupport() < 0)
-		cout << " ▼" << setw(3) << player->DSupport() << endl;
-
-}
-
-void Game::PrintWorld()
-{
-	cout << "|" << "인구수(   전체 /   생존 /   사망 )" << endl;
-	cout << "|" << setw(7) << "("
-		<< setw(7) << world->Population() << " /"
-		<< setw(7) << world->Live() << " /"
-		<< setw(7) << world->Dead() << " )" 
-		<< " ▲ "<< world->DDead()<< endl;
-
-
-	cout << "|" << "배출량(   일일 /   누적 )" << endl;
-	cout << "|" << setw(7) << "("
-		<< setw(7) << world->DEmission() << " /"
-		<< setw(7) << world->TEmission() << " )"<<  endl;
-
-	cout << "|" << "에너지(   수요 /    공급 )" << endl;
-	cout << "|" << setw(7) << "("
-		<< setw(7) << world->NeedEnergy()<< " / " 
-		<< setw(7) << world->SupplyEnergy() << " )" << endl;
-
-	cout << "|" << "  인식(" <<setw(4) <<world->Recognition() << " )";
-
-	if (world->DRecognition() == 0)
-		cout << " ◆" << setw(2) << world->DRecognition() << endl;
-	else if (world->DRecognition() > 0)					 
-		cout << " ▲" << setw(3) << world->DRecognition() << endl;
-	else if (world->DRecognition() < 0)					 
-		cout << " ▼" << setw(3) << world->DRecognition() << endl;
-}
-
-void Game::PrintCountriesAll()
-{
-	cout << "| ( No. )  전체  /  생존  /  사망   " << endl;
-	for (int i = 0; i < COUNTRY_NUM; i++)
-	{
-		cout << "| ( " <<setw(3)<< i <<" )"
-			<<setw(7) << countries[i]->Population() << " /"
-			<<setw(7) << countries[i]->Live() << " /"
-			<<setw(7) << countries[i]->Dead() << " "
-			<< " ▲ " << countries[i]->DDead() << endl;
-	}
-}
-void Game::PrintCountriesDetail(char _input)
-{
-	int countryCode = static_cast<int>(_input) - 48;
-
-	if (countryCode >= COUNTRY_NUM) {
-		cout << " 비정상적인 접근입니다" << endl;
-		return;
-	}
-	cout << "| ( " << setw(3) << countryCode << " ) 국가의 정보" << endl;
-	cout << "| ( " << setw(3) << countryCode << " )"
-		<< setw(7) << countries[countryCode]->Population() << " /"
-		<< setw(7) << countries[countryCode]->Live() << " /"
-		<< setw(7) << countries[countryCode]->Dead() << " "
-		<< " ▲ " << countries[countryCode]->DDead() << endl;
-	cout << endl;
-
-	cout << "|     [골드]" << endl;
-	cout << "|   일일 수입:" << setw(7) << countries[countryCode]->DGold() << endl;
-	cout << "|   누적 수입:" << setw(7) << countries[countryCode]->TGold() << endl;
-	cout << endl;
-
-	cout << "|     [지지도]" << endl;
-	cout << "| 지지도 변화:" << setw(7) << countries[countryCode]->DSupport() << endl;
-	cout << "|      지지도:" << setw(7) << countries[countryCode]->Support() << endl;
-	cout << endl;
-
-	cout << "| [기후위기 인식]" << endl;
-	cout << "| 인식의 변화:" << setw(7) << countries[countryCode]->DSupport() << endl;
-	cout << "|      인식도:" << setw(7) << countries[countryCode]->Recognition() << endl;
-	cout << endl;
-
-	cout << "|     [에너지]" << endl;
-	cout << "| 에너지 수요:" << setw(7) << countries[countryCode]->NeedEnergy() << endl;
-	cout << "| 에너지 공급:" << setw(7) << countries[countryCode]->SupplyEnergy() << endl;
-	cout << endl;
-
-	cout << "|     [발전소]" << endl;
-	cout << "| 화력 발전소:" << setw(7) << countries[countryCode]->FirePlants() << endl;
-	cout << "| 재생 발전소:" << setw(7) << countries[countryCode]->GreenPlants() << endl;
-	cout << endl;
-
-
-
-}
 
 void Game::TotalPopulation()
 {
@@ -229,11 +104,11 @@ void Game::TotalPopulation()
 
 	population = live = dead = 0;
 
-	for (Country* _country : countries)
+	for (Country* country : countries)
 	{
-		population += _country->Population();
-		live += _country->Live();
-		dead += _country->Dead();
+		population += country->Population();
+		live += country->Live();
+		dead += country->Dead();
 	}
 
 	world->SetPopulation(population, live, dead);
@@ -242,17 +117,21 @@ void Game::TotalPopulation()
 
 void Game::TotalEnergy()
 {
-	int need, supply;
-	
-	need = supply = 0;
+	int need, dNeed, supply,dSupply, saving;
 
-	for (Country* _country : countries)
+	need = dNeed = supply = dSupply = saving = 0;
+
+	for (Country* country : countries)
 	{
-		need += _country->NeedEnergy();
-		supply += _country->SupplyEnergy();
+		need += country->NeedEnergy();
+		dNeed += country->DNeedEnergy();
+		supply += country->SupplyEnergy();
+		dSupply += country->DSupplyEnergy();
+		saving += country->SavingEnergy();
+
 	}
 
-	world->SetEnergy(need, supply);
+	world->SetEnergy(need, dNeed, supply, dSupply, saving);
 }
 
 void Game::TotalPlants()
@@ -261,10 +140,10 @@ void Game::TotalPlants()
 
 	fire = green = 0;
 
-	for (Country* _country : countries)
+	for (Country* country : countries)
 	{
-		fire += _country->FirePlants();
-		green += _country->GreenPlants();
+		fire += country->FirePlants();
+		green += country->GreenPlants();
 	}
 
 	world->SetPlants(fire, green);
@@ -274,9 +153,9 @@ void Game::TotalEmission()
 {
 	int emission = 0;
 
-	for (Country* _country : countries)
+	for (Country* country : countries)
 	{
-		emission += _country->DEmission();
+		emission += country->DEmission();
 	}
 
 	world->SetEmission(emission);
@@ -287,9 +166,9 @@ void Game::TotalGold()
 {
 	int gold = 0;
 
-	for (Country* _country : countries)
+	for (Country* country : countries)
 	{
-		gold += _country->DGold();
+		gold += country->DGold();
 	}
 
 	player->SetGold(gold);
@@ -298,9 +177,9 @@ void Game::TotalSupport()
 {
 	int support = 0;
 
-	for (Country* _country : countries)
+	for (Country* country : countries)
 	{
-		support += _country->Support();
+		support += country->Support();
 	}
 
 	support /= COUNTRY_NUM;
@@ -310,11 +189,12 @@ void Game::TotalSupport()
 
 void Game::TotalRecognition()
 {
-	int recognition = 0;
+	int recognition;
+	recognition = 0;
 
-	for (Country* _country : countries)
+	for (Country* country : countries)
 	{
-		recognition += _country->Recognition();
+		recognition += country->Recognition();
 	}
 
 	recognition /= COUNTRY_NUM;

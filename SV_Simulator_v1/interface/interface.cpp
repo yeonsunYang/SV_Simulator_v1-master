@@ -144,6 +144,7 @@ int InitGame(long long _cycle, int _debugMode)
 	SV_Sim::game = Game::GetInstance();
 	SV_Sim::world = World::GetInstance();
 	SV_Sim::player = Player::GetInstance();
+	SV_Sim::policyManager = PolicyManager::GetInstance();
 
 	SV_Sim::game->Init();
 
@@ -429,4 +430,86 @@ int GetGreenPlants(int _countryCode)
 int GetDGreenPlants(int _countryCode)
 {
 	return SV_Sim::game->CountryInstance(_countryCode)->DGreenPlants();
+}
+
+int GetCountEduPolicy(int _countryCode, int _eduCode)
+{
+	return SV_Sim::game->CountryInstance(_countryCode)->CountEduPolicy(_eduCode);
+}
+int EnforceEduPolicy(int _countryCode, int _eduCode)
+{
+	return SV_Sim::policyManager->EnforceEduPolicy(_countryCode, _eduCode);
+}
+int GetCostEduPolicy(int _eduCode)
+{
+	return SV_Sim::policyManager->CostEduPolicy(_eduCode);
+}
+int GetEffectEduPolicy(int _eduCode)
+{
+	return SV_Sim::policyManager->EffectEduPolicy(_eduCode);
+}
+int BuildFirePlants(int _countryCode, int _numBuild)
+{
+	return SV_Sim::policyManager->BuildFirePlants(_countryCode, _numBuild);
+}
+int DestroyFirePlants(int _countryCode, int _numDestroy)
+{
+	return SV_Sim::policyManager->DestroyFirePlants(_countryCode, _numDestroy);
+}
+int GetCostFirePlants()
+{
+	return SV_Sim::policyManager->CostFirePlants();
+}
+int GetRefundFirePlants()
+{
+	return SV_Sim::policyManager->RefundFirePlants();
+}
+int GetEmissionFirePlants()
+{
+	return 10;
+}
+int GetSupplyFirePlants()
+{
+	return 100;
+}
+int BuildGreenPlants(int _countryCode, int _numBuild)
+{
+	return SV_Sim::policyManager->BuildGreenPlants(_countryCode, _numBuild);
+}
+int DestroyGreenPlatns(int _countryCode, int _numDestroy)
+{
+	return SV_Sim::policyManager->DestroyGreenPlants(_countryCode, _numDestroy);
+}
+int GetCostGreenPlants()
+{
+	return SV_Sim::policyManager->CostGreenPlants();
+}
+int GetRefundGreenPlants()
+{
+	return SV_Sim::policyManager->RefundGreenPlants();
+}
+int GetEmissionGreenPlants()
+{
+	return 0;
+}
+int GetSupplyGreenPlants()
+{
+	return 60;
+}
+
+int EnforceLifePolicy(int _countryCode, int _lifeCode)
+{
+	return SV_Sim::policyManager->EnforceLifePolicy(_countryCode, _lifeCode);
+}
+int GetCountLifePolicy(int _countryCode, int _lifeCode)
+{
+	return SV_Sim::policyManager->CountLifePolicy(_countryCode, _lifeCode);
+}
+int GetCostLifePolicy(int _lifeCode)
+{
+	return SV_Sim::policyManager->CostLifePolicy(_lifeCode);
+}
+int GetEffectLifePolicy(int _lifeCode)
+{
+	return SV_Sim::policyManager->EffectLifePolicy(_lifeCode);
 }

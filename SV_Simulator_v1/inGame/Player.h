@@ -18,6 +18,8 @@ public:
 
 	void SetGold(int _gold);
 	void SetSupport(int _support);
+	void RefundGold(int _refund);
+	void PayGold(int _cost);
 
 	void DataInit();
 

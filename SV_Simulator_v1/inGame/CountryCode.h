@@ -2,7 +2,7 @@
 
 enum class CountryCode {
 	//7개 국가 사용 예정.
-	South_Korea, United_States_of_America, China, Germany, Syria, Brazil, Australia, 
+	South_Korea, United_States_of_America, China, Germany, Syria, Brazil, Australia,
 
 	//Afghanistan, Angola, Albania, United_Arab_Emirates,
 	//Argentina, Armenia, Austria, Azerbaijan, Burundi,

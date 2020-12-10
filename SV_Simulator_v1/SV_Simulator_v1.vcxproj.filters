@@ -24,10 +24,10 @@
     <ClInclude Include="interface\interface.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inGame\CountryCode.h">
+    <ClInclude Include="inGame\Country.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inGame\Country.h">
+    <ClInclude Include="inGame\CountryCode.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="inGame\Game.h">
@@ -37,6 +37,30 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="inGame\World.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame\Policy\EduPolicy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame\Policy\EduPolicyCode.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame\Policy\EnforcedPolicy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame\Policy\LifePolicy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame\Policy\LifePolicyCode.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame\Policy\Plants.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame\Policy\Policy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame\Policy\PolicyManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,6 +84,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="inGame\World.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="inGame\Policy\PolicyManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

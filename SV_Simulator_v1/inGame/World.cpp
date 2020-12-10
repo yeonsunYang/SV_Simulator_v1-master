@@ -7,11 +7,11 @@ World::World()
 	DataInit();
 }
 
-World::World(const World& other) 
+World::World(const World& other) : World::World()
 {
-	DataInit();
+
 }
-World::~World() 
+World::~World()
 {
 
 }
@@ -22,6 +22,7 @@ void World::DataInit()
 	deltaNeedEnergy = 0;
 	supplyEnergy = 0;
 	deltaSupplyEnergy = 0;
+	savingEnergy = 0;
 
 	firePlants = 0;
 	greenPlants = 0;
@@ -49,13 +50,13 @@ void World::SetPopulation(int _population, int _live, int _dead)
 	live = _live;
 	dead = _dead;
 }
-void World::SetEnergy(int _needEnergy, int _supplyEnergy)
+void World::SetEnergy(int _need, int _dNeed, int _supply, int _dSupply, int _saving)
 {
-	deltaNeedEnergy = _needEnergy - needEnergy;
-	deltaSupplyEnergy = _supplyEnergy - supplyEnergy;
-	needEnergy = _needEnergy;
-	supplyEnergy = _supplyEnergy;
-		
+	needEnergy = _need;
+	deltaNeedEnergy = _dNeed;
+	supplyEnergy = _supply;
+	deltaSupplyEnergy = _dSupply;
+	savingEnergy = _saving;
 }
 
 void World::SetPlants(int _firePlants, int _greenPlants)

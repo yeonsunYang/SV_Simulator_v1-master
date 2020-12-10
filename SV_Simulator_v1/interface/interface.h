@@ -1,5 +1,6 @@
 #pragma once
 #include "..\inGame\Game.h"
+#include "..\inGame\Policy\PolicyManager.h"
 #include "pch.h"
 
 #define MINCYCLE 500
@@ -91,6 +92,32 @@ extern "C" {
 	SV_SIMULATOR_API int GetGreenPlants(int _countryCode);
 	SV_SIMULATOR_API int GetDGreenPlants(int _countryCode);
 
+
+
+	SV_SIMULATOR_API int GetCountEduPolicy(int _countryCode, int _eduCode);
+	SV_SIMULATOR_API int EnforceEduPolicy(int _countryCode, int _eduCode);
+	SV_SIMULATOR_API int GetCostEduPolicy(int _eduCode);
+	SV_SIMULATOR_API int GetEffectEduPolicy(int _eduCode);
+	SV_SIMULATOR_API int BuildFirePlants(int _countryCode, int _numBuild);
+	SV_SIMULATOR_API int DestroyFirePlants(int _countryCode, int _numDestroy);
+	SV_SIMULATOR_API int GetCostFirePlants();
+	SV_SIMULATOR_API int GetRefundFirePlants();
+	SV_SIMULATOR_API int GetEmissionFirePlants();
+	SV_SIMULATOR_API int GetSupplyFirePlants();
+	SV_SIMULATOR_API int BuildGreenPlants(int _countryCode, int _numBuild);
+	SV_SIMULATOR_API int DestroyGreenPlatns(int _countryCode, int _numDestroy);
+	SV_SIMULATOR_API int GetCostGreenPlants();
+	SV_SIMULATOR_API int GetRefundGreenPlants();
+	SV_SIMULATOR_API int GetEmissionGreenPlants();
+	SV_SIMULATOR_API int GetSupplyGreenPlants();
+	SV_SIMULATOR_API int EnforceLifePolicy(int _countryCode, int _lifeCode);
+	SV_SIMULATOR_API int GetCountLifePolicy(int _countryCode, int _lifeCode);
+	SV_SIMULATOR_API int GetCostLifePolicy(int _lifeCode);
+	SV_SIMULATOR_API int GetEffectLifePolicy(int _lifeCode);
+
+
+
+
 	//***************************************************************************************
 }
 
@@ -106,6 +133,7 @@ namespace SV_Sim {
 	Game* game;
 	World* world;
 	Player* player;
+	PolicyManager* policyManager;
 
 	// oneDay의 호출 주기 ms 단위, MINCYCLE 이상의 값만 입력됨.
 	static time_t oneDayCycle;

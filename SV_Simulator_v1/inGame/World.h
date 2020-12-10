@@ -14,7 +14,7 @@ public:
 	void DataInit();
 
 	void SetPopulation(int _population, int _live, int _dead);
-	void SetEnergy(int _needEnergy, int _supplyEnergy);
+	void SetEnergy(int _need, int _dNeed, int _supply, int _dSupply, int _saving);
 	void SetPlants(int _firePlants, int _greenPlants);
 	void SetEmission(int _emission);
 	void SetStartTemperature();
@@ -32,6 +32,7 @@ public:
 	int DNeedEnergy() { return deltaNeedEnergy; }
 	int SupplyEnergy() { return supplyEnergy; }
 	int DSupplyEnergy() { return deltaSupplyEnergy; }
+	int SavingEnergy() { return savingEnergy; }
 	int FirePlants() { return firePlants; }
 	int GreenPlants() { return greenPlants; }
 	int DEmission() { return dailyEmission; }
@@ -57,6 +58,7 @@ private:
 	int deltaNeedEnergy;
 	int supplyEnergy;
 	int deltaSupplyEnergy;
+	int savingEnergy;
 	int firePlants;
 	int greenPlants;
 
@@ -74,7 +76,7 @@ private:
 	int recognition;
 	int deltaRecognition;
 
-	
+
 
 	static World* instance;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "World.h"
+#include "Policy\EnforcedPolicy.h"
 
 class Country {
 public:
@@ -9,7 +10,7 @@ public:
 
 	void DataInit(int _population, int _fire, int _green);
 
-	int Population() {return population;}
+	int Population() { return population; }
 	int Live() { return live; }
 	int Dead() { return dead; }
 	int DDead() { return dailyDead; }
@@ -17,6 +18,7 @@ public:
 	int NeedEnergy() { return needEnergy; }
 	int DNeedEnergy() { return deltaNeedEnergy; }
 	int SupplyEnergy() { return supplyEnergy; }
+	int SavingEnergy() { return savingEnergy; }
 	int DSupplyEnergy() { return deltaSupplyEnergy; }
 	int FirePlants() { return firePlants; }
 	int DFIrePlants() { return deltaFirePlants; }
@@ -33,12 +35,26 @@ public:
 	int DRecognition() { return deltaRecognition; }
 
 
+
+	int CountEduPolicy(int _eduPolicyCode);
+	int CountLifePolicy(int _lifePolicyCode);
+
+
 	void CalEnergy();
 	void CalEmission();
 	void CalDeath();
 	void CalRecognition();
 	void CalSupport();
 	void ReceiveGold();
+
+	void EnforceEduPolicy(int _eduPolicyCode, int _effect);
+	void EnforceLifePolicy(int _lifePolicyCode, int _effect);
+
+	void BuildFirePlants(int _numBuild);
+	void BuildGreenPlants(int _numBuild);
+	void DestroyFirePlants(int _numDestroy);
+	void DestroyGreenPlants(int _numDestroy);
+
 
 
 private:
@@ -55,6 +71,8 @@ private:
 	int deltaNeedEnergy;
 	int supplyEnergy;
 	int deltaSupplyEnergy;
+	int savingEnergy;
+
 
 	int firePlants;
 	int deltaFirePlants;
@@ -70,5 +88,9 @@ private:
 	int deltaSupport;
 	int recognition;
 	int deltaRecognition;
-	
+
+	EnforcedPolicy lifePolicy [LIFE_POLICY_NUM] ;
+	EnforcedPolicy eduPolicy [EDU_POLICY_NUM];
+
+
 };

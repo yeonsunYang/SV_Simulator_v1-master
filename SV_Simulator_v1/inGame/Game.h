@@ -1,10 +1,12 @@
 #pragma once
 
+
 #include "Player.h"
 #include "World.h"
 #include "Country.h"
 
-#define COUNTRY_NUM 7
+constexpr auto COUNTRY_NUM = 7;
+
 
 class Game
 {
@@ -20,12 +22,7 @@ public:
 	int Today();
 	void OneDay();
 	void Init();
-	void End();
-	void PrintPlayer();
-	void PrintDate();
-	void PrintWorld();
-	void PrintCountriesAll();
-	void PrintCountriesDetail(char _input);
+
 
 	void TotalPopulation();
 	void TotalEnergy();
@@ -35,6 +32,8 @@ public:
 	void TotalSupport();
 	void TotalRecognition();
 	Country* CountryInstance(int _countryCode) { return countries[_countryCode]; }
+
+
 
 private:
 

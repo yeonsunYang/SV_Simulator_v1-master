@@ -4,23 +4,24 @@ Player* Player::instance = nullptr;
 
 Player::Player()
 {
-	dailyGold = 0;
-	totalGold = 0;
-	support = 30;
-	deltaSupport = 30;
+	DataInit();
+
 }
 Player::Player(const Player& other)
+{
+	DataInit();
+}
+Player::~Player()
+{
+
+}
+void Player::DataInit()
 {
 	dailyGold = 0;
 	totalGold = 0;
 	support = 0;
 	deltaSupport = 0;
 }
-Player::~Player()
-{
-
-}
-
 void Player::SetGold(int _gold)
 {
 	dailyGold = _gold;

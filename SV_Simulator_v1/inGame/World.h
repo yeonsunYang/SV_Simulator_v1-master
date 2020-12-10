@@ -11,6 +11,8 @@ public:
 		return instance;
 	}
 
+	void DataInit();
+
 	void SetPopulation(int _population, int _live, int _dead);
 	void SetEnergy(int _needEnergy, int _supplyEnergy);
 	void SetPlants(int _firePlants, int _greenPlants);

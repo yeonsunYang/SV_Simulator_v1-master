@@ -5,7 +5,9 @@ class Country {
 public:
 
 	~Country();
-	Country(int _population, int _fire, int _green);
+	Country();
+
+	void DataInit(int _population, int _fire, int _green);
 
 	int Population() {return population;}
 	int Live() { return live; }
@@ -41,7 +43,6 @@ public:
 
 private:
 
-	Country();
 
 	World* world;
 

@@ -19,6 +19,8 @@ public:
 	void SetGold(int _gold);
 	void SetSupport(int _support);
 
+	void DataInit();
+
 private:
 
 	int dailyGold;

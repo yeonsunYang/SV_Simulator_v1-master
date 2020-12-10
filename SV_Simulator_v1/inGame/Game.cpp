@@ -12,26 +12,10 @@ Game::Game()
 	player = Player::GetInstance();
 	world = World::GetInstance();
 
-	countries[static_cast<int>(CountryCode::South_Korea)] 
-		= new Country(7540, 73, 12);
-
-	countries[static_cast<int>(CountryCode::United_States_of_America)] 
-		= new Country(3270, 35, 17);
-
-	countries[static_cast<int>(CountryCode::China)] 
-		= new Country(2520, 22, 3);
-
-	countries[static_cast<int>(CountryCode::Germany)] 
-		= new Country(910, 10, 4);
-
-	countries[static_cast<int>(CountryCode::Syria)] 
-		= new Country(2300, 15, 8);
-
-	countries[static_cast<int>(CountryCode::Brazil)]
-		= new Country(1000, 12, 3);
-
-	countries[static_cast<int>(CountryCode::Australia)]
-		= new Country(6050, 35, 23);
+	for (int i = 0; i < COUNTRY_NUM; i++)
+	{
+		countries[i] = new Country();
+	}
 
 	date = 0;
 }
@@ -49,18 +33,45 @@ Game::Game(const Game& other)
 
 }
 
-void Game::Play()
+void Game::Init()
 {
 	system("cls");
 	cout << "=========================" << endl;
 	cout << "잠시 후 게임을 시작합니다." << endl; 
 	cout << "=========================" << endl;
 
+
+	date = 0;
+
+	world->DataInit();
+	player->DataInit();
+
+	countries[static_cast<int>(CountryCode::South_Korea)]
+		->DataInit(7540, 73, 12);
+
+	countries[static_cast<int>(CountryCode::United_States_of_America)]
+		->DataInit(3270, 35, 17);
+
+	countries[static_cast<int>(CountryCode::China)]
+		->DataInit(2520, 22, 3);
+
+	countries[static_cast<int>(CountryCode::Germany)]
+		->DataInit(910, 10, 4);
+
+	countries[static_cast<int>(CountryCode::Syria)]
+		->DataInit(2300, 15, 8);
+
+	countries[static_cast<int>(CountryCode::Brazil)]
+		->DataInit(1000, 12, 3);
+
+	countries[static_cast<int>(CountryCode::Australia)]
+		->DataInit(6050, 35, 23);
+
+
 	OneDay();
 
 	world->SetStartTemperature();
 
-	//Sleep(2000);
 }
 
 int Game::Today()

@@ -42,6 +42,8 @@ int SV_Sim::Run()
 		end = clock();
 		delta = end - start;
 
+		//cout << "연산시간: " << delta << "(ms)" << endl;
+
 
 		waitTime = static_cast<time_t> (oneDayCycle / static_cast<long long> (SV_Sim::playSpeed));
 
@@ -138,12 +140,16 @@ int InitGame(long long _cycle, int _debugMode)
 
 	SV_Sim::debugMode = _debugMode;
 
-	SV_Sim::simState = SimState::WaitPlay;
-	SV_Sim::playSpeed = PlaySpeed::Normal;
+
 	SV_Sim::game = Game::GetInstance();
 	SV_Sim::world = World::GetInstance();
 	SV_Sim::player = Player::GetInstance();
 
+	SV_Sim::game->Init();
+
+
+	SV_Sim::simState = SimState::WaitPlay;
+	SV_Sim::playSpeed = PlaySpeed::Normal;
 	return 0;
 }
 int PlayGame()
@@ -153,7 +159,6 @@ int PlayGame()
 	if (SV_Sim::simState != SimState::WaitPlay)
 		return static_cast<int> (SV_Sim::simState);
 
-	SV_Sim::game->Play();
 
 	SV_Sim::simState = SimState::InitThread;
 

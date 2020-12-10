@@ -12,7 +12,7 @@ Country::~Country()
 
 }
 
-Country::Country(int _population, int _fire, int _green)
+void Country::DataInit(int _population, int _fire, int _green)
 {
 	world = World::GetInstance();
 
@@ -33,7 +33,6 @@ Country::Country(int _population, int _fire, int _green)
 
 	dailyEmission = 0;
 	totalEmission = 0;
-	srand(static_cast<unsigned int> (time(0)));
 
 	dailyGold = 0;
 	totalGold = 0;
@@ -43,7 +42,10 @@ Country::Country(int _population, int _fire, int _green)
 	deltaRecognition = 0;
 
 	CalEnergy();
+
+	srand(static_cast<unsigned int> (time(0)));
 }
+
 
 void Country::CalEnergy()
 {

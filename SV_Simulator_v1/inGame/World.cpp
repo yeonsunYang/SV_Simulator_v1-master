@@ -4,6 +4,20 @@ World* World::instance = nullptr;
 
 World::World()
 {
+	DataInit();
+}
+
+World::World(const World& other) 
+{
+	DataInit();
+}
+World::~World() 
+{
+
+}
+
+void World::DataInit()
+{
 	needEnergy = 0;
 	deltaNeedEnergy = 0;
 	supplyEnergy = 0;
@@ -26,15 +40,6 @@ World::World()
 
 	recognition = 20;
 	deltaRecognition = 0;
-
-}
-World::World(const World& other) 
-{
-
-}
-World::~World() 
-{
-
 }
 
 void World::SetPopulation(int _population, int _live, int _dead)

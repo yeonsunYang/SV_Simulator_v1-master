@@ -19,7 +19,7 @@ public:
 
 	int Today();
 	void OneDay();
-	void Play();
+	void Init();
 	void End();
 	void PrintPlayer();
 	void PrintDate();

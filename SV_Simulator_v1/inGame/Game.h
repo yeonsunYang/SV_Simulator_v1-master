@@ -5,7 +5,7 @@
 #include "World.h"
 #include "Country.h"
 
-constexpr auto COUNTRY_NUM = 7;
+constexpr auto COUNTRY_NUM = 10;
 
 
 class Game

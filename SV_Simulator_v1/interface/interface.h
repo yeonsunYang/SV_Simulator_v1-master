@@ -84,9 +84,11 @@ extern "C" {
 	SV_SIMULATOR_API int GetDRecognition(int _countryCode);
 	SV_SIMULATOR_API int GetRecognition(int _countryCode);
 	SV_SIMULATOR_API int GetNeedEnergy(int _countryCode);
+	SV_SIMULATOR_API int GetNeedEnergyPerson(int _countryCode);
 	SV_SIMULATOR_API int GetDNeedEnergy(int _countryCode);
 	SV_SIMULATOR_API int GetSupplyEnergy(int _countryCode);
 	SV_SIMULATOR_API int GetDSupplyEnergy(int _countryCode);
+	SV_SIMULATOR_API int GetSavingEnergy(int _countryCode);
 	SV_SIMULATOR_API int GetFirePlants(int _countryCode);
 	SV_SIMULATOR_API int GetDFirePlants(int _countryCode);
 	SV_SIMULATOR_API int GetGreenPlants(int _countryCode);
@@ -112,8 +114,11 @@ extern "C" {
 	SV_SIMULATOR_API int GetSupplyGreenPlants();
 	SV_SIMULATOR_API int EnforceLifePolicy(int _countryCode, int _lifeCode);
 	SV_SIMULATOR_API int GetCountLifePolicy(int _countryCode, int _lifeCode);
+	SV_SIMULATOR_API int GetNeedRecognition(int _lifeCode);
 	SV_SIMULATOR_API int GetCostLifePolicy(int _lifeCode);
 	SV_SIMULATOR_API int GetEffectLifePolicy(int _lifeCode);
+	SV_SIMULATOR_API int GetEffect2LifePolicy(int _lifeCode);
+
 
 
 

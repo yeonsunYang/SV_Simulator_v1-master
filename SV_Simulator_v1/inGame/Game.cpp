@@ -9,6 +9,8 @@ Game::Game()
 	player = Player::GetInstance();
 	world = World::GetInstance();
 
+
+
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
 		countries[i] = new Country();
@@ -39,25 +41,34 @@ void Game::Init()
 	player->DataInit();
 
 	countries[static_cast<int>(CountryCode::South_Korea)]
-		->DataInit(7540, 73, 12);
+		->DataInit(7540, 73, 12, 26, 58);
 
 	countries[static_cast<int>(CountryCode::United_States_of_America)]
-		->DataInit(3270, 35, 17);
-
-	countries[static_cast<int>(CountryCode::China)]
-		->DataInit(2520, 22, 3);
+		->DataInit(3270, 35, 17, 18, 64);
 
 	countries[static_cast<int>(CountryCode::Germany)]
-		->DataInit(910, 10, 4);
+		->DataInit(2520, 22, 3, 48, 24);
 
-	countries[static_cast<int>(CountryCode::Syria)]
-		->DataInit(2300, 15, 8);
-
-	countries[static_cast<int>(CountryCode::Brazil)]
-		->DataInit(1000, 12, 3);
+	countries[static_cast<int>(CountryCode::China)]
+		->DataInit(910, 10, 4, 30, 36);
 
 	countries[static_cast<int>(CountryCode::Australia)]
-		->DataInit(6050, 35, 23);
+		->DataInit(2300, 15, 8, 20, 15);
+
+	countries[static_cast<int>(CountryCode::Brazil)]
+		->DataInit(1000, 12, 3, 55, 98);
+
+	countries[static_cast<int>(CountryCode::Russia)]
+		->DataInit(6050, 35, 23, 30, 54);
+
+	countries[static_cast<int>(CountryCode::Algeria)]
+		->DataInit(6050, 35, 23, 30, 54);
+
+	countries[static_cast<int>(CountryCode::Saudi_Arabia)]
+		->DataInit(6050, 35, 23, 30, 54);
+
+	countries[static_cast<int>(CountryCode::Sweden)]
+		->DataInit(6050, 35, 23, 30, 54);
 
 
 	OneDay();
@@ -83,7 +94,6 @@ void Game::OneDay()
 		country->CalEnergy();
 		country->CalSupport();
 		country->ReceiveGold();
-
 	}
 
 	TotalPopulation();

@@ -4,7 +4,7 @@
 
 Country::Country()
 {
-	DataInit(0, 0, 0);
+	DataInit(0, 0, 0, 0, 0);
 }
 
 Country::~Country()
@@ -12,7 +12,7 @@ Country::~Country()
 
 }
 
-void Country::DataInit(int _population, int _fire, int _green)
+void Country::DataInit(int _population, int _fire, int _green, int _recognition, int _needEnergyPerson)
 {
 	world = World::GetInstance();
 
@@ -22,6 +22,7 @@ void Country::DataInit(int _population, int _fire, int _green)
 	dailyDead = 0;
 
 	needEnergy = 0;
+	needEnergyPerson = _needEnergyPerson;
 	deltaNeedEnergy = 0;
 	supplyEnergy = 0;
 	deltaSupplyEnergy = 0;
@@ -39,7 +40,7 @@ void Country::DataInit(int _population, int _fire, int _green)
 	totalGold = 0;
 	support = 30;
 	deltaSupport = 0;
-	recognition = 20;
+	recognition = _recognition;
 	deltaRecognition = 0;
 
 	CalEnergy();
@@ -51,7 +52,7 @@ void Country::DataInit(int _population, int _fire, int _green)
 void Country::CalEnergy()
 {
 	int enrgy = firePlants * 100 + greenPlants * 60;
-	int newNeedEnergy = live - savingEnergy;
+	int newNeedEnergy = static_cast<int> ((live * needEnergyPerson) / 100) - savingEnergy;
 
 	if (newNeedEnergy < 0)
 		newNeedEnergy = 0;
@@ -191,7 +192,7 @@ int Country::CountEduPolicy(int _eduPolicyCode)
 	return eduPolicy[_eduPolicyCode].Count();
 }
 
-void Country::EnforceLifePolicy(int _lifePolicyCode, int _effect)
+void Country::EnforceLifePolicy(int _lifePolicyCode, int _effect, int _effec2)
 {
 	if (_lifePolicyCode >= LIFE_POLICY_NUM || _lifePolicyCode < 0)
 		return;
@@ -200,6 +201,12 @@ void Country::EnforceLifePolicy(int _lifePolicyCode, int _effect)
 	savingEnergy += _effect;
 	deltaNeedEnergy -= _effect;
 	needEnergy -= _effect;
+	needEnergyPerson -= _effec2;
+
+	if (needEnergy < 0)
+		needEnergy = 0;
+	if (needEnergyPerson < 0)
+		needEnergyPerson = 0;
 	
 }
 
@@ -208,13 +215,12 @@ int Country::CountLifePolicy(int _lifePolicyCode)
 	if (_lifePolicyCode >= LIFE_POLICY_NUM || _lifePolicyCode < 0)
 		return -1;
 
-	return eduPolicy[_lifePolicyCode].Count();
+	return lifePolicy[_lifePolicyCode].Count();
 }
 
 void Country::BuildFirePlants(int _numPlants)
 {
 	firePlants += _numPlants;
-
 
 	if(recognition > 35)
 		for (int i = 0; i < _numPlants; i++)
@@ -237,7 +243,6 @@ void Country::BuildGreenPlants(int _numPlants)
 				deltaSupport++;
 				support--;
 			}
-
 		}
 }
 

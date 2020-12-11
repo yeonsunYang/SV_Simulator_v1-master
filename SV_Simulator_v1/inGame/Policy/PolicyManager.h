@@ -25,6 +25,8 @@ public:
 	int CountLifePolicy(int _countryCode, int _lifePolicyCode);
 	int CostLifePolicy(int _lifePolicyCode);
 	int EffectLifePolicy(int _lifePolicyCode);
+	int Effect2LifePolicy(int _lifePolicyCode);
+	int NeedRecoLifePolicy(int _lifePolicyCode);
 
 	int BuildFirePlants(int _countryCode, int _numBuild);
 	int DestroyFirePlants(int _countryCode, int _numDestroy);

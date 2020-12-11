@@ -8,7 +8,7 @@ public:
 	~Country();
 	Country();
 
-	void DataInit(int _population, int _fire, int _green);
+	void DataInit(int _population, int _fire, int _green, int _recognition, int _needEnergyPerson);
 
 	int Population() { return population; }
 	int Live() { return live; }
@@ -19,6 +19,7 @@ public:
 	int DNeedEnergy() { return deltaNeedEnergy; }
 	int SupplyEnergy() { return supplyEnergy; }
 	int SavingEnergy() { return savingEnergy; }
+	int NeedEnergyPerson() { return needEnergyPerson; }
 	int DSupplyEnergy() { return deltaSupplyEnergy; }
 	int FirePlants() { return firePlants; }
 	int DFIrePlants() { return deltaFirePlants; }
@@ -48,7 +49,7 @@ public:
 	void ReceiveGold();
 
 	void EnforceEduPolicy(int _eduPolicyCode, int _effect);
-	void EnforceLifePolicy(int _lifePolicyCode, int _effect);
+	void EnforceLifePolicy(int _lifePolicyCode, int _effect, int _effec2);
 
 	void BuildFirePlants(int _numBuild);
 	void BuildGreenPlants(int _numBuild);
@@ -68,6 +69,8 @@ private:
 	int dailyDead;
 
 	int needEnergy;
+	int needEnergyPerson;
+
 	int deltaNeedEnergy;
 	int supplyEnergy;
 	int deltaSupplyEnergy;

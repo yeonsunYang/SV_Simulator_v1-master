@@ -403,6 +403,10 @@ int GetNeedEnergy(int _countryCode)
 {
 	return SV_Sim::game->CountryInstance(_countryCode)->NeedEnergy();
 }
+int GetNeedEnergyPerson(int _countryCode)
+{
+	return SV_Sim::game->CountryInstance(_countryCode)->NeedEnergyPerson();
+}
 int GetDNeedEnergy(int _countryCode)
 {
 	return SV_Sim::game->CountryInstance(_countryCode)->DNeedEnergy();
@@ -414,6 +418,10 @@ int GetSupplyEnergy(int _countryCode)
 int GetDSupplyEnergy(int _countryCode)
 {
 	return SV_Sim::game->CountryInstance(_countryCode)->DSupplyEnergy();
+}
+int GetSavingEnergy(int _countryCode)
+{
+	return SV_Sim::game->CountryInstance(_countryCode)->SavingEnergy();
 }
 int GetFirePlants(int _countryCode)
 {
@@ -505,6 +513,10 @@ int GetCountLifePolicy(int _countryCode, int _lifeCode)
 {
 	return SV_Sim::policyManager->CountLifePolicy(_countryCode, _lifeCode);
 }
+int GetNeedRecognition(int _lifeCode)
+{
+	return SV_Sim::policyManager->NeedRecoLifePolicy(_lifeCode);
+}
 int GetCostLifePolicy(int _lifeCode)
 {
 	return SV_Sim::policyManager->CostLifePolicy(_lifeCode);
@@ -512,4 +524,9 @@ int GetCostLifePolicy(int _lifeCode)
 int GetEffectLifePolicy(int _lifeCode)
 {
 	return SV_Sim::policyManager->EffectLifePolicy(_lifeCode);
+}
+
+int GetEffect2LifePolicy(int _lifeCode)
+{
+	return SV_Sim::policyManager->Effect2LifePolicy(_lifeCode);
 }

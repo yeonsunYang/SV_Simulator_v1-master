@@ -7,20 +7,26 @@ PolicyManager::PolicyManager()
 	world = World::GetInstance();
 	game = Game::GetInstance();
 	player = Player::GetInstance();
+	
+
+
 
 	for (int i = 0; i < COUNTRY_NUM; i++)
 	{
 		countries[i] = game->CountryInstance(i);
 	}
 
+	// 순서대로 (비용, 인식도 증가 효과)
 	edu[static_cast<int>(EduPolicyCode::edu1)] = new EduPolicy(10, 10);
 	edu[static_cast<int>(EduPolicyCode::edu2)] = new EduPolicy(15, 20);
 	edu[static_cast<int>(EduPolicyCode::edu3)] = new EduPolicy(20, 30);
 
-	life[static_cast<int>(LifePolicyCode::life1)] = new LifePolicy(10, 100);
-	life[static_cast<int>(LifePolicyCode::life2)] = new LifePolicy(15, 200);
-	life[static_cast<int>(LifePolicyCode::life3)] = new LifePolicy(20, 300);
+	// 순서대로 (비용, 에너지 소비량 감소 효과, 1인당 에너지 소비량 감소 효과, 요구되는 인식률)
+	life[static_cast<int>(LifePolicyCode::life1)] = new LifePolicy(10, 100, 2, 30);
+	life[static_cast<int>(LifePolicyCode::life2)] = new LifePolicy(15, 200, 2, 40);
+	life[static_cast<int>(LifePolicyCode::life3)] = new LifePolicy(20, 300, 3, 50);
 
+	// 비용, 반환금
 	firePlants = new Plants(10, 2);
 	greenPlants = new Plants(15, 4);
 }
@@ -70,6 +76,7 @@ int PolicyManager::EffectEduPolicy(int _eduPolicyCode)
 int PolicyManager::EnforceLifePolicy(int _countryCode, int _lifeCode)
 {
 	int effect = life[_lifeCode]->Effect();
+	int effect2 = life[_lifeCode]->Effect2();
 	int cost = life[_lifeCode]->Cost();
 
 	if (_lifeCode >= LIFE_POLICY_NUM || _lifeCode < 0)
@@ -78,7 +85,15 @@ int PolicyManager::EnforceLifePolicy(int _countryCode, int _lifeCode)
 	if (player->TGold() < cost)
 		return -1;
 
-	countries[_countryCode]->EnforceLifePolicy(_lifeCode, effect);
+	int reco = countries[_countryCode]->Recognition();
+	int needReco = life[_lifeCode]->NeedRecognition();
+
+	if (reco <= needReco)
+		return -3;
+
+
+
+	countries[_countryCode]->EnforceLifePolicy(_lifeCode, effect, effect2);
 	player->PayGold(cost);
 
 	return 0;
@@ -95,6 +110,14 @@ int PolicyManager::CostLifePolicy(int _lifePolicyCode)
 int PolicyManager::EffectLifePolicy(int _lifePolicyCode)
 {
 	return life[_lifePolicyCode]->Effect();
+}
+int PolicyManager::Effect2LifePolicy(int _lifePolicyCode)
+{
+	return life[_lifePolicyCode]->Effect2();
+}
+int PolicyManager::NeedRecoLifePolicy(int _lifePolicyCode)
+{
+	return life[_lifePolicyCode]->NeedRecognition();
 }
 
 int PolicyManager::BuildFirePlants(int _countryCode, int _numBuild)

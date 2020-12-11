@@ -11,10 +11,7 @@ int main()
 
 	PlayGame();
 
-
-
-	Sleep(100000);
-
+	Sleep(1000);
 
 	EndGame();
 	

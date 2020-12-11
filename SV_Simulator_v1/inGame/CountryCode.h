@@ -1,10 +1,11 @@
 #pragma once
 
 enum class CountryCode {
-	//7개 국가 사용 예정.
-	South_Korea, United_States_of_America, China, Germany, Syria, Brazil, Australia,
+	//10개 국가 사용 예정.
+	South_Korea, United_States_of_America, Germany, China, Australia, 
+	Brazil, Russia, Algeria, Saudi_Arabia, Sweden
 
-	//Afghanistan, Angola, Albania, United_Arab_Emirates,
+	//Syria, Afghanistan, Angola, Albania, United_Arab_Emirates,
 	//Argentina, Armenia, Austria, Azerbaijan, Burundi,
 	//Belgium, Benin, Burkina_Faso, Bangladesh, Bulgaria,
 	//The_Bahamas, Bosnia_and_Herzegovina, Belarus, Belize,
@@ -12,7 +13,7 @@ enum class CountryCode {
 	//Canada, Switzerland, Chile, Ivory_Coast, Cameroon,
 	//Democratic_Republic_of_the_Congo, Republic_of_Congo, Colombia,
 	//Costa_Rica, Cuba, Northern_Cyprus, Cyprus, Czech_Republic,
-	//Djibouti, Denmark, Dominican_Republic, Algeria,
+	//Djibouti, Denmark, Dominican_Republic, 
 	//Ecuador, Egypt, Eritrea, Spain, Estonia, Ethiopia, Finland,
 	//Fiji, Falkland_Islands, France, Gabon, United_Kingdom,
 	//Georgia, Ghana, Guinea, Gambia, Guinea_Bissau, Equatorial_Guinea,
@@ -27,11 +28,11 @@ enum class CountryCode {
 	//New_Caledonia, Niger, Nigeria, Nicaragua, Netherlands,
 	//Norway, Nepal, New_Zealand, Oman, Pakistan, Panama, Peru,
 	//Philippines, Papua_New_Guinea, Poland, Puerto_Rico, North_Korea,
-	//Portugal, Paraguay, Palestine, Qatar, Romania, Russia,
-	//Rwanda, Western_Sahara, Saudi_Arabia, Sudan, South_Sudan,
+	//Portugal, Paraguay, Palestine, Qatar, Romania, 
+	//Rwanda, Western_Sahara, Sudan, South_Sudan,
 	//Senegal, Solomon_Islands, Sierra_Leone, El_Salvador, Somaliland,
 	//Somalia, Republic_of_Serbia, Suriname, Slovakia, Slovenia,
-	//Sweden, Swaziland, Chad, Togo, Thailand, Tajikistan,
+	// Swaziland, Chad, Togo, Thailand, Tajikistan,
 	//Turkmenistan, East_Timor, Trinidad_and_Tobago, Tunisia,
 	//Turkey, Taiwan, United_Republic_of_Tanzania, Uganda, Ukraine,
 	//Uruguay, Uzbekistan, Venezuela,

@@ -1,6 +1,8 @@
 #pragma once
 #include "World.h"
 #include "Policy\EnforcedPolicy.h"
+#include "Policy\FirePlants.h"
+#include "Policy\GreenPlants.h"
 
 class Country {
 public:
@@ -60,6 +62,7 @@ public:
 
 private:
 
+	void ReCalEnergy();
 
 	World* world;
 
@@ -92,8 +95,10 @@ private:
 	int recognition;
 	int deltaRecognition;
 
-	EnforcedPolicy lifePolicy [LIFE_POLICY_NUM] ;
+	EnforcedPolicy lifePolicy [LIFE_POLICY_NUM];
 	EnforcedPolicy eduPolicy [EDU_POLICY_NUM];
 
+	FirePlantsInfo fireInfo;
+	GreenPlantsInfo greenInfo;
 
 };

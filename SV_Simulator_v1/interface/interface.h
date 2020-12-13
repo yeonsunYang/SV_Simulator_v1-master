@@ -3,7 +3,7 @@
 #include "..\inGame\Policy\PolicyManager.h"
 #include "pch.h"
 
-#define MINCYCLE 500
+#define MINCYCLE 100
 #define MAXCYCLE 100000
 
 #define SV_SIMULATOR_API __declspec(dllexport)
@@ -93,7 +93,8 @@ extern "C" {
 	SV_SIMULATOR_API int GetDFirePlants(int _countryCode);
 	SV_SIMULATOR_API int GetGreenPlants(int _countryCode);
 	SV_SIMULATOR_API int GetDGreenPlants(int _countryCode);
-
+	SV_SIMULATOR_API int GetDEmission(int _countryCode);
+	SV_SIMULATOR_API int GetTEmission(int _countryCode);
 
 
 	SV_SIMULATOR_API int GetCountEduPolicy(int _countryCode, int _eduCode);

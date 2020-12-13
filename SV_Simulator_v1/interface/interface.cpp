@@ -127,8 +127,8 @@ int InitGame(long long _cycle, int _debugMode)
 {
 	SV_Sim::DebugLog("InitGame()", LogType::Func);
 
-	if (SV_Sim::simState != SimState::Disable)
-		return static_cast<int> (SV_Sim::simState);
+	//if (SV_Sim::simState != SimState::Disable)
+	//	return static_cast<int> (SV_Sim::simState);
 
 
 	if (_cycle < MINCYCLE)
@@ -440,6 +440,16 @@ int GetDGreenPlants(int _countryCode)
 	return SV_Sim::game->CountryInstance(_countryCode)->DGreenPlants();
 }
 
+int GetDEmission(int _countryCode)
+{
+	return SV_Sim::game->CountryInstance(_countryCode)->DEmission();
+}
+int GetTEmission(int _countryCode)
+{
+	return SV_Sim::game->CountryInstance(_countryCode)->TEmission();
+}
+//******************************************************************************************
+
 int GetCountEduPolicy(int _countryCode, int _eduCode)
 {
 	return SV_Sim::game->CountryInstance(_countryCode)->CountEduPolicy(_eduCode);
@@ -474,11 +484,11 @@ int GetRefundFirePlants()
 }
 int GetEmissionFirePlants()
 {
-	return 10;
+	return SV_Sim::policyManager->EmissionFirePlants();
 }
 int GetSupplyFirePlants()
 {
-	return 100;
+	return SV_Sim::policyManager->SupplyFirePlants();
 }
 int BuildGreenPlants(int _countryCode, int _numBuild)
 {
@@ -498,11 +508,11 @@ int GetRefundGreenPlants()
 }
 int GetEmissionGreenPlants()
 {
-	return 0;
+	return SV_Sim::policyManager->SupplyGreenPlants();
 }
 int GetSupplyGreenPlants()
 {
-	return 60;
+	return SV_Sim::policyManager->SupplyGreenPlants();
 }
 
 int EnforceLifePolicy(int _countryCode, int _lifeCode)

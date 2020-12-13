@@ -1,7 +1,7 @@
 #pragma once
 
 enum class CountryCode {
-	//10개 국가 사용 예정.
+	//7개 국가 사용 예정.
 	South_Korea, United_States_of_America, Germany, China, Australia, 
 	Brazil, Russia, Algeria, Saudi_Arabia, Sweden
 

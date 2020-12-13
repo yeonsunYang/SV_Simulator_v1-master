@@ -26,9 +26,9 @@ PolicyManager::PolicyManager()
 	life[static_cast<int>(LifePolicyCode::life2)] = new LifePolicy(15, 200, 2, 40);
 	life[static_cast<int>(LifePolicyCode::life3)] = new LifePolicy(20, 300, 3, 50);
 
-	// 비용, 반환금
-	firePlants = new Plants(10, 2);
-	greenPlants = new Plants(15, 4);
+	// 비용, 반환금, 에너지 공급량, 탄소배출량
+	firePlants = new FirePlantsInfo();
+	greenPlants = new GreenPlantsInfo();
 }
 PolicyManager::PolicyManager(const PolicyManager& other) 
 	: PolicyManager::PolicyManager()

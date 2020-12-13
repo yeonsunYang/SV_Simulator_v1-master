@@ -1,7 +1,8 @@
 #pragma once
 #include "EduPolicy.h"
 #include "LifePolicy.h"
-#include "Plants.h"
+#include "GreenPlants.h"
+#include "FirePlants.h"
 #include "..\Game.h"
 #include "..\Country.h"
 
@@ -32,11 +33,15 @@ public:
 	int DestroyFirePlants(int _countryCode, int _numDestroy);
 	int CostFirePlants() { return firePlants->Cost(); }
 	int RefundFirePlants() { return firePlants->Refund(); }
+	int SupplyFirePlants() { return firePlants->Supply(); }
+	int EmissionFirePlants() { return firePlants->Emission(); }
 
 	int BuildGreenPlants(int _countryCode, int _numBuild);
 	int DestroyGreenPlants(int _countryCode, int _numDestroy);
 	int CostGreenPlants() { return greenPlants->Cost(); }
 	int RefundGreenPlants() { return greenPlants->Refund(); }
+	int SupplyGreenPlants() { return greenPlants->Supply(); }
+	int EmissionGreenPlants() { return greenPlants->Emission(); }
 
 
 
@@ -51,8 +56,8 @@ private:
 
 	EduPolicy* edu[EDU_POLICY_NUM];
 	LifePolicy* life[LIFE_POLICY_NUM];
-	Plants* firePlants;
-	Plants* greenPlants;
+	FirePlantsInfo* firePlants;
+	GreenPlantsInfo* greenPlants;
 
 
 

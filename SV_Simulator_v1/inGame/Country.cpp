@@ -51,7 +51,8 @@ void Country::DataInit(int _population, int _fire, int _green, int _recognition,
 
 void Country::CalEnergy()
 {
-	int enrgy = firePlants * 100 + greenPlants * 60;
+	int enrgy = (firePlants * fireInfo.Supply()) 
+		+ (greenPlants * greenInfo.Supply());
 	int newNeedEnergy = static_cast<int> ((live * needEnergyPerson) / 100) - savingEnergy;
 
 	if (newNeedEnergy < 0)
@@ -59,6 +60,23 @@ void Country::CalEnergy()
 
 	deltaNeedEnergy = newNeedEnergy - needEnergy;
 	deltaSupplyEnergy = enrgy - supplyEnergy;
+
+	needEnergy = newNeedEnergy;
+	supplyEnergy = enrgy;
+}
+// 발전소 개수가 변화될 때만 사용하는 private 멤버함수
+// CalEnergy와 delta~~~~ 변수 계산만 다름.
+void Country::ReCalEnergy() 
+{
+	int enrgy = (firePlants * fireInfo.Supply())
+		+ (greenPlants * greenInfo.Supply());
+	int newNeedEnergy = static_cast<int> ((live * needEnergyPerson) / 100) - savingEnergy;
+
+	if (newNeedEnergy < 0)
+		newNeedEnergy = 0;
+
+	deltaNeedEnergy += newNeedEnergy - needEnergy; 
+	deltaSupplyEnergy += enrgy - supplyEnergy;
 
 	needEnergy = newNeedEnergy;
 	supplyEnergy = enrgy;
@@ -226,10 +244,11 @@ void Country::BuildFirePlants(int _numPlants)
 		for (int i = 0; i < _numPlants; i++)
 		{
 			if (rand() % 100 <= 10) {
-				deltaSupport++;
+				deltaSupport--;
 				support--;
 			}
 		}
+	ReCalEnergy();
 }
 
 void Country::BuildGreenPlants(int _numPlants)
@@ -240,20 +259,22 @@ void Country::BuildGreenPlants(int _numPlants)
 		for (int i = 0; i < _numPlants; i++)
 		{
 			if (rand() % 100 <= 10) {
-				deltaSupport++;
+				deltaSupport--;
 				support--;
 			}
 		}
+	ReCalEnergy();
 }
 
 void Country::DestroyFirePlants(int _numDestroy)
 {
 	firePlants -= _numDestroy;
+	ReCalEnergy();
 
 }
 
 void Country::DestroyGreenPlants(int _numDestroy)
 {
 	greenPlants -= _numDestroy;
-
+	ReCalEnergy();
 }

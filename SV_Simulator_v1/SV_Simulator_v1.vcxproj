@@ -162,6 +162,8 @@
     <ClInclude Include="inGame\Policy\EduPolicy.h" />
     <ClInclude Include="inGame\Policy\EduPolicyCode.h" />
     <ClInclude Include="inGame\Policy\EnforcedPolicy.h" />
+    <ClInclude Include="inGame\Policy\FirePlants.h" />
+    <ClInclude Include="inGame\Policy\GreenPlants.h" />
     <ClInclude Include="inGame\Policy\LifePolicy.h" />
     <ClInclude Include="inGame\Policy\LifePolicyCode.h" />
     <ClInclude Include="inGame\Policy\Plants.h" />

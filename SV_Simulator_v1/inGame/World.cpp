@@ -39,7 +39,7 @@ void World::DataInit()
 	temperature_p2 = 0;
 	startTemperature_p2 = 0;
 
-	recognition = 20;
+	recognition = 0;
 	deltaRecognition = 0;
 }
 
@@ -72,7 +72,7 @@ void World::SetEmission(int _emission)
 
 void World::CalTemperature()
 {
-	carbonPPM_p2 += dailyEmission / 10;
+	carbonPPM_p2 += dailyEmission / 440; //기존 나누기 40에서 440으로 수정
 	temperature_p2 = static_cast<int> (carbonPPM_p2 * 0.008984) + 1236;
 }
 void World::SetStartTemperature()

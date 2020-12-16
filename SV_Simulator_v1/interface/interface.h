@@ -49,6 +49,8 @@ extern "C" {
 	SV_SIMULATOR_API int NormalSpeed();
 	// 현재 날짜 반환
 	SV_SIMULATOR_API int Today();
+
+	SV_SIMULATOR_API int RewardGold(int _gold);
 	
 	SV_SIMULATOR_API int GetWTemperature_p2();
 	SV_SIMULATOR_API float GetWTemperature();

@@ -41,34 +41,34 @@ void Game::Init()
 	player->DataInit();
 
 	countries[static_cast<int>(CountryCode::South_Korea)]
-		->DataInit(7540, 73, 12, 26, 58);
+		->DataInit(5164, 28, 2, 27, 58);
 
 	countries[static_cast<int>(CountryCode::United_States_of_America)]
-		->DataInit(3270, 35, 17, 18, 64);
+		->DataInit(32820, 182, 66, 18, 67);
 
 	countries[static_cast<int>(CountryCode::Germany)]
-		->DataInit(2520, 22, 3, 48, 24);
+		->DataInit(8302, 18, 20, 56, 36);
 
 	countries[static_cast<int>(CountryCode::China)]
-		->DataInit(910, 10, 4, 30, 36);
+		->DataInit(139300, 240, 148, 48, 24);
 
 	countries[static_cast<int>(CountryCode::Australia)]
-		->DataInit(2300, 15, 8, 20, 15);
+		->DataInit(2499, 11, 4, 31, 54);
 
 	countries[static_cast<int>(CountryCode::Brazil)]
-		->DataInit(1000, 12, 3, 55, 98);
+		->DataInit(20950, 5, 40, 56, 14);
 
 	countries[static_cast<int>(CountryCode::Russia)]
-		->DataInit(6050, 35, 23, 30, 54);
+		->DataInit(14450, 64, 23, 38, 54);
 
 	countries[static_cast<int>(CountryCode::Algeria)]
-		->DataInit(6050, 35, 23, 30, 54);
+		->DataInit(4223, 6, 0, 41, 15);
 
 	countries[static_cast<int>(CountryCode::Saudi_Arabia)]
-		->DataInit(6050, 35, 23, 30, 54);
+		->DataInit(3370, 21, 0, 22, 61);
 
 	countries[static_cast<int>(CountryCode::Sweden)]
-		->DataInit(6050, 35, 23, 30, 54);
+		->DataInit(1023, 2, 5, 78, 46);
 
 
 	OneDay();
@@ -102,6 +102,7 @@ void Game::OneDay()
 	TotalEmission();
 	TotalGold();
 	TotalSupport();
+	TotalRecognition();
 
 
 	world->CalTemperature();

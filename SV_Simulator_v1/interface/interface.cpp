@@ -268,7 +268,11 @@ int Today()
 {
 	return SV_Sim::game->Today();
 }
-
+int RewardGold(int _gold)
+{
+	SV_Sim::player->RefundGold(_gold);
+	return 0;
+}
 
 int GetWTemperature_p2()
 {

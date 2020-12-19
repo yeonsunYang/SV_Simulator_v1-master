@@ -29,6 +29,7 @@ extern "C" {
 	/// <param name="_debugMode">Debug 모드 (0 ~ 2) </param>
 	/// <returns></returns>
 	SV_SIMULATOR_API int InitGame(long long _cycle, int _debugMode);
+	SV_SIMULATOR_API int ResetGame();
 
 	// thread 생성 및 detach. state를 InitThread 상태로 설정.
 	SV_SIMULATOR_API int PlayGame();

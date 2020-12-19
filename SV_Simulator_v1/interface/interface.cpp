@@ -9,7 +9,7 @@ int SV_Sim::Run()
 	if (SV_Sim::simState != SimState::InitThread)
 		return static_cast<int> (SV_Sim::simState);
 
-	time_t delta, start, end, waitTime;
+	time_t waitTime;
 
 
 	SV_Sim::simState = SimState::Work;
@@ -21,44 +21,19 @@ int SV_Sim::Run()
 		if (SV_Sim::simState == SimState::Pause)
 			SV_Sim::Pause();
 
-		start = clock();
 		// work() 호출
 		SV_Sim::Work();
-		//system("cls");
-
-
-		//cout << "===================================================" << endl;
-		//cout << "===                 Survival 1.5                ===" << endl;
-		//cout << "===================================================" << endl;
-
-		//SV_Sim::game->PrintDate();
-		//SV_Sim::game->PrintPlayer();
-		//SV_Sim::game->PrintWorld();
-		//SV_Sim::game->PrintCountriesAll();
-
 
 		if(SV_Sim::simState == SimState::WaitEnd)
 			break;
-		end = clock();
-		delta = end - start;
-
-		//cout << "연산시간: " << delta << "(ms)" << endl;
-
 
 		waitTime = static_cast<time_t> (oneDayCycle / static_cast<long long> (SV_Sim::playSpeed));
-
-		// 연산이 매우 길어져서 연산에 소요된 시간이 waitTime보다 길어질 경우.
-
-		if (delta > waitTime)
-			delta = waitTime;
 
 		//Pause() 체크
 		if (SV_Sim::simState == SimState::Pause)
 			SV_Sim::Pause();
 
-		// Wait() 호출
-		SV_Sim::Wait(waitTime - delta);
-
+		Sleep(waitTime);
 
 		if (SV_Sim::simState == SimState::WaitEnd)
 			break;
@@ -82,35 +57,7 @@ int SV_Sim::Work()
 
 	return 0;
 }
-int SV_Sim::Wait(time_t _waitTime)
-{
-	SV_Sim::DebugLog("Wait()", LogType::Func);
 
-	while (_waitTime > 50)
-	{
-		if (SV_Sim::simState == SimState::WaitEnd) {
-			return static_cast<int> (SV_Sim::simState);
-		}
-
-		if (SV_Sim::simState == SimState::Pause)
-			SV_Sim::Pause();
-
-		Sleep(50);
-		_waitTime -= 50;
-	}
-
-	Sleep(static_cast<DWORD> (_waitTime));
-
-	if (SV_Sim::simState == SimState::WaitEnd) {
-		return static_cast<int> (SV_Sim::simState);
-	}
-
-	if (SV_Sim::simState == SimState::Pause)
-		SV_Sim::Pause();
-
-	return 0;
-
-}
 int SV_Sim::Pause()
 {
 	SV_Sim::DebugLog("Pause()", LogType::Func);
@@ -127,8 +74,8 @@ int InitGame(long long _cycle, int _debugMode)
 {
 	SV_Sim::DebugLog("InitGame()", LogType::Func);
 
-	//if (SV_Sim::simState != SimState::Disable)
-	//	return static_cast<int> (SV_Sim::simState);
+	if (SV_Sim::simState != SimState::Disable)
+		return static_cast<int> (SV_Sim::simState);
 
 
 	if (_cycle < MINCYCLE)
@@ -151,6 +98,14 @@ int InitGame(long long _cycle, int _debugMode)
 
 	SV_Sim::simState = SimState::WaitPlay;
 	SV_Sim::playSpeed = PlaySpeed::Normal;
+	return 0;
+}
+int ResetGame()
+{
+	if (SV_Sim::simState == SimState::Disable)
+		return static_cast<int> (SV_Sim::simState);
+
+	SV_Sim::game->Init();
 	return 0;
 }
 int PlayGame()

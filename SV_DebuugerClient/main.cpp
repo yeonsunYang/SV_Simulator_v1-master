@@ -18,11 +18,11 @@ int main()
 		Sleep(1000);
 
 	}
-	EndGame();
+	//EndGame();
 	
-	InitGame(1000, 0);
+	cout << "return: " << ResetGame() << endl;;
 
-	PlayGame();
+	//PlayGame();
 
 	for (int i = 0; i < 10; i++) {
 

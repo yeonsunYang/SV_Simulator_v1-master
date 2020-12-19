@@ -74,6 +74,13 @@ int InitGame(long long _cycle, int _debugMode)
 {
 	SV_Sim::DebugLog("InitGame()", LogType::Func);
 
+	SV_Sim::game = Game::GetInstance();
+	SV_Sim::world = World::GetInstance();
+	SV_Sim::player = Player::GetInstance();
+	SV_Sim::policyManager = PolicyManager::GetInstance();
+
+	SV_Sim::game->Init();
+
 	if (SV_Sim::simState != SimState::Disable)
 		return static_cast<int> (SV_Sim::simState);
 
@@ -87,27 +94,11 @@ int InitGame(long long _cycle, int _debugMode)
 
 	SV_Sim::debugMode = _debugMode;
 
-
-	SV_Sim::game = Game::GetInstance();
-	SV_Sim::world = World::GetInstance();
-	SV_Sim::player = Player::GetInstance();
-	SV_Sim::policyManager = PolicyManager::GetInstance();
-
-	SV_Sim::game->Init();
-
-
 	SV_Sim::simState = SimState::WaitPlay;
 	SV_Sim::playSpeed = PlaySpeed::Normal;
 	return 0;
 }
-int ResetGame()
-{
-	if (SV_Sim::simState == SimState::Disable)
-		return static_cast<int> (SV_Sim::simState);
 
-	SV_Sim::game->Init();
-	return 0;
-}
 int PlayGame()
 {
 	SV_Sim::DebugLog("PlayGame()", LogType::Func);

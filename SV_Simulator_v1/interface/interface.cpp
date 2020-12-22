@@ -444,7 +444,7 @@ int BuildGreenPlants(int _countryCode, int _numBuild)
 {
 	return SV_Sim::policyManager->BuildGreenPlants(_countryCode, _numBuild);
 }
-int DestroyGreenPlatns(int _countryCode, int _numDestroy)
+int DestroyGreenPlants(int _countryCode, int _numDestroy)
 {
 	return SV_Sim::policyManager->DestroyGreenPlants(_countryCode, _numDestroy);
 }

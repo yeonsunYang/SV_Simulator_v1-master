@@ -98,10 +98,10 @@ void Country::CalDeath()
 	int newLive = 0;
 
 	if (ElevatedTemp_p2  > 150) {//온도가 1.5도 이상 증가했다면
-		dailyDead = static_cast<int> (population * 0.07 * (rand() % 4));//오늘죽은사람 = 인구의 7퍼센트~21퍼센트 랜덤하게 죽는다
+		dailyDead = static_cast<int> (population * 0.0025 * (rand() % 4));//오늘죽은사람 = 인구의 0.25퍼센트~1퍼센트 랜덤하게 죽는다
 	}
 	else if (ElevatedTemp_p2 > 100) {//온도가 1도 이상 증가했다면
-		dailyDead = static_cast<int> (population * 0.005 * (rand() % 3)); //오늘죽은사람 = 인구의 0.5퍼센트~1퍼센트 랜덤하게 죽는다
+		dailyDead = static_cast<int> (population * 0.002 * (rand() % 3)); //오늘죽은사람 = 인구의 0.2퍼센트~0.6퍼센트 랜덤하게 죽는다
 ;	}
 
 	else if (ElevatedTemp_p2 > 50) { //온도가 0.5도 이상 증가했다면
@@ -182,13 +182,13 @@ void Country::ReceiveGold()
 
 	//20 * 100 ~ 0 * 20
 	if (liveRate > 90) { //생존자비율 90%이상이면
-		dailyGold = (recognition / 7) * (rand() % 2); //인식률/7 에 해당하는 만큼 골드수급
+		dailyGold = (recognition / 20) * (rand() % 2); //인식률/20 에 해당하는 만큼 골드수급
 	}
-	else if (liveRate > 45) { //생존자비율이 45%이상이면
-		dailyGold = (recognition / 11) * (rand() % 2);//인식률/11에 해당하는만큼 골드수급
+	else if (liveRate > 60) { //생존자비율이 45%이상이면
+		dailyGold = (recognition / 30) * (rand() % 2);//인식률/30에 해당하는만큼 골드수급
 	}
-	else if (liveRate > 15)//생존자비율이 15%이상이면
-		dailyGold = (recognition / 17) * (rand() % 2);//인식률/17에 해당하는만큼 골드수급
+	else if (liveRate > 20)//생존자비율이 15%이상이면
+		dailyGold = (recognition / 50) * (rand() % 2);//인식률/50에 해당하는만큼 골드수급
 
 
 	totalGold += dailyGold;

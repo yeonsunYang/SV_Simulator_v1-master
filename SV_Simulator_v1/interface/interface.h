@@ -25,7 +25,7 @@ extern "C" {
 	/// 게임 시작 직후 반드시 호출. 게임 중 단 한번만 호출 가능. game 생성 초기화.
 	/// state를 WaitPlay로 설정
 	/// </summary>
-	/// <param name="_cycle"> oneday의 호출 주기 (ms 단위), 500이상 ~ 100,000 이하 값만 유효함. </param>
+	/// <param name="_cycle"> oneday의 호출 주기 (ms 단위), 100이상 ~ 100,000 이하 값만 유효함. </param>
 	/// <param name="_debugMode">Debug 모드 (0 ~ 2) </param>
 	/// <returns></returns>
 	SV_SIMULATOR_API int InitGame(long long _cycle, int _debugMode);

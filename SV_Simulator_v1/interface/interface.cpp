@@ -33,7 +33,7 @@ int SV_Sim::Run()
 		if (SV_Sim::simState == SimState::Pause)
 			SV_Sim::Pause();
 
-		Sleep(waitTime);
+		Sleep(static_cast<DWORD>(waitTime));
 
 		if (SV_Sim::simState == SimState::WaitEnd)
 			break;

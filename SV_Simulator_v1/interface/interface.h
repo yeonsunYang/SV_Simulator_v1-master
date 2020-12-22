@@ -110,7 +110,7 @@ extern "C" {
 	SV_SIMULATOR_API int GetEmissionFirePlants();
 	SV_SIMULATOR_API int GetSupplyFirePlants();
 	SV_SIMULATOR_API int BuildGreenPlants(int _countryCode, int _numBuild);
-	SV_SIMULATOR_API int DestroyGreenPlatns(int _countryCode, int _numDestroy);
+	SV_SIMULATOR_API int DestroyGreenPlants(int _countryCode, int _numDestroy);
 	SV_SIMULATOR_API int GetCostGreenPlants();
 	SV_SIMULATOR_API int GetRefundGreenPlants();
 	SV_SIMULATOR_API int GetEmissionGreenPlants();

@@ -180,14 +180,15 @@ void Country::ReceiveGold()
 
 	int liveRate = (live * 100) / population; //생존자비율 = (생존자*100)/인구수 (0~100까지의 range)
 
+	int randnum = rand() % 100;
 	//20 * 100 ~ 0 * 20
-	if (liveRate > 90) { //생존자비율 90%이상이면
-		dailyGold = (recognition / 20) * (rand() % 2); //인식률/20 에 해당하는 만큼 골드수급
+	if (liveRate > 90 && randnum < 2) { //생존자비율 90%이상이면 2%확률로
+		dailyGold = (recognition / 20); //인식률/20 에 해당하는 만큼 골드수급
 	}
-	else if (liveRate > 60) { //생존자비율이 45%이상이면
+	else if (liveRate > 60 && randnum < 2) { //생존자비율이 45%이상이면 2%확률로
 		dailyGold = (recognition / 30) * (rand() % 2);//인식률/30에 해당하는만큼 골드수급
 	}
-	else if (liveRate > 20)//생존자비율이 15%이상이면
+	else if (liveRate > 20 && randnum < 2)//생존자비율이 15%이상이면 2%확률로
 		dailyGold = (recognition / 50) * (rand() % 2);//인식률/50에 해당하는만큼 골드수급
 
 
